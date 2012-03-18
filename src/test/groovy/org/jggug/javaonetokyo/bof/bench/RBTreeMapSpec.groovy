@@ -10,9 +10,9 @@ class RdBTreeMapSpec extends Specification {
         map = new RBTreeMap()
     }
 
-    def "エントリを追加しない場合は高さ0"() {
+    def "エントリを追加しない場合は高さ1"() {
         expect:
-        map.height() == 0
+        map.height() == 1
     }
 
     def "エントリを1つだけ追加する"() {
@@ -20,7 +20,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('a', 'A')
 
         then:
-        map.height() == 1
+        map.height() == 2
     }
 
 //    def "エントリを2つ追加する"() {

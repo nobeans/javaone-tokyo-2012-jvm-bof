@@ -77,7 +77,7 @@ class Empty extends Node {
     }
 
     int height() {
-        0
+        1 // empty node is always black.
     }
 }
 
