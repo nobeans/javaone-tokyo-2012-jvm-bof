@@ -35,10 +35,6 @@ abstract class Node {
     int height() {
         left.height() + (color == Color.BLACK ? 1 : 0)
     }
-
-    Node balance() {
-        this
-    }
 }
 
 class FillNode extends Node {
@@ -58,14 +54,14 @@ class FillNode extends Node {
         else {
             assert false
         }
-        return balance() // TODO
     }
 }
 
 class Empty extends Node {
     Node put(String key, String value) {
         entry = new Entry(key:key, value:value)
-        return new FillNode(color:Color.RED, entry:entry, left:new Empty(), right:new Empty())
+        def node = new FillNode(color:Color.RED, entry:entry, left:new Empty(), right:new Empty())
+        return node
     }
 
     int height() {
