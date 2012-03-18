@@ -1,7 +1,6 @@
 package org.jggug.javaonetokyo.bof.bench
 
 class RBTreeMap {
-
     def root = new Empty()
 
     void put(String key, String value) {
@@ -28,9 +27,12 @@ class Entry {
 
 abstract class Node {
     Color color
+    Node parent
     Entry entry
     Node left
     Node right
+
+    abstract Node put(String key, String value)
 
     int height() {
         left.height() + (color == Color.BLACK ? 1 : 0)
@@ -59,8 +61,18 @@ class FillNode extends Node {
 
 class Empty extends Node {
     Node put(String key, String value) {
+        def parent
+
         entry = new Entry(key:key, value:value)
-        def node = new FillNode(color:Color.RED, entry:entry, left:new Empty(), right:new Empty())
+
+        def node = new FillNode(
+            color: Color.RED,
+            entry: entry,
+            left: new Empty(parent:parent),
+            right: new Empty(parent:parent),
+            parent: parent,
+        )
+
         return node
     }
 
