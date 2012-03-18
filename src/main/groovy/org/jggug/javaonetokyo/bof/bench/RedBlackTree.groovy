@@ -1,10 +1,6 @@
 package org.jggug.javaonetokyo.bof.bench
 
-enum Color {
-    BLACK, RED
-}
-
-class RedBlackTreeMap {
+class RBTreeMap {
 
     def root = new Empty()
 
@@ -12,9 +8,17 @@ class RedBlackTreeMap {
         root = root.put(key, value)
     }
 
+    String get(String key) {
+        // TODO
+    }
+
     int height() {
         root.height()
     }
+}
+
+enum Color {
+    BLACK, RED
 }
 
 class Entry {
