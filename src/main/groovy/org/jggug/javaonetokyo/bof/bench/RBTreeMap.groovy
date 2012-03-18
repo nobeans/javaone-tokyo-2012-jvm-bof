@@ -35,6 +35,10 @@ abstract class Node {
     int height() {
         left.height() + (color == Color.BLACK ? 1 : 0)
     }
+
+    Node balance() {
+        this
+    }
 }
 
 class FillNode extends Node {
@@ -54,7 +58,7 @@ class FillNode extends Node {
         else {
             assert false
         }
-        balance() // TODO
+        return balance() // TODO
     }
 }
 
