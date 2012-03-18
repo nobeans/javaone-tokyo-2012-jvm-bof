@@ -7,7 +7,7 @@ class RdBTreeMapSpec extends Specification {
     def map
 
     def setup() {
-        map = new RedBlackTreeMap()
+        map = new RBTreeMap()
     }
 
     def "エントリを1つだけ追加する"() {
