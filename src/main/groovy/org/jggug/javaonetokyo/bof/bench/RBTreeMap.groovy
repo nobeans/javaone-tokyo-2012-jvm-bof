@@ -41,34 +41,30 @@ class FillNode extends Node {
     Node put(String key, String value) {
         if (entry == null) {
             entry = new Entry(key:key, value:value)
-            return
         }
-        if (entry.key == key) {
-            entry = new Entry(key:key, value:value)
-            return
+        else if (entry.key == key) {
+            entry.value == value
         }
-        if (entry.key > key) {
+        else if (entry.key > key) {
             left.put(key, value)
         }
-        if (entry.key < key) {
+        else if (entry.key < key) {
             right.put(key, value)
+        }
+        else {
+            assert false
         }
     }
 }
 
 class Empty extends Node {
-
-    Empty() {
-        color = Color.BLACK
-    }
-
     Node put(String key, String value) {
         entry = new Entry(key:key, value:value)
         return new FillNode(color:Color.RED, entry:entry, left:new Empty(), right:new Empty())
     }
 
     int height() {
-        1
+        0
     }
 }
 
