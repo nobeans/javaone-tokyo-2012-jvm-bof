@@ -54,6 +54,7 @@ class FillNode extends Node {
         else {
             assert false
         }
+        balance() // TODO
     }
 }
 
