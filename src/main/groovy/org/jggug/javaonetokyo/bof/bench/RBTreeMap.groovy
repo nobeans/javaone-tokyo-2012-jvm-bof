@@ -66,7 +66,7 @@ class Empty extends Node {
         entry = new Entry(key:key, value:value)
 
         def node = new FillNode(
-            color: Color.RED,
+            color: Color.BLACK,
             entry: entry,
             left: new Empty(parent:parent),
             right: new Empty(parent:parent),
