@@ -1,0 +1,31 @@
+apply plugin:'groovy'
+defaultTasks 'clean', 'test'
+
+repositories {
+    mavenCentral()
+    mavenRepo name:"codehaus", url:"http://repository.codehaus.org/"
+}
+dependencies {
+    groovy 'org.codehaus.groovy:groovy:1.8.6'
+    testCompile 'junit:junit:4.10'
+}
+
+def defaultEncoding = 'UTF-8'
+compileJava {
+    options.encoding = defaultEncoding
+}
+compileTestJava {
+    options.encoding = defaultEncoding
+}
+compileGroovy {
+    groovyOptions.encoding = defaultEncoding
+    options.encoding = defaultEncoding
+}
+compileTestGroovy {
+    groovyOptions.encoding = defaultEncoding
+    options.encoding = defaultEncoding
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.0-milestone-9'
+}
