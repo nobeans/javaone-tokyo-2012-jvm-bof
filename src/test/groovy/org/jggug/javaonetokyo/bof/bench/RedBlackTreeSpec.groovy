@@ -10,10 +10,20 @@ class RedBlackTreeSpec extends Specification {
         map = new RedBlackTreeMap()
     }
 
-    def "topic"() {
+    def "エントリを1つだけ追加する"() {
         when:
         map.put('a', 'A')
+
         then:
         map.height() == 1
     }
+
+//    def "エントリを2つ追加する"() {
+//        when:
+//        map.put('a', 'A')
+//        map.put('b', 'B')
+//
+//        then:
+//        map.height() == 1
+//    }
 }
