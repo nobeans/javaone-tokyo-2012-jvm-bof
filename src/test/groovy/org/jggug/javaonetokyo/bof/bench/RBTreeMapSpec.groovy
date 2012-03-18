@@ -2,7 +2,7 @@ package org.jggug.javaonetokyo.bof.bench
 
 import spock.lang.*
 
-class RedBlackTreeSpec extends Specification {
+class RdBTreeMapSpec extends Specification {
 
     def map
 
