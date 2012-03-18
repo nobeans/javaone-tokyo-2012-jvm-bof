@@ -7,7 +7,9 @@ repositories {
 }
 dependencies {
     groovy 'org.codehaus.groovy:groovy:1.8.6'
-    testCompile 'junit:junit:4.10'
+    testCompile 'org.spockframework:spock-core:0.5-groovy-1.8', {
+        exclude group:'org.codehaus.groovy', module:'groovy-all'
+    }
 }
 
 def defaultEncoding = 'UTF-8'
