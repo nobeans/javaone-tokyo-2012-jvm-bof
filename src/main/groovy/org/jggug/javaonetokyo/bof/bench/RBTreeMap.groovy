@@ -1,7 +1,7 @@
 package org.jggug.javaonetokyo.bof.bench
 
 class RBTreeMap {
-    def root = new EmptyNode()
+    def root = new EmptyNode(null)
 
     void put(String key, String value) {
         root = root.put(key, value)
@@ -19,6 +19,7 @@ class RBTreeMap {
 enum Color {
     BLACK, RED
 }
+import static org.jggug.javaonetokyo.bof.bench.Color.*
 
 class Entry {
     String key
@@ -35,7 +36,15 @@ abstract class Node {
     abstract Node put(String key, String value)
 
     int height() {
-        left.height() + (color == Color.BLACK ? 1 : 0)
+        left.height() + (color == BLACK ? 1 : 0)
+    }
+
+    boolean isLefty() {
+        parent.left == this
+    }
+
+    boolean isRighty() {
+        parent.right == this
     }
 }
 
@@ -44,8 +53,8 @@ class FillNode extends Node {
         this.parent = parent
         this.color = color
         this.entry = entry
-        this.left = new EmptyNode(parent:parent)
-        this.right = new EmptyNode(parent:parent)
+        this.left = new EmptyNode(parent)
+        this.right = new EmptyNode(parent)
     }
 
     Node put(String key, String value) {
@@ -72,8 +81,9 @@ class FillNode extends Node {
 }
 
 class EmptyNode extends Node {
-    {
-        color = Color.BLACK
+    EmptyNode(parent) {
+        this.parent = parent
+        this.color = BLACK
     }
 
     Node put(String key, String value) {
@@ -83,22 +93,32 @@ class EmptyNode extends Node {
 
         // as root
         if (parent == null) {
-            return new FillNode(null, Color.BLACK, entry)
+            return new FillNode(null, BLACK, entry)
         }
 
-        // 
-        if (parent.color == Color.BLACK) {
-            return new FillNode(parent, Color.RED, entry)
+        // parent is black
+        if (parent.color == BLACK) {
+            return new FillNode(parent, RED, entry)
         }
 
         // parent is red
         def brother = parent.brother
-        if (brother == Color.RED) {
-            parent.color = Color.BLACK
-            brother.color = Color.BLACK
+        if (brother == RED) {
+            parent.color = BLACK
+            brother.color = BLACK
             // TODO ここで親にぶら下がるEmptyNode(this)と新規FillNodeを差し替える？
-            return new FillNode(parent, Color.RED, entry)
+            return new FillNode(parent, RED, entry)
         }
+
+        // parent is red and parent's brother is black
+        if (parent.isLefty() && this.isLefty()) {
+            def newSubRoot = parent
+            parent.color = BLACK
+
+        }
+        if (parent.isRighty() && this.isRighty()) {
+        }
+
 
         return node
     }
