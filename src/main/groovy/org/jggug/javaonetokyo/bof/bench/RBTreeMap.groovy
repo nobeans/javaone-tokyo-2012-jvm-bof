@@ -42,9 +42,7 @@ abstract class Node {
 
     abstract String get(String key)
 
-    final int height() {
-        left.height() + (color == BLACK ? 1 : 0)
-    }
+    abstract int height()
 
     final Node getBrother() {
         if (isLefty()) {
@@ -115,6 +113,11 @@ class FillNode extends Node {
             case -1: return right.get(key)
         }
         assert false
+    }
+
+    @Override
+    int height() {
+        left.height() + (color == BLACK ? 1 : 0)
     }
 
     @Override
@@ -210,13 +213,13 @@ class EmptyNode extends Node {
     }
 
     @Override
-    int height() {
-        1 // empty node is always black.
+    String get(String key) {
+        null
     }
 
     @Override
-    String get(String key) {
-        null
+    int height() {
+        1 // empty node is always black.
     }
 
     @Override
