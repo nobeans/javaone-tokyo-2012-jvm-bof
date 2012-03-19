@@ -125,7 +125,7 @@ class FillNode extends Node {
 
     @Override
     String toString() {
-        "[${parent?.key ?: 'ROOT'}]->${color}(${key}=${value}){L:${left?.toString()}}{R:${right?.toString()}}"
+        "[${parent?.key ?: 'ROOT'}]->${color == 0 ? 'BLACK' : 'RED'}(${key}=${value}){L:${left?.toString()}}{R:${right?.toString()}}"
     }
 }
 
@@ -227,7 +227,7 @@ class EmptyNode extends Node {
 
     @Override
     String toString() {
-        "[${parent?.key}]->${color}(empty)"
+        "[${parent?.key}]->${color == 0 ? 'BLACK' : 'RED'}(empty)"
     }
 }
 
