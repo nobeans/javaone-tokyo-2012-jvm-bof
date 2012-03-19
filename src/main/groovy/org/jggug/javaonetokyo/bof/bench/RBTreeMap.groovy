@@ -59,7 +59,9 @@ abstract class Node {
     }
 
     void replace(Node node) {
-        if (isLefty()) {
+        if (parent == null) {
+            node.parent = null
+        } else if (isLefty()) {
             parent.left = node
         } else if (isRighty()) {
             parent.right = node
@@ -68,7 +70,7 @@ abstract class Node {
         }
     }
 
-    boolean isLefty()  { parent.left == this }
+    boolean isLefty() { parent.left == this }
     boolean isRighty() { parent.right == this }
 
     void setLeft(Node left) {
@@ -176,18 +178,18 @@ class EmptyNode extends Node {
             def oldSubRoot = parent.parent
             def newSubRoot = parent
             newSubRoot.color = BLACK
-            newSubRoot.parent = oldSubRoot.parent
+            oldSubRoot.replace(newSubRoot)
             oldSubRoot.left = newSubRoot.right
             oldSubRoot.color = RED
             newSubRoot.right = oldSubRoot
             newSubRoot.left = new FillNode(RED, key, value)
-            return newSubRoot
+            return newSubRoot.left
         }
         if (parent.isRighty() && this.isRighty()) {
             def oldSubRoot = parent.parent
             def newSubRoot = parent
             newSubRoot.color = BLACK
-            newSubRoot.parent = oldSubRoot.parent
+            oldSubRoot.replace(newSubRoot)
             oldSubRoot.right = newSubRoot.left
             oldSubRoot.color = RED
             newSubRoot.left = oldSubRoot
@@ -197,7 +199,7 @@ class EmptyNode extends Node {
         if (parent.isRighty() && this.isLefty()) {
             def oldSubRoot = parent.parent
             def newSubRoot = new FillNode(BLACK, key, value)
-            newSubRoot.parent = oldSubRoot.parent
+            oldSubRoot.replace(newSubRoot)
             oldSubRoot.right = newSubRoot.left
             oldSubRoot.color = RED
             parent.left = newSubRoot.right
@@ -209,7 +211,7 @@ class EmptyNode extends Node {
         if (parent.isLefty() && this.isRighty()) {
             def oldSubRoot = parent.parent
             def newSubRoot = new FillNode(BLACK, key, value)
-            newSubRoot.parent = oldSubRoot.parent
+            oldSubRoot.replace(newSubRoot)
             oldSubRoot.left = newSubRoot.right
             oldSubRoot.color = RED
             parent.right = newSubRoot.left

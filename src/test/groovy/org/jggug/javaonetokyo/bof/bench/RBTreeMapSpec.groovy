@@ -241,6 +241,31 @@ class RdBTreeMapSpec extends Specification {
             '''.readLines().collect{ it.trim() }.join()
     }
 
+    def "右側にエントリを5つ追加する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('c', 'Value of c')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+
+        then:
+        map.height() == 3
+        map.toString() == '''
+            [ROOT]->BLACK(b=Value of b)
+                {L:[b]->BLACK(a=Value of a)
+                    {L:[a]->BLACK(empty)}
+                    {R:[a]->BLACK(empty)}}
+                {R:[b]->BLACK(d=Value of d)
+                    {L:[d]->RED(c=Value of c)
+                        {L:[c]->BLACK(empty)}
+                        {R:[c]->BLACK(empty)}}
+                    {R:[d]->RED(e=Value of e)
+                        {L:[e]->BLACK(empty)}
+                        {R:[e]->BLACK(empty)}}}
+            '''.readLines().collect{ it.trim() }.join()
+    }
+
 //    def "get: 指定したキーの値を取得する"() {
 //        setup:
 //        map.put('a', 'Value of a')
