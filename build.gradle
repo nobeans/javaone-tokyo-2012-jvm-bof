@@ -1,5 +1,8 @@
 apply plugin:'groovy'
+apply plugin:'application'
+
 defaultTasks 'clean', 'test'
+mainClassName = "org.jggug.javaonetokyo.bof.bench.Benchmark"
 
 repositories {
     mavenCentral()
@@ -10,6 +13,7 @@ dependencies {
     testCompile 'org.spockframework:spock-core:0.5-groovy-1.8', {
         exclude group:'org.codehaus.groovy', module:'groovy-all'
     }
+    groovy 'com.googlecode.gbench:gbench:0.3.0-groovy-1.8'
 }
 
 def defaultEncoding = 'UTF-8'
