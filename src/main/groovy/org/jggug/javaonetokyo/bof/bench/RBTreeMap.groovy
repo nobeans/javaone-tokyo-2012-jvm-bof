@@ -152,9 +152,19 @@ class EmptyNode extends Node {
 
         // parent is red and parent's brother is black
         if (parent.isLefty() && this.isLefty()) {
-            assert false : "まだテストも書いてない"
+            def oldSubRoot = parent.parent
             def newSubRoot = parent
-            parent.color = BLACK
+
+            newSubRoot.parent = oldSubRoot.parent
+            newSubRoot.color = BLACK
+
+            oldSubRoot.left = newSubRoot.right
+            oldSubRoot.color = RED
+
+            newSubRoot.right = oldSubRoot
+            newSubRoot.left = new FillNode(RED, key, value)
+
+            return newSubRoot
         }
         if (parent.isRighty() && this.isRighty()) {
             def oldSubRoot = parent.parent
