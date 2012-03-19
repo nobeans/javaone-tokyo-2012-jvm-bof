@@ -266,25 +266,25 @@ class RdBTreeMapSpec extends Specification {
             '''.readLines().collect{ it.trim() }.join()
     }
 
-//    def "get: 指定したキーの値を取得する"() {
-//        setup:
-//        map.put('a', 'Value of a')
-//        map.put('b', 'Value of b')
-//        map.put('c', 'Value of c')
-//        map.put('d', 'Value of d')
-//        map.put('e', 'Value of e')
-//
-//        expect:
-//        map.get(key) == value
-//
-//        where:
-//        key | value
-//        'a' | 'Value of a'
-//        'b' | 'Value of b'
-//        'c' | 'Value of c'
-//        'd' | 'Value of d'
-//        'e' | 'Value of e'
-//    }
+   def "get: 指定したキーの値を取得する"() {
+       setup:
+       map.put('a', 'Value of a')
+       map.put('b', 'Value of b')
+       map.put('c', 'Value of c')
+       map.put('d', 'Value of d')
+       map.put('e', 'Value of e')
+
+       expect:
+       map.get(key) == value
+
+       where:
+       key | value
+       'a' | 'Value of a'
+       'b' | 'Value of b'
+       'c' | 'Value of c'
+       'd' | 'Value of d'
+       'e' | 'Value of e'
+   }
 
     def "nullをgetすると例外をスローする"() {
         when:
