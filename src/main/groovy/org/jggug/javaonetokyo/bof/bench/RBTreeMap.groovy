@@ -53,13 +53,15 @@ class FillNode extends Node {
         this.parent = parent
         this.color = color
         this.entry = entry
-        this.left = new EmptyNode(parent)
-        this.right = new EmptyNode(parent)
+        this.left = new EmptyNode(this)
+        this.right = new EmptyNode(this)
     }
 
     Node put(String key, String value) {
         if (entry == null) {
             entry = new Entry(key:key, value:value)
+            left.parent = entry
+            right.parent = entry
             return this
         }
         else if (entry.key == key) {
@@ -109,6 +111,8 @@ class EmptyNode extends Node {
             // TODO ここで親にぶら下がるEmptyNode(this)と新規FillNodeを差し替える？
             return new FillNode(parent, RED, entry)
         }
+
+        assert false : "まだテストも書いてない"
 
         // parent is red and parent's brother is black
         if (parent.isLefty() && this.isLefty()) {
