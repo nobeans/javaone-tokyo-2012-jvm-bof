@@ -1,7 +1,7 @@
 package org.jggug.javaonetokyo.bof.bench
 
 class RBTreeMap {
-    def root = new Empty()
+    def root = new EmptyNode()
 
     void put(String key, String value) {
         root = root.put(key, value)
@@ -44,8 +44,8 @@ class FillNode extends Node {
         this.parent = parent
         this.color = color
         this.entry = entry
-        this.left = new Empty(parent:parent)
-        this.right = new Empty(parent:parent)
+        this.left = new EmptyNode(parent:parent)
+        this.right = new EmptyNode(parent:parent)
     }
 
     Node put(String key, String value) {
@@ -71,7 +71,7 @@ class FillNode extends Node {
     }
 }
 
-class Empty extends Node {
+class EmptyNode extends Node {
     {
         color = Color.BLACK
     }
@@ -81,10 +81,12 @@ class Empty extends Node {
 
         entry = new Entry(key:key, value:value)
 
+        // as root
         if (parent == null) {
             return new FillNode(null, Color.BLACK, entry)
         }
 
+        // 
         if (parent.color == Color.BLACK) {
             return new FillNode(parent, Color.RED, entry)
         }
@@ -94,6 +96,7 @@ class Empty extends Node {
         if (brother == Color.RED) {
             parent.color = Color.BLACK
             brother.color = Color.BLACK
+            // TODO ここで親にぶら下がるEmptyNode(this)と新規FillNodeを差し替える？
             return new FillNode(parent, Color.RED, entry)
         }
 
