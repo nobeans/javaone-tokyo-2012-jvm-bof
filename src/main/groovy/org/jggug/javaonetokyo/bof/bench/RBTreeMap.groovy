@@ -26,8 +26,8 @@ class Entry {
 }
 
 abstract class Node {
-    Color color
     Node parent
+    Color color
     Entry entry
     Node left
     Node right
@@ -40,18 +40,30 @@ abstract class Node {
 }
 
 class FillNode extends Node {
+    FillNode(Node parent, Color color, Entry entry) {
+        this.parent = parent
+        this.color = color
+        this.entry = entry
+        this.left = new Empty(parent:parent)
+        this.right = new Empty(parent:parent)
+    }
+
     Node put(String key, String value) {
         if (entry == null) {
             entry = new Entry(key:key, value:value)
+            return this
         }
         else if (entry.key == key) {
             entry.value == value
+            return this
         }
         else if (entry.key > key) {
-            left.put(key, value)
+            left = left.put(key, value)
+            return this
         }
         else if (entry.key < key) {
-            right.put(key, value)
+            right = right.put(key, value)
+            return this
         }
         else {
             assert false
@@ -61,17 +73,25 @@ class FillNode extends Node {
 
 class Empty extends Node {
     Node put(String key, String value) {
-        def parent
+        def parent = this.parent
 
         entry = new Entry(key:key, value:value)
 
-        def node = new FillNode(
-            color: Color.BLACK,
-            entry: entry,
-            left: new Empty(parent:parent),
-            right: new Empty(parent:parent),
-            parent: parent,
-        )
+        if (parent == null) {
+            return new FillNode(null, Color.BLACK, entry)
+        }
+
+        if (parent.color == Color.BLACK) {
+            return new FillNode(parent, Color.RED, entry)
+        }
+
+        // parent is red
+        def brother = parent.brother
+        if (brother == Color.RED) {
+            parent.color = Color.BLACK
+            brother.color = Color.BLACK
+            return new FillNode(parent, Color.RED, entry)
+        }
 
         return node
     }
