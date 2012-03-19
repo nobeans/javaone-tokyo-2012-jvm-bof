@@ -72,6 +72,10 @@ class FillNode extends Node {
 }
 
 class Empty extends Node {
+    {
+        color = Color.BLACK
+    }
+
     Node put(String key, String value) {
         def parent = this.parent
 
