@@ -284,6 +284,7 @@ class RdBTreeMapSpec extends Specification {
        'c' | 'Value of c'
        'd' | 'Value of d'
        'e' | 'Value of e'
+       'f' | null
    }
 
     def "nullをgetすると例外をスローする"() {
