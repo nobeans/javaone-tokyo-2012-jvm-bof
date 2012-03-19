@@ -33,8 +33,8 @@ class RBTreeMap {
 
 abstract class Node {
 
-    final static int BLACK = 0
-    final static int RED = 1
+    final static int BLACK = 1
+    final static int RED = 0
 
     int color
     String key
@@ -116,12 +116,12 @@ class FillNode extends Node {
 
     @Override
     int height() {
-        left.height() + (color == BLACK ? 1 : 0)
+        left.height() + color // BLACK = 1, RED = 0
     }
 
     @Override
     String toString() {
-        "[${parent?.key ?: 'ROOT'}]->${color == 0 ? 'BLACK' : 'RED'}(${key}=${value}){L:${left?.toString()}}{R:${right?.toString()}}"
+        "[${parent?.key ?: 'ROOT'}]->${color == 1 ? 'BLACK' : 'RED'}(${key}=${value}){L:${left?.toString()}}{R:${right?.toString()}}"
     }
 }
 
