@@ -221,7 +221,7 @@ class EmptyNode extends Node {
 
     @Override
     String toString() {
-        "[${parent?.key}]->BLACK}(empty)"
+        "[${parent?.key}]->BLACK(empty)"
     }
 }
 
