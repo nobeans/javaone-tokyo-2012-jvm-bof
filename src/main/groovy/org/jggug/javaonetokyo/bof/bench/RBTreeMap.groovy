@@ -14,6 +14,11 @@ class RBTreeMap {
     int height() {
         root.height()
     }
+
+    @Override
+    String toString() {
+        root.toString()
+    }
 }
 
 enum Color {
@@ -47,12 +52,12 @@ abstract class Node {
         }
     }
 
-    boolean isLefty() {
-        parent.left == this
-    }
+    boolean isLefty()  { parent.left == this }
+    boolean isRighty() { parent.right == this }
 
-    boolean isRighty() {
-        parent.right == this
+    @Override
+    String toString() {
+        return "[${parent?.entry?.key ?: 'ROOT'}]->${color}(${entry?.key}=${entry?.value}){L:${left?.toString()}}{R:${right?.toString()}}"
     }
 }
 
@@ -65,6 +70,7 @@ class FillNode extends Node {
         this.right = new EmptyNode(this)
     }
 
+    @Override
     Node put(String key, String value) {
         if (entry == null) {
             entry = new Entry(key:key, value:value)
@@ -94,6 +100,7 @@ class EmptyNode extends Node {
         this.color = BLACK
     }
 
+    @Override
     Node put(String key, String value) {
         def parent = this.parent
 
@@ -137,8 +144,14 @@ class EmptyNode extends Node {
         return node
     }
 
+    @Override
     int height() {
         1 // empty node is always black.
+    }
+
+    @Override
+    String toString() {
+        return "[${parent?.entry?.key}]->${color}(empty)"
     }
 }
 

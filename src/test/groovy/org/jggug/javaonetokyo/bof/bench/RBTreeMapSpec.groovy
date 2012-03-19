@@ -24,18 +24,7 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 2
-
-        map.root in FillNode
-        map.root.parent == null
-        map.root.color == Color.BLACK
-        map.root.entry.key == 'a'
-        map.root.entry.value == 'Value of a'
-
-        map.root.left in EmptyNode
-        map.root.left.parent == map.root
-
-        map.root.right in EmptyNode
-        map.root.right.parent == map.root
+        map.toString() == "[ROOT]->BLACK(a=Value of a){L:[a]->BLACK(empty)}{R:[a]->BLACK(empty)}"
     }
 
     def "エントリを2つ追加する"() {
@@ -45,26 +34,13 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 2
-
-        map.root in FillNode
-        map.root.parent == null
-        map.root.color == Color.BLACK
-        map.root.entry.key == 'a'
-        map.root.entry.value == 'Value of a'
-
-        map.root.left in EmptyNode
-        map.root.left.parent == map.root
-
-        map.root.right in FillNode
-        map.root.right.parent == map.root
-        map.root.right.color == Color.RED
-        map.root.right.entry.key == 'b'
-        map.root.right.entry.value == 'Value of b'
-
-        map.root.right.left in EmptyNode
-        map.root.right.left.parent == map.root.right
-        map.root.right.right in EmptyNode
-        map.root.right.right.parent == map.root.right
+        map.toString() == """
+            [ROOT]->BLACK(a=Value of a)
+                {L:[a]->BLACK(empty)}
+                {R:[a]->RED(b=Value of b)
+                    {L:[b]->BLACK(empty)}
+                    {R:[b]->BLACK(empty)}}
+            """.readLines().collect{ it.trim() }.join()
     }
 
     def "エントリを3つ追加する"() {
@@ -75,34 +51,15 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 2
-
-        map.root in FillNode
-        map.root.parent == null
-        map.root.color == Color.BLACK
-        map.root.entry.key == 'a'
-        map.root.entry.value == 'Value of a'
-
-        map.root.left in FillNode
-        map.root.left.parent == map.root
-        map.root.left.color == Color.RED
-        map.root.left.entry.key == 'X'
-        map.root.left.entry.value == 'Value of X'
-
-        map.root.left.left in EmptyNode
-        map.root.left.left.parent == map.root.left
-        map.root.left.right in EmptyNode
-        map.root.left.right.parent == map.root.left
-
-        map.root.right in FillNode
-        map.root.right.parent == map.root
-        map.root.right.color == Color.RED
-        map.root.right.entry.key == 'b'
-        map.root.right.entry.value == 'Value of b'
-
-        map.root.right.left in EmptyNode
-        map.root.right.left.parent == map.root.right
-        map.root.right.right in EmptyNode
-        map.root.right.right.parent == map.root.right
+        map.toString() == """
+            [ROOT]->BLACK(a=Value of a)
+                {L:[a]->RED(X=Value of X)
+                    {L:[X]->BLACK(empty)}
+                    {R:[X]->BLACK(empty)}}
+                {R:[a]->RED(b=Value of b)
+                    {L:[b]->BLACK(empty)}
+                    {R:[b]->BLACK(empty)}}
+            """.readLines().collect{ it.trim() }.join()
     }
 
     def "エントリを4つ追加する。親と親の兄弟が赤の場合は、親の親を赤に、親と親の兄弟を黒に変更する。ただし親の親が根の場合は黒のままとする。"() {
@@ -114,40 +71,17 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 3
-
-        map.root in FillNode
-        map.root.parent == null
-        map.root.color == Color.BLACK
-        map.root.entry.key == 'a'
-        map.root.entry.value == 'Value of a'
-
-        map.root.left in FillNode
-        map.root.left.parent == map.root
-        map.root.left.color == Color.BLACK
-        map.root.left.entry.key == 'X'
-        map.root.left.entry.value == 'Value of X'
-
-        map.root.left.left in EmptyNode
-        map.root.left.left.parent == map.root.left
-        map.root.left.right in EmptyNode
-        map.root.left.right.parent == map.root.left
-
-        map.root.right in FillNode
-        map.root.right.parent == map.root
-        map.root.right.color == Color.BLACK
-        map.root.right.entry.key == 'b'
-        map.root.right.entry.value == 'Value of b'
-
-        map.root.right.right in FillNode
-        map.root.right.right.parent == map.root.right
-        map.root.right.right.color == Color.RED
-        map.root.right.right.entry.key == 'c'
-        map.root.right.right.entry.value == 'Value of c'
-
-        map.root.right.right.left in EmptyNode
-        map.root.right.right.left.parent == map.root.right.right
-        map.root.right.right.right in EmptyNode
-        map.root.right.right.right.parent == map.root.right.right
+        map.toString() == """
+            [ROOT]->BLACK(a=Value of a)
+                {L:[a]->BLACK(X=Value of X)
+                    {L:[X]->BLACK(empty)}
+                    {R:[X]->BLACK(empty)}}
+                {R:[a]->BLACK(b=Value of b)
+                    {L:[b]->BLACK(empty)}
+                    {R:[b]->RED(c=Value of c)
+                        {L:[c]->BLACK(empty)}
+                        {R:[c]->BLACK(empty)}}}
+            """.readLines().collect{ it.trim() }.join()
     }
 
     def "エントリを5つ追加する"() {
@@ -160,51 +94,19 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 3
-
-        map.root in FillNode
-        map.root.parent == null
-        map.root.color == Color.BLACK
-        map.root.entry.key == 'a'
-        map.root.entry.value == 'Value of a'
-
-        map.root.left in FillNode
-        map.root.left.parent == map.root
-        map.root.left.color == Color.BLACK
-        map.root.left.entry.key == 'X'
-        map.root.left.entry.value == 'Value of X'
-
-        map.root.left.left in EmptyNode
-        map.root.left.left.parent == map.root.left
-        map.root.left.right in EmptyNode
-        map.root.left.right.parent == map.root.left
-
-        map.root.right in FillNode
-        map.root.right.parent == map.root
-        map.root.right.color == Color.BLACK
-        map.root.right.entry.key == 'c'
-        map.root.right.entry.value == 'Value of c'
-
-        map.root.right.left in FillNode
-        map.root.right.left.parent == map.root.right
-        map.root.right.left.color == Color.RED
-        map.root.right.left.entry.key == 'b'
-        map.root.right.left.entry.value == 'Value of b'
-
-        map.root.right.left.left in EmptyNode
-        map.root.right.left.left.parent == map.root.right.left
-        map.root.right.left.right in EmptyNode
-        map.root.right.left.right.parent == map.root.right.left
-
-        map.root.right.right in FillNode
-        map.root.right.right.parent == map.root.right
-        map.root.right.right.color == Color.RED
-        map.root.right.right.entry.key == 'd'
-        map.root.right.right.entry.value == 'Value of d'
-
-        map.root.right.right.left in EmptyNode
-        map.root.right.right.left.parent == map.root.right.right
-        map.root.right.right.right in EmptyNode
-        map.root.right.right.right.parent == map.root.right.right
+        map.toString() == """
+            [ROOT]->BLACK(a=Value of a)
+                {L:[a]->BLACK(X=Value of X)
+                    {L:[X]->BLACK(empty)}
+                    {R:[X]->BLACK(empty)}}
+                {R:[a]->BLACK(c=Value of c)
+                    {L:[c]->RED(b=Value of b)
+                        {L:[b]->BLACK(empty)}
+                        {R:[b]->BLACK(empty)}}
+                    {R:[c]->RED(d=Value of d)
+                        {L:[d]->BLACK(empty)}
+                        {R:[d]->BLACK(empty)}}}
+            """.readLines().collect{ it.trim() }.join()
     }
 
     def "エントリを6つ追加する。親と親の兄弟が赤の場合は、親の親を赤に、親と親の兄弟を黒に変更する"() {
@@ -218,59 +120,20 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 3
-
-        map.root in FillNode
-        map.root.parent == null
-        map.root.color == Color.BLACK
-        map.root.entry.key == 'a'
-        map.root.entry.value == 'Value of a'
-
-        map.root.left in FillNode
-        map.root.left.parent == map.root
-        map.root.left.color == Color.BLACK
-        map.root.left.entry.key == 'X'
-        map.root.left.entry.value == 'Value of X'
-
-        map.root.left.left in EmptyNode
-        map.root.left.left.parent == map.root.left
-        map.root.left.right in EmptyNode
-        map.root.left.right.parent == map.root.left
-
-        map.root.right in FillNode
-        map.root.right.parent == map.root
-        map.root.right.color == Color.RED
-        map.root.right.entry.key == 'c'
-        map.root.right.entry.value == 'Value of c'
-
-        map.root.right.left in FillNode
-        map.root.right.left.parent == map.root.right
-        map.root.right.left.color == Color.BLACK
-        map.root.right.left.entry.key == 'b'
-        map.root.right.left.entry.value == 'Value of b'
-
-        map.root.right.left.left in EmptyNode
-        map.root.right.left.left.parent == map.root.right.left
-        map.root.right.left.right in EmptyNode
-        map.root.right.left.right.parent == map.root.right.left
-
-        map.root.right.right in FillNode
-        map.root.right.right.parent == map.root.right
-        map.root.right.right.color == Color.BLACK
-        map.root.right.right.entry.key == 'd'
-        map.root.right.right.entry.value == 'Value of d'
-
-        map.root.right.right.left in EmptyNode
-        map.root.right.right.left.parent == map.root.right.right
-
-        map.root.right.right.right in FillNode
-        map.root.right.right.right.parent == map.root.right.right
-        map.root.right.right.right.color == Color.RED
-        map.root.right.right.right.entry.key == 'e'
-        map.root.right.right.right.entry.value == 'Value of e'
-
-        map.root.right.right.right.left in EmptyNode
-        map.root.right.right.right.left.parent == map.root.right.right.right
-        map.root.right.right.right.right in EmptyNode
-        map.root.right.right.right.right.parent == map.root.right.right.right
+        map.toString() == """
+            [ROOT]->BLACK(a=Value of a)
+                {L:[a]->BLACK(X=Value of X)
+                    {L:[X]->BLACK(empty)}
+                    {R:[X]->BLACK(empty)}}
+                {R:[a]->RED(c=Value of c)
+                    {L:[c]->BLACK(b=Value of b)
+                        {L:[b]->BLACK(empty)}
+                        {R:[b]->BLACK(empty)}}
+                    {R:[c]->BLACK(d=Value of d)
+                        {L:[d]->BLACK(empty)}
+                        {R:[d]->RED(e=Value of e)
+                            {L:[e]->BLACK(empty)}
+                            {R:[e]->BLACK(empty)}}}}
+            """.readLines().collect{ it.trim() }.join()
     }
 }
