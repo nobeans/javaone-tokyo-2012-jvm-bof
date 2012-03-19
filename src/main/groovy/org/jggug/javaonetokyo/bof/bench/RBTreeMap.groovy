@@ -153,10 +153,10 @@ class EmptyNode extends Node {
         // parent is red and parent's brother is black
         if (parent.isLefty() && this.isLefty()) {
             def oldSubRoot = parent.parent
-            def newSubRoot = parent
 
-            newSubRoot.parent = oldSubRoot.parent
+            def newSubRoot = parent
             newSubRoot.color = BLACK
+            newSubRoot.parent = oldSubRoot.parent
 
             oldSubRoot.left = newSubRoot.right
             oldSubRoot.color = RED
@@ -168,16 +168,33 @@ class EmptyNode extends Node {
         }
         if (parent.isRighty() && this.isRighty()) {
             def oldSubRoot = parent.parent
-            def newSubRoot = parent
 
-            newSubRoot.parent = oldSubRoot.parent
+            def newSubRoot = parent
             newSubRoot.color = BLACK
+            newSubRoot.parent = oldSubRoot.parent
 
             oldSubRoot.right = newSubRoot.left
             oldSubRoot.color = RED
 
             newSubRoot.left = oldSubRoot
             newSubRoot.right = new FillNode(RED, key, value)
+
+            return newSubRoot
+        }
+        if (parent.isRighty() && this.isLefty()) {
+            def oldSubRoot = parent.parent
+
+            def newSubRoot = new FillNode(BLACK, key, value)
+            newSubRoot.parent = oldSubRoot.parent
+
+            oldSubRoot.right = newSubRoot.left
+            oldSubRoot.color = RED
+
+            parent.left = newSubRoot.right
+            parent.color = RED
+
+            newSubRoot.left = oldSubRoot
+            newSubRoot.right = parent
 
             return newSubRoot
         }
