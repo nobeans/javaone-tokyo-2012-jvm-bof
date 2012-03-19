@@ -168,7 +168,7 @@ class EmptyNode extends Node {
             oldSubRoot.color = RED
             newSubRoot.right = oldSubRoot
             newSubRoot.left = new FillNode(RED, key, value)
-            return newSubRoot.left
+            return newSubRoot
         }
         if (parent.isRighty() && this.isRighty()) {
             def oldSubRoot = parent.parent
