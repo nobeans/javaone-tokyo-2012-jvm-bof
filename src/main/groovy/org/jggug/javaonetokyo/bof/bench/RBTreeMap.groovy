@@ -50,10 +50,8 @@ abstract class Node {
     final Node getBrother() {
         if (isLefty()) {
             return parent.right
-        } else if (isRighty()) {
-            return parent.left
         } else {
-            assert false
+            return parent.left
         }
     }
 
@@ -62,10 +60,8 @@ abstract class Node {
             node.parent = null
         } else if (isLefty()) {
             parent.left = node
-        } else if (isRighty()) {
-            parent.right = node
         } else {
-            assert false
+            parent.right = node
         }
     }
 
