@@ -30,20 +30,17 @@ enum Color {
 }
 import static org.jggug.javaonetokyo.bof.bench.Color.*
 
-
-interface Node {
-    Node put(String key, String value)
-    String get(String key)
-    int height()
-}
-
-abstract class AbstractNode implements Node {
+abstract class Node {
     Color color
     String key
     String value
     Node parent
     Node left
     Node right
+
+    abstract Node put(String key, String value)
+    abstract String get(String key)
+    abstract int height()
 
     final Node getBrother() {
         if (isLefty()) {
@@ -87,7 +84,7 @@ abstract class AbstractNode implements Node {
     }
 }
 
-class FillNode extends AbstractNode {
+class FillNode extends Node {
     FillNode(Color color, String key, String value) {
         this.color = color
         this.key = key
@@ -127,7 +124,7 @@ class FillNode extends AbstractNode {
     }
 }
 
-class EmptyNode extends AbstractNode {
+class EmptyNode extends Node {
     EmptyNode() {
         this.color = BLACK
     }
