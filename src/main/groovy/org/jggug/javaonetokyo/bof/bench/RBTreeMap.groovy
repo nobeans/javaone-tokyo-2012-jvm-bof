@@ -123,7 +123,7 @@ class EmptyNode extends Node {
             parent.color = BLACK
             brother.color = BLACK
             def grandParent = parent.parent
-            if (grandParent != null && grandParent.parent != null) { // if grandparent is root
+            if (grandParent != null && grandParent.parent != null) { // if grandparent isn't root
                 grandParent.color = RED
             }
             // TODO ここで親にぶら下がるEmptyNode(this)と新規FillNodeを差し替える？
