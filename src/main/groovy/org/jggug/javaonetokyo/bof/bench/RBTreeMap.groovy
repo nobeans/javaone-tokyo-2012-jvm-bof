@@ -39,6 +39,14 @@ abstract class Node {
         left.height() + (color == BLACK ? 1 : 0)
     }
 
+    Node getBrother() {
+        if (isLefty()) {
+            return parent.right
+        } else {
+            return parent.left
+        }
+    }
+
     boolean isLefty() {
         parent.left == this
     }
@@ -103,16 +111,16 @@ class EmptyNode extends Node {
             return new FillNode(parent, RED, entry)
         }
 
-        assert false : "まだテストも書いてない"
-
         // parent is red
         def brother = parent.brother
-        if (brother == RED) {
+        if (brother.color == RED) {
             parent.color = BLACK
             brother.color = BLACK
             // TODO ここで親にぶら下がるEmptyNode(this)と新規FillNodeを差し替える？
             return new FillNode(parent, RED, entry)
         }
+
+        assert false : "まだテストも書いてない"
 
         // parent is red and parent's brother is black
         if (parent.isLefty() && this.isLefty()) {
