@@ -1,19 +1,17 @@
 package org.jggug.javaonetokyo.bof.bench
 
+import java.lang.IllegalArgumentException as IAE
+
 class RBTreeMap {
     def root = new EmptyNode()
 
     void put(String key, String value) {
-        if (key == null) {
-            throw new IllegalArgumentException("key is null")
-        }
+        if (key == null) throw new IAE("key is null")
         root = root.put(key, value).root
     }
 
     String get(String key) {
-        if (key == null) {
-            throw new IllegalArgumentException("key is null")
-        }
+        if (key == null) throw new IAE("key is null")
         root.get(key)
     }
 
