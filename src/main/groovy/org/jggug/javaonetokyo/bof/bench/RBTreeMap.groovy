@@ -137,8 +137,13 @@ class EmptyNode extends Node {
             if (grandParent != null && grandParent.parent != null) { // if grandparent isn't root
                 grandParent.color = RED
             }
-            // TODO ここで親にぶら下がるEmptyNode(this)と新規FillNodeを差し替える？
-            return new FillNode(RED, key, value)
+            Node node = new FillNode(RED, key, value)
+            if (this.isLefty()) {
+                parent.left = node
+            } else {
+                parent.right = node
+            }
+            return node
         }
 
         // parent is red and parent's brother is black
