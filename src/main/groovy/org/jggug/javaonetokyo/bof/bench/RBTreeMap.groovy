@@ -54,11 +54,6 @@ abstract class Node {
 
     boolean isLefty()  { parent.left == this }
     boolean isRighty() { parent.right == this }
-
-    @Override
-    String toString() {
-        return "[${parent?.entry?.key ?: 'ROOT'}]->${color}(${entry?.key}=${entry?.value}){L:${left?.toString()}}{R:${right?.toString()}}"
-    }
 }
 
 class FillNode extends Node {
@@ -91,6 +86,11 @@ class FillNode extends Node {
         else {
             assert false
         }
+    }
+
+    @Override
+    String toString() {
+        return "[${parent?.entry?.key ?: 'ROOT'}]->${color}(${entry?.key}=${entry?.value}){L:${left?.toString()}}{R:${right?.toString()}}"
     }
 }
 
