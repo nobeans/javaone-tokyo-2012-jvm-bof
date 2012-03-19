@@ -31,13 +31,12 @@ class RBTreeMap {
     }
 }
 
-enum Color {
-    BLACK, RED
-}
-import static org.jggug.javaonetokyo.bof.bench.Color.*
-
 abstract class Node {
-    Color color
+
+    final static int BLACK = 0
+    final static int RED = 1
+
+    int color
     String key
     String value
     Node parent
@@ -91,7 +90,7 @@ abstract class Node {
 }
 
 class FillNode extends Node {
-    FillNode(Color color, String key, String value) {
+    FillNode(int color, String key, String value) {
         this.color = color
         this.key = key
         this.value = value
