@@ -42,6 +42,8 @@ abstract class Node {
 
     abstract Node put(String key, String value)
 
+    abstract String get(String key)
+
     int height() {
         left.height() + (color == BLACK ? 1 : 0)
     }
@@ -113,8 +115,24 @@ class FillNode extends Node {
     }
 
     @Override
+    String get(String key) {
+        if (this.key == key) {
+            return value
+        }
+        else if (this.key > key) {
+            return left.get(key)
+        }
+        else if (this.key < key) {
+            return right.get(key)
+        }
+        else {
+            assert false
+        }
+    }
+
+    @Override
     String toString() {
-        return "[${parent?.key ?: 'ROOT'}]->${color}(${key}=${value}){L:${left?.toString()}}{R:${right?.toString()}}"
+        "[${parent?.key ?: 'ROOT'}]->${color}(${key}=${value}){L:${left?.toString()}}{R:${right?.toString()}}"
     }
 }
 
@@ -210,8 +228,13 @@ class EmptyNode extends Node {
     }
 
     @Override
+    String get(String key) {
+        null
+    }
+
+    @Override
     String toString() {
-        return "[${parent?.key}]->${color}(empty)"
+        "[${parent?.key}]->${color}(empty)"
     }
 }
 

@@ -221,11 +221,11 @@ class RdBTreeMapSpec extends Specification {
 
 //    def "get: 指定したキーの値を取得する"() {
 //        setup:
-//        map.put('c', 'Value of c')
 //        map.put('a', 'Value of a')
 //        map.put('b', 'Value of b')
-//        map.put('d', 'Value of b')
-//        map.put('e', 'Value of b')
+//        map.put('c', 'Value of c')
+//        map.put('d', 'Value of d')
+//        map.put('e', 'Value of e')
 //
 //        expect:
 //        map.get(key) == value
