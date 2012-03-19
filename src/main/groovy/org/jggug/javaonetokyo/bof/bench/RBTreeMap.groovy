@@ -132,8 +132,6 @@ class EmptyNode extends Node {
 
     @Override
     Node put(String key, String value) {
-        def parent = this.parent
-
         // as root
         if (parent == null) {
             return new FillNode(BLACK, key, value)
@@ -223,7 +221,7 @@ class EmptyNode extends Node {
 
     @Override
     String toString() {
-        "[${parent?.key}]->${color == 0 ? 'BLACK' : 'RED'}(empty)"
+        "[${parent?.key}]->BLACK}(empty)"
     }
 }
 
