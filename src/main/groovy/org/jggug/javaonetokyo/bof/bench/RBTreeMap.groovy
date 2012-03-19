@@ -46,8 +46,20 @@ abstract class Node {
     Node getBrother() {
         if (isLefty()) {
             return parent.right
-        } else {
+        } else if (isRighty()) {
             return parent.left
+        } else {
+            assert false
+        }
+    }
+
+    void replace(Node node) {
+        if (isLefty()) {
+            parent.left = node
+        } else if (isRighty()) {
+            parent.right = node
+        } else {
+            assert false
         }
     }
 
@@ -120,11 +132,7 @@ class EmptyNode extends Node {
         // parent is black
         if (parent.color == BLACK) {
             Node node = new FillNode(RED, key, value)
-            if (this.isLefty()) {
-                parent.left = node
-            } else {
-                parent.right = node
-            }
+            this.replace(node)
             return node
         }
 
@@ -138,11 +146,7 @@ class EmptyNode extends Node {
                 grandParent.color = RED
             }
             Node node = new FillNode(RED, key, value)
-            if (this.isLefty()) {
-                parent.left = node
-            } else {
-                parent.right = node
-            }
+            this.replace(node)
             return node
         }
 
@@ -156,22 +160,19 @@ class EmptyNode extends Node {
             def oldSubRoot = parent.parent
             def newSubRoot = parent
 
-            // TODO
             newSubRoot.parent = oldSubRoot.parent
-
-            parent.color = BLACK
+            newSubRoot.color = BLACK
 
             oldSubRoot.right = newSubRoot.left
             oldSubRoot.color = RED
 
             newSubRoot.left = oldSubRoot
-
             newSubRoot.right = new FillNode(RED, key, value)
 
             return newSubRoot
         }
 
-        return node
+        assert false
     }
 
     @Override
