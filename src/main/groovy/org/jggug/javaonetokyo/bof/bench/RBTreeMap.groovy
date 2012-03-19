@@ -62,6 +62,13 @@ abstract class Node {
         this.right = right
         right.parent = this
     }
+
+    Node getRoot() {
+        if (parent == null) {
+            return this
+        }
+        return parent.getRoot()
+    }
 }
 
 class FillNode extends Node {
@@ -80,12 +87,10 @@ class FillNode extends Node {
             return this
         }
         else if (this.key > key) {
-            left = left.put(key, value)
-            return this
+            return left.put(key, value).root
         }
         else if (this.key < key) {
-            right = right.put(key, value)
-            return this
+            return right.put(key, value).root
         }
         else {
             assert false
@@ -114,7 +119,13 @@ class EmptyNode extends Node {
 
         // parent is black
         if (parent.color == BLACK) {
-            return new FillNode(RED, key, value)
+            Node node = new FillNode(RED, key, value)
+            if (this.isLefty()) {
+                parent.left = node
+            } else {
+                parent.right = node
+            }
+            return node
         }
 
         // parent is red
