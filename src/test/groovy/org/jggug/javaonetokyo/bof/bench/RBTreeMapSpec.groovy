@@ -7,7 +7,7 @@ class RdBTreeMapSpec extends Specification {
     def map
 
     def setup() {
-        map = new RBTreeMap()
+        map = RBTreeMap.newInstance()
     }
 
     def "エントリを追加しない場合は高さ1"() {

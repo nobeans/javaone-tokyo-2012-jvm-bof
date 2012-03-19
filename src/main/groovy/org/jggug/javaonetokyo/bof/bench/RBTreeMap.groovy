@@ -5,6 +5,8 @@ import java.lang.IllegalArgumentException as IAE
 class RBTreeMap {
     def root = new EmptyNode()
 
+    private RBTreeMap() {}
+
     void put(String key, String value) {
         if (key == null) throw new IAE("key is null")
         root = root.put(key, value).root
@@ -22,6 +24,10 @@ class RBTreeMap {
     @Override
     String toString() {
         root.toString()
+    }
+
+    static newInstance() {
+        new RBTreeMap()
     }
 }
 
