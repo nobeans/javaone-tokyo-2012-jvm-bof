@@ -4,6 +4,9 @@ class RBTreeMap {
     def root = new EmptyNode()
 
     void put(String key, String value) {
+        if (key == null) {
+            throw new IllegalArgumentException("key is null")
+        }
         root = root.put(key, value)
     }
 
@@ -26,15 +29,11 @@ enum Color {
 }
 import static org.jggug.javaonetokyo.bof.bench.Color.*
 
-class Entry {
+abstract class Node {
+    Color color
     String key
     String value
-}
-
-abstract class Node {
     Node parent
-    Color color
-    Entry entry
     Node left
     Node right
 
@@ -66,28 +65,30 @@ abstract class Node {
 }
 
 class FillNode extends Node {
-    FillNode(Color color, Entry entry) {
+    FillNode(Color color, String key, String value) {
         this.color = color
-        this.entry = entry
+        this.key = key
+        this.value = value
         this.left = new EmptyNode()
         this.right = new EmptyNode()
     }
 
     @Override
     Node put(String key, String value) {
-        if (entry == null) {
-            entry = new Entry(key:key, value:value)
+        if (key == null) {
+            this.key = key
+            this.value = value
             return this
         }
-        else if (entry.key == key) {
-            entry.value == value
+        else if (this.key == key) {
+            this.value == value
             return this
         }
-        else if (entry.key > key) {
+        else if (this.key > key) {
             left = left.put(key, value)
             return this
         }
-        else if (entry.key < key) {
+        else if (this.key < key) {
             right = right.put(key, value)
             return this
         }
@@ -98,7 +99,7 @@ class FillNode extends Node {
 
     @Override
     String toString() {
-        return "[${parent?.entry?.key ?: 'ROOT'}]->${color}(${entry?.key}=${entry?.value}){L:${left?.toString()}}{R:${right?.toString()}}"
+        return "[${parent?.key ?: 'ROOT'}]->${color}(${key}=${value}){L:${left?.toString()}}{R:${right?.toString()}}"
     }
 }
 
@@ -111,16 +112,14 @@ class EmptyNode extends Node {
     Node put(String key, String value) {
         def parent = this.parent
 
-        entry = new Entry(key:key, value:value)
-
         // as root
         if (parent == null) {
-            return new FillNode(BLACK, entry)
+            return new FillNode(BLACK, key, value)
         }
 
         // parent is black
         if (parent.color == BLACK) {
-            return new FillNode(RED, entry)
+            return new FillNode(RED, key, value)
         }
 
         // parent is red
@@ -133,7 +132,7 @@ class EmptyNode extends Node {
                 grandParent.color = RED
             }
             // TODO ここで親にぶら下がるEmptyNode(this)と新規FillNodeを差し替える？
-            return new FillNode(RED, entry)
+            return new FillNode(RED, key, value)
         }
 
         // parent is red and parent's brother is black
@@ -157,7 +156,7 @@ class EmptyNode extends Node {
 
             newSubRoot.left = oldSubRoot
 
-            newSubRoot.right = new FillNode(RED, entry)
+            newSubRoot.right = new FillNode(RED, key, value)
 
             return newSubRoot
         }
@@ -172,7 +171,7 @@ class EmptyNode extends Node {
 
     @Override
     String toString() {
-        return "[${parent?.entry?.key}]->${color}(empty)"
+        return "[${parent?.key}]->${color}(empty)"
     }
 }
 

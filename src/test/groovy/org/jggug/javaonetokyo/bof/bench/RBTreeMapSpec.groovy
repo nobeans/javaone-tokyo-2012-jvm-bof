@@ -13,9 +13,15 @@ class RdBTreeMapSpec extends Specification {
     def "エントリを追加しない場合は高さ1"() {
         expect:
         map.height() == 1
+        map.toString() == "[null]->BLACK(empty)"
+    }
 
-        map.root in EmptyNode
-        map.root.parent == null
+    def "nullをputすると例外をスローする"() {
+        when:
+        map.put(null, "value")
+
+        then:
+        thrown(IllegalArgumentException)
     }
 
     def "エントリを1つだけ追加する"() {
