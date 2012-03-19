@@ -42,11 +42,11 @@ abstract class Node {
 
     abstract String get(String key)
 
-    int height() {
+    final int height() {
         left.height() + (color == BLACK ? 1 : 0)
     }
 
-    Node getBrother() {
+    final Node getBrother() {
         if (isLefty()) {
             return parent.right
         } else if (isRighty()) {
@@ -56,7 +56,7 @@ abstract class Node {
         }
     }
 
-    void replace(Node node) {
+    final void replace(Node node) {
         if (parent == null) {
             node.parent = null
         } else if (isLefty()) {
@@ -68,19 +68,19 @@ abstract class Node {
         }
     }
 
-    boolean isLefty() { parent.left == this }
-    boolean isRighty() { parent.right == this }
+    final boolean isLefty() { parent.left == this }
+    final boolean isRighty() { parent.right == this }
 
-    void setLeft(Node left) {
+    final void setLeft(Node left) {
         this.left = left
         left.parent = this
     }
-    void setRight(Node right) {
+    final void setRight(Node right) {
         this.right = right
         right.parent = this
     }
 
-    Node getRoot() {
+    final Node getRoot() {
         if (parent == null) {
             return this
         }
