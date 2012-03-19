@@ -75,12 +75,7 @@ class FillNode extends Node {
 
     @Override
     Node put(String key, String value) {
-        if (this.key == null) {
-            this.key = key
-            this.value = value
-            return this
-        }
-        else if (this.key == key) {
+        if (this.key == key) {
             this.value == value
             return this
         }
