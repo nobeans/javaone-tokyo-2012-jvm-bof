@@ -101,35 +101,22 @@ class FillNode extends Node {
 
     @Override
     Node put(String key, String value) {
-        if (this.key == key) {
-            this.value == value
-            return this
+        switch (this.key <=> key) {
+            case  0: return this
+            case  1: return left.put(key, value)
+            case -1: return right.put(key, value)
         }
-        else if (this.key > key) {
-            return left.put(key, value)
-        }
-        else if (this.key < key) {
-            return right.put(key, value)
-        }
-        else {
-            assert false
-        }
+        assert false
     }
 
     @Override
     String get(String key) {
-        if (this.key == key) {
-            return value
+        switch (this.key <=> key) {
+            case  0: return value
+            case  1: return left.get(key)
+            case -1: return right.get(key)
         }
-        else if (this.key > key) {
-            return left.get(key)
-        }
-        else if (this.key < key) {
-            return right.get(key)
-        }
-        else {
-            assert false
-        }
+        assert false
     }
 
     @Override
