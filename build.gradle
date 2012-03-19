@@ -37,9 +37,3 @@ compileTestGroovy {
 task wrapper(type: Wrapper) {
     gradleVersion = '1.0-milestone-9'
 }
-
-task copyToLib(type: Copy) {
-    into "$buildDir/libs"
-    from configurations.default
-    from configurations.default.allArtifacts.files
-}
