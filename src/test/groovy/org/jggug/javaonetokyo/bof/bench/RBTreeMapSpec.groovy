@@ -143,22 +143,22 @@ class RdBTreeMapSpec extends Specification {
             '''.readLines().collect{ it.trim() }.join()
     }
 
-//    def "エントリを3つ追加する。直列に偏るように追加されると平衡化を行う"() {
-//        when:
-//        map.put('a', 'Value of a')
-//        map.put('b', 'Value of b')
-//        map.put('c', 'Value of c')
-//
-//        then:
-//        map.height() == 2
-//        map.toString() == '''
-//            [ROOT]->BLACK(b=Value of b)
-//                {L:[b]->RED(a=Value of a)
-//                    {L:[X]->BLACK(empty)}
-//                    {R:[X]->BLACK(empty)}}
-//                {R:[b]->RED(c=Value of c)
-//                    {L:[b]->BLACK(empty)}
-//                    {R:[b]->BLACK(empty)}}
-//            '''.readLines().collect{ it.trim() }.join()
-//    }
+    def "エントリを3つ追加する。直列に偏るように追加されると平衡化を行う"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('c', 'Value of c')
+
+        then:
+        map.height() == 2
+        map.toString() == '''
+            [ROOT]->BLACK(b=Value of b)
+                {L:[b]->RED(a=Value of a)
+                    {L:[a]->BLACK(empty)}
+                    {R:[a]->BLACK(empty)}}
+                {R:[b]->RED(c=Value of c)
+                    {L:[c]->BLACK(empty)}
+                    {R:[c]->BLACK(empty)}}
+            '''.readLines().collect{ it.trim() }.join()
+    }
 }

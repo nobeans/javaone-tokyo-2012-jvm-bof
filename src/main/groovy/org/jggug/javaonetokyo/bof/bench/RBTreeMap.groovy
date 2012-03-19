@@ -151,7 +151,6 @@ class EmptyNode extends Node {
             assert false : "まだテストも書いてない"
             def newSubRoot = parent
             parent.color = BLACK
-
         }
         if (parent.isRighty() && this.isRighty()) {
             def oldSubRoot = parent.parent
