@@ -7,11 +7,14 @@ class RBTreeMap {
         if (key == null) {
             throw new IllegalArgumentException("key is null")
         }
-        root = root.put(key, value)
+        root = root.put(key, value).root
     }
 
     String get(String key) {
-        // TODO
+        if (key == null) {
+            throw new IllegalArgumentException("key is null")
+        }
+        root.get(key)
     }
 
     int height() {
@@ -99,10 +102,10 @@ class FillNode extends Node {
             return this
         }
         else if (this.key > key) {
-            return left.put(key, value).root
+            return left.put(key, value)
         }
         else if (this.key < key) {
-            return right.put(key, value).root
+            return right.put(key, value)
         }
         else {
             assert false
