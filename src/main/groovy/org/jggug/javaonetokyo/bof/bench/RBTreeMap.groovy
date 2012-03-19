@@ -198,6 +198,23 @@ class EmptyNode extends Node {
 
             return newSubRoot
         }
+        if (parent.isLefty() && this.isRighty()) {
+            def oldSubRoot = parent.parent
+
+            def newSubRoot = new FillNode(BLACK, key, value)
+            newSubRoot.parent = oldSubRoot.parent
+
+            oldSubRoot.left = newSubRoot.right
+            oldSubRoot.color = RED
+
+            parent.right = newSubRoot.left
+            parent.color = RED
+
+            newSubRoot.right = oldSubRoot
+            newSubRoot.left = parent
+
+            return newSubRoot
+        }
 
         assert false
     }
