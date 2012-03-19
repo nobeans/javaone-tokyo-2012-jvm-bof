@@ -20,7 +20,7 @@ class RdBTreeMapSpec extends Specification {
 
     def "エントリを1つだけ追加する"() {
         when:
-        map.put('a', 'A')
+        map.put('a', 'Value of a')
 
         then:
         map.height() == 2
@@ -29,7 +29,7 @@ class RdBTreeMapSpec extends Specification {
         map.root.parent == null
         map.root.color == Color.BLACK
         map.root.entry.key == 'a'
-        map.root.entry.value == 'A'
+        map.root.entry.value == 'Value of a'
 
         map.root.left in EmptyNode
         map.root.left.parent == map.root
@@ -40,8 +40,8 @@ class RdBTreeMapSpec extends Specification {
 
     def "エントリを2つ追加する"() {
         when:
-        map.put('a', 'A')
-        map.put('b', 'B')
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
 
         then:
         map.height() == 2
@@ -50,7 +50,7 @@ class RdBTreeMapSpec extends Specification {
         map.root.parent == null
         map.root.color == Color.BLACK
         map.root.entry.key == 'a'
-        map.root.entry.value == 'A'
+        map.root.entry.value == 'Value of a'
 
         map.root.left in EmptyNode
         map.root.left.parent == map.root
@@ -59,7 +59,7 @@ class RdBTreeMapSpec extends Specification {
         map.root.right.parent == map.root
         map.root.right.color == Color.RED
         map.root.right.entry.key == 'b'
-        map.root.right.entry.value == 'B'
+        map.root.right.entry.value == 'Value of b'
 
         map.root.right.right in EmptyNode
         map.root.right.right.parent == map.root.right
@@ -69,9 +69,9 @@ class RdBTreeMapSpec extends Specification {
 
     def "エントリを3つ追加する"() {
         when:
-        map.put('a', 'A')
-        map.put('b', 'B')
-        map.put('5', 'five')
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('X', 'Value of X')
 
         then:
         map.height() == 2
@@ -80,13 +80,13 @@ class RdBTreeMapSpec extends Specification {
         map.root.parent == null
         map.root.color == Color.BLACK
         map.root.entry.key == 'a'
-        map.root.entry.value == 'A'
+        map.root.entry.value == 'Value of a'
 
         map.root.left in FillNode
         map.root.left.parent == map.root
         map.root.left.color == Color.RED
-        map.root.left.entry.key == '5'
-        map.root.left.entry.value == 'five'
+        map.root.left.entry.key == 'X'
+        map.root.left.entry.value == 'Value of X'
 
         map.root.left.right in EmptyNode
         map.root.left.right.parent == map.root.left
@@ -97,7 +97,7 @@ class RdBTreeMapSpec extends Specification {
         map.root.right.parent == map.root
         map.root.right.color == Color.RED
         map.root.right.entry.key == 'b'
-        map.root.right.entry.value == 'B'
+        map.root.right.entry.value == 'Value of b'
 
         map.root.right.right in EmptyNode
         map.root.right.right.parent == map.root.right

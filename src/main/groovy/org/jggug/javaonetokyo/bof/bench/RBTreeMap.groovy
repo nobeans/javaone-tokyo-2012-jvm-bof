@@ -103,6 +103,8 @@ class EmptyNode extends Node {
             return new FillNode(parent, RED, entry)
         }
 
+        assert false : "まだテストも書いてない"
+
         // parent is red
         def brother = parent.brother
         if (brother == RED) {
@@ -111,8 +113,6 @@ class EmptyNode extends Node {
             // TODO ここで親にぶら下がるEmptyNode(this)と新規FillNodeを差し替える？
             return new FillNode(parent, RED, entry)
         }
-
-        assert false : "まだテストも書いてない"
 
         // parent is red and parent's brother is black
         if (parent.isLefty() && this.isLefty()) {
