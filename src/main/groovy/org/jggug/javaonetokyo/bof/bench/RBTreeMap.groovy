@@ -1,7 +1,7 @@
 package org.jggug.javaonetokyo.bof.bench
 
 class RBTreeMap {
-    def root = new EmptyNode(null)
+    def root = new EmptyNode()
 
     void put(String key, String value) {
         root = root.put(key, value)
@@ -54,15 +54,23 @@ abstract class Node {
 
     boolean isLefty()  { parent.left == this }
     boolean isRighty() { parent.right == this }
+
+    void setLeft(Node left) {
+        this.left = left
+        left.parent = this
+    }
+    void setRight(Node right) {
+        this.right = right
+        right.parent = this
+    }
 }
 
 class FillNode extends Node {
-    FillNode(Node parent, Color color, Entry entry) {
-        this.parent = parent
+    FillNode(Color color, Entry entry) {
         this.color = color
         this.entry = entry
-        this.left = new EmptyNode(this)
-        this.right = new EmptyNode(this)
+        this.left = new EmptyNode()
+        this.right = new EmptyNode()
     }
 
     @Override
@@ -95,8 +103,7 @@ class FillNode extends Node {
 }
 
 class EmptyNode extends Node {
-    EmptyNode(parent) {
-        this.parent = parent
+    EmptyNode() {
         this.color = BLACK
     }
 
@@ -108,12 +115,12 @@ class EmptyNode extends Node {
 
         // as root
         if (parent == null) {
-            return new FillNode(null, BLACK, entry)
+            return new FillNode(BLACK, entry)
         }
 
         // parent is black
         if (parent.color == BLACK) {
-            return new FillNode(parent, RED, entry)
+            return new FillNode(RED, entry)
         }
 
         // parent is red
@@ -126,20 +133,34 @@ class EmptyNode extends Node {
                 grandParent.color = RED
             }
             // TODO ここで親にぶら下がるEmptyNode(this)と新規FillNodeを差し替える？
-            return new FillNode(parent, RED, entry)
+            return new FillNode(RED, entry)
         }
-
-        assert false : "まだテストも書いてない"
 
         // parent is red and parent's brother is black
         if (parent.isLefty() && this.isLefty()) {
+            assert false : "まだテストも書いてない"
             def newSubRoot = parent
             parent.color = BLACK
 
         }
         if (parent.isRighty() && this.isRighty()) {
-        }
+            def oldSubRoot = parent.parent
+            def newSubRoot = parent
 
+            // TODO
+            newSubRoot.parent = oldSubRoot.parent
+
+            parent.color = BLACK
+
+            oldSubRoot.right = newSubRoot.left
+            oldSubRoot.color = RED
+
+            newSubRoot.left = oldSubRoot
+
+            newSubRoot.right = new FillNode(RED, entry)
+
+            return newSubRoot
+        }
 
         return node
     }
