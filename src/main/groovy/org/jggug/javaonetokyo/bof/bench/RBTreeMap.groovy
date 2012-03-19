@@ -161,54 +161,53 @@ class EmptyNode extends Node {
         // parent is red and parent's brother is black
         boolean isLefty = this.isLefty()
         boolean parentIsLefty = parent.isLefty()
-        if (parentIsLefty && isLefty) {
-            def oldSubRoot = parent.parent
-            def newSubRoot = parent
-            newSubRoot.color = BLACK
-            oldSubRoot.replace(newSubRoot)
-            oldSubRoot.left = newSubRoot.right
-            oldSubRoot.color = RED
-            newSubRoot.right = oldSubRoot
-            newSubRoot.left = new FillNode(RED, key, value)
-            return newSubRoot
+        if (parentIsLefty) {
+            if (isLefty) {
+                def oldSubRoot = parent.parent
+                def newSubRoot = parent
+                newSubRoot.color = BLACK
+                oldSubRoot.replace(newSubRoot)
+                oldSubRoot.left = newSubRoot.right
+                oldSubRoot.color = RED
+                newSubRoot.right = oldSubRoot
+                newSubRoot.left = new FillNode(RED, key, value)
+                return newSubRoot
+            } else {
+                def oldSubRoot = parent.parent
+                def newSubRoot = new FillNode(BLACK, key, value)
+                oldSubRoot.replace(newSubRoot)
+                oldSubRoot.left = newSubRoot.right
+                oldSubRoot.color = RED
+                parent.right = newSubRoot.left
+                parent.color = RED
+                newSubRoot.right = oldSubRoot
+                newSubRoot.left = parent
+                return newSubRoot
+            }
+        } else {
+            if (isLefty) {
+                def oldSubRoot = parent.parent
+                def newSubRoot = new FillNode(BLACK, key, value)
+                oldSubRoot.replace(newSubRoot)
+                oldSubRoot.right = newSubRoot.left
+                oldSubRoot.color = RED
+                parent.left = newSubRoot.right
+                parent.color = RED
+                newSubRoot.left = oldSubRoot
+                newSubRoot.right = parent
+                return newSubRoot
+            } else {
+                def oldSubRoot = parent.parent
+                def newSubRoot = parent
+                newSubRoot.color = BLACK
+                oldSubRoot.replace(newSubRoot)
+                oldSubRoot.right = newSubRoot.left
+                oldSubRoot.color = RED
+                newSubRoot.left = oldSubRoot
+                newSubRoot.right = new FillNode(RED, key, value)
+                return newSubRoot
+            }
         }
-        if (!parentIsLefty && !isLefty) {
-            def oldSubRoot = parent.parent
-            def newSubRoot = parent
-            newSubRoot.color = BLACK
-            oldSubRoot.replace(newSubRoot)
-            oldSubRoot.right = newSubRoot.left
-            oldSubRoot.color = RED
-            newSubRoot.left = oldSubRoot
-            newSubRoot.right = new FillNode(RED, key, value)
-            return newSubRoot
-        }
-        if (!parentIsLefty && isLefty) {
-            def oldSubRoot = parent.parent
-            def newSubRoot = new FillNode(BLACK, key, value)
-            oldSubRoot.replace(newSubRoot)
-            oldSubRoot.right = newSubRoot.left
-            oldSubRoot.color = RED
-            parent.left = newSubRoot.right
-            parent.color = RED
-            newSubRoot.left = oldSubRoot
-            newSubRoot.right = parent
-            return newSubRoot
-        }
-        if (parentIsLefty && !isLefty) {
-            def oldSubRoot = parent.parent
-            def newSubRoot = new FillNode(BLACK, key, value)
-            oldSubRoot.replace(newSubRoot)
-            oldSubRoot.left = newSubRoot.right
-            oldSubRoot.color = RED
-            parent.right = newSubRoot.left
-            parent.color = RED
-            newSubRoot.right = oldSubRoot
-            newSubRoot.left = parent
-            return newSubRoot
-        }
-
-        assert false
     }
 
     @Override
