@@ -23,6 +23,15 @@ class RdBTreeMapSpec extends Specification {
         map.height() == 2
     }
 
+    def "エントリを2つ追加する"() {
+        when:
+        map.put('a', 'A')
+        map.put('b', 'B')
+
+        then:
+        map.height() == 3
+    }
+
 //    def "エントリを2つ追加する"() {
 //        when:
 //        map.put('a', 'A')
