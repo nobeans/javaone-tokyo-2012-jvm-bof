@@ -68,8 +68,6 @@ class FillNode extends Node {
     Node put(String key, String value) {
         if (entry == null) {
             entry = new Entry(key:key, value:value)
-            left.parent = entry
-            right.parent = entry
             return this
         }
         else if (entry.key == key) {
