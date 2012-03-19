@@ -60,5 +60,48 @@ class RdBTreeMapSpec extends Specification {
         map.root.right.color == Color.RED
         map.root.right.entry.key == 'b'
         map.root.right.entry.value == 'B'
+
+        map.root.right.right in EmptyNode
+        map.root.right.right.parent == map.root.right
+        map.root.right.left in EmptyNode
+        map.root.right.left.parent == map.root.right
+    }
+
+    def "エントリを3つ追加する"() {
+        when:
+        map.put('a', 'A')
+        map.put('b', 'B')
+        map.put('5', 'five')
+
+        then:
+        map.height() == 2
+
+        map.root in FillNode
+        map.root.parent == null
+        map.root.color == Color.BLACK
+        map.root.entry.key == 'a'
+        map.root.entry.value == 'A'
+
+        map.root.left in FillNode
+        map.root.left.parent == map.root
+        map.root.left.color == Color.RED
+        map.root.left.entry.key == '5'
+        map.root.left.entry.value == 'five'
+
+        map.root.left.right in EmptyNode
+        map.root.left.right.parent == map.root.left
+        map.root.left.left in EmptyNode
+        map.root.left.left.parent == map.root.left
+
+        map.root.right in FillNode
+        map.root.right.parent == map.root
+        map.root.right.color == Color.RED
+        map.root.right.entry.key == 'b'
+        map.root.right.entry.value == 'B'
+
+        map.root.right.right in EmptyNode
+        map.root.right.right.parent == map.root.right
+        map.root.right.left in EmptyNode
+        map.root.right.left.parent == map.root.right
     }
 }
