@@ -61,10 +61,10 @@ class RdBTreeMapSpec extends Specification {
         map.root.right.entry.key == 'b'
         map.root.right.entry.value == 'Value of b'
 
-        map.root.right.right in EmptyNode
-        map.root.right.right.parent == map.root.right
         map.root.right.left in EmptyNode
         map.root.right.left.parent == map.root.right
+        map.root.right.right in EmptyNode
+        map.root.right.right.parent == map.root.right
     }
 
     def "エントリを3つ追加する"() {
@@ -88,10 +88,10 @@ class RdBTreeMapSpec extends Specification {
         map.root.left.entry.key == 'X'
         map.root.left.entry.value == 'Value of X'
 
-        map.root.left.right in EmptyNode
-        map.root.left.right.parent == map.root.left
         map.root.left.left in EmptyNode
         map.root.left.left.parent == map.root.left
+        map.root.left.right in EmptyNode
+        map.root.left.right.parent == map.root.left
 
         map.root.right in FillNode
         map.root.right.parent == map.root
@@ -99,13 +99,13 @@ class RdBTreeMapSpec extends Specification {
         map.root.right.entry.key == 'b'
         map.root.right.entry.value == 'Value of b'
 
-        map.root.right.right in EmptyNode
-        map.root.right.right.parent == map.root.right
         map.root.right.left in EmptyNode
         map.root.right.left.parent == map.root.right
+        map.root.right.right in EmptyNode
+        map.root.right.right.parent == map.root.right
     }
 
-    def "エントリを4つ追加する"() {
+    def "エントリを4つ追加する。親と親の兄弟が赤の場合は、親の親を赤に、親と親の兄弟を黒に変更する。ただし親の親が根の場合は黒のままとする。"() {
         when:
         map.put('a', 'Value of a')
         map.put('b', 'Value of b')
@@ -127,10 +127,10 @@ class RdBTreeMapSpec extends Specification {
         map.root.left.entry.key == 'X'
         map.root.left.entry.value == 'Value of X'
 
-        map.root.left.right in EmptyNode
-        map.root.left.right.parent == map.root.left
         map.root.left.left in EmptyNode
         map.root.left.left.parent == map.root.left
+        map.root.left.right in EmptyNode
+        map.root.left.right.parent == map.root.left
 
         map.root.right in FillNode
         map.root.right.parent == map.root
@@ -144,10 +144,10 @@ class RdBTreeMapSpec extends Specification {
         map.root.right.right.entry.key == 'c'
         map.root.right.right.entry.value == 'Value of c'
 
-        map.root.right.right.right in EmptyNode
-        map.root.right.right.right.parent == map.root.right.right
         map.root.right.right.left in EmptyNode
         map.root.right.right.left.parent == map.root.right.right
+        map.root.right.right.right in EmptyNode
+        map.root.right.right.right.parent == map.root.right.right
     }
 
     def "エントリを5つ追加する"() {
@@ -173,10 +173,10 @@ class RdBTreeMapSpec extends Specification {
         map.root.left.entry.key == 'X'
         map.root.left.entry.value == 'Value of X'
 
-        map.root.left.right in EmptyNode
-        map.root.left.right.parent == map.root.left
         map.root.left.left in EmptyNode
         map.root.left.left.parent == map.root.left
+        map.root.left.right in EmptyNode
+        map.root.left.right.parent == map.root.left
 
         map.root.right in FillNode
         map.root.right.parent == map.root
@@ -190,10 +190,10 @@ class RdBTreeMapSpec extends Specification {
         map.root.right.left.entry.key == 'b'
         map.root.right.left.entry.value == 'Value of b'
 
-        map.root.right.left.right in EmptyNode
-        map.root.right.left.right.parent == map.root.right.left
         map.root.right.left.left in EmptyNode
         map.root.right.left.left.parent == map.root.right.left
+        map.root.right.left.right in EmptyNode
+        map.root.right.left.right.parent == map.root.right.left
 
         map.root.right.right in FillNode
         map.root.right.right.parent == map.root.right
@@ -201,9 +201,76 @@ class RdBTreeMapSpec extends Specification {
         map.root.right.right.entry.key == 'd'
         map.root.right.right.entry.value == 'Value of d'
 
-        map.root.right.right.right in EmptyNode
-        map.root.right.right.right.parent == map.root.right.right
         map.root.right.right.left in EmptyNode
         map.root.right.right.left.parent == map.root.right.right
+        map.root.right.right.right in EmptyNode
+        map.root.right.right.right.parent == map.root.right.right
+    }
+
+    def "エントリを6つ追加する。親と親の兄弟が赤の場合は、親の親を赤に、親と親の兄弟を黒に変更する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('c', 'Value of c')
+        map.put('X', 'Value of X')
+        map.put('b', 'Value of b')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+
+        then:
+        map.height() == 3
+
+        map.root in FillNode
+        map.root.parent == null
+        map.root.color == Color.BLACK
+        map.root.entry.key == 'a'
+        map.root.entry.value == 'Value of a'
+
+        map.root.left in FillNode
+        map.root.left.parent == map.root
+        map.root.left.color == Color.BLACK
+        map.root.left.entry.key == 'X'
+        map.root.left.entry.value == 'Value of X'
+
+        map.root.left.left in EmptyNode
+        map.root.left.left.parent == map.root.left
+        map.root.left.right in EmptyNode
+        map.root.left.right.parent == map.root.left
+
+        map.root.right in FillNode
+        map.root.right.parent == map.root
+        map.root.right.color == Color.RED
+        map.root.right.entry.key == 'c'
+        map.root.right.entry.value == 'Value of c'
+
+        map.root.right.left in FillNode
+        map.root.right.left.parent == map.root.right
+        map.root.right.left.color == Color.BLACK
+        map.root.right.left.entry.key == 'b'
+        map.root.right.left.entry.value == 'Value of b'
+
+        map.root.right.left.left in EmptyNode
+        map.root.right.left.left.parent == map.root.right.left
+        map.root.right.left.right in EmptyNode
+        map.root.right.left.right.parent == map.root.right.left
+
+        map.root.right.right in FillNode
+        map.root.right.right.parent == map.root.right
+        map.root.right.right.color == Color.BLACK
+        map.root.right.right.entry.key == 'd'
+        map.root.right.right.entry.value == 'Value of d'
+
+        map.root.right.right.left in EmptyNode
+        map.root.right.right.left.parent == map.root.right.right
+
+        map.root.right.right.right in FillNode
+        map.root.right.right.right.parent == map.root.right.right
+        map.root.right.right.right.color == Color.RED
+        map.root.right.right.right.entry.key == 'e'
+        map.root.right.right.right.entry.value == 'Value of e'
+
+        map.root.right.right.right.left in EmptyNode
+        map.root.right.right.right.left.parent == map.root.right.right.right
+        map.root.right.right.right.right in EmptyNode
+        map.root.right.right.right.right.parent == map.root.right.right.right
     }
 }
