@@ -7,6 +7,7 @@ mainClassName = "org.jggug.javaonetokyo.bof.bench.Benchmark"
 repositories {
     mavenCentral()
     mavenRepo name:"codehaus", url:"http://repository.codehaus.org/"
+    mavenRepo name:"groovypp", url:"http://groovypp.artifactoryonline.com/groovypp/libs-releases-local"
 }
 dependencies {
     groovy 'org.codehaus.groovy:groovy:1.8.6'
@@ -14,6 +15,7 @@ dependencies {
         exclude group:'org.codehaus.groovy', module:'groovy-all'
     }
     groovy 'com.googlecode.gbench:gbench:0.3.0-groovy-1.8'
+    //groovy 'org.mbte.groovypp:groovypp-all:0.2.25'
 }
 
 def defaultEncoding = 'UTF-8'
@@ -35,3 +37,9 @@ compileTestGroovy {
 task wrapper(type: Wrapper) {
     gradleVersion = '1.0-milestone-9'
 }
+
+//task copyToLib(type: Copy) {
+//    into "$buildDir/libs"
+//    from configurations.default
+//    from configurations.default.allArtifacts.files
+//}

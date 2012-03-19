@@ -1,3 +1,4 @@
+@Type
 package org.jggug.javaonetokyo.bof.bench
 
 import java.lang.IllegalArgumentException as IAE
