@@ -266,6 +266,99 @@ class RdBTreeMapSpec extends Specification {
             '''.readLines().collect{ it.trim() }.join()
     }
 
+    def "右側にエントリを6つ追加する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('c', 'Value of c')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+        map.put('f', 'Value of f')
+
+        then:
+        map.height() == 3
+        map.toString() == '''
+            [ROOT]->BLACK(b=Value of b)
+                {L:[b]->BLACK(a=Value of a)
+                    {L:[a]->BLACK(empty)}
+                    {R:[a]->BLACK(empty)}}
+                {R:[b]->RED(d=Value of d)
+                    {L:[d]->BLACK(c=Value of c)
+                        {L:[c]->BLACK(empty)}
+                        {R:[c]->BLACK(empty)}}
+                    {R:[d]->BLACK(e=Value of e)
+                        {L:[e]->BLACK(empty)}
+                        {R:[e]->RED(f=Value of f)
+                            {L:[f]->BLACK(empty)}
+                            {R:[f]->BLACK(empty)}}}}
+            '''.readLines().collect{ it.trim() }.join()
+    }
+
+    def "右側にエントリを7つ追加する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('c', 'Value of c')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+        map.put('f', 'Value of f')
+        map.put('g', 'Value of g')
+
+        then:
+        map.height() == 3
+        map.toString() == '''
+            [ROOT]->BLACK(b=Value of b)
+                {L:[b]->BLACK(a=Value of a)
+                    {L:[a]->BLACK(empty)}
+                    {R:[a]->BLACK(empty)}}
+                {R:[b]->RED(d=Value of d)
+                    {L:[d]->BLACK(c=Value of c)
+                        {L:[c]->BLACK(empty)}
+                        {R:[c]->BLACK(empty)}}
+                    {R:[d]->BLACK(f=Value of f)
+                        {L:[f]->RED(e=Value of e)
+                            {L:[e]->BLACK(empty)}
+                            {R:[e]->BLACK(empty)}}
+                        {R:[f]->RED(g=Value of g)
+                            {L:[g]->BLACK(empty)}
+                            {R:[g]->BLACK(empty)}}}}
+            '''.readLines().collect{ it.trim() }.join()
+    }
+
+    def "右側にエントリを8つ追加する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('c', 'Value of c')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+        map.put('f', 'Value of f')
+        map.put('g', 'Value of g')
+        map.put('h', 'Value of h')
+
+        then:
+        map.height() == 3
+        map.toString() == '''
+            [ROOT]->BLACK(b=Value of b)
+                {L:[b]->BLACK(a=Value of a)
+                    {L:[a]->BLACK(empty)}
+                    {R:[a]->BLACK(empty)}}
+                {R:[b]->RED(d=Value of d)
+                    {L:[d]->BLACK(c=Value of c)
+                        {L:[c]->BLACK(empty)}
+                        {R:[c]->BLACK(empty)}}
+                    {R:[d]->RED(f=Value of f)
+                        {L:[f]->BLACK(e=Value of e)
+                            {L:[e]->BLACK(empty)}
+                            {R:[e]->BLACK(empty)}}
+                        {R:[f]->BLACK(g=Value of g)
+                            {L:[g]->BLACK(empty)}
+                            {R:[g]->RED(h=Value of h)
+                                {L:[h]->BLACK(empty)}
+                                {R:[h]->BLACK(empty)}}}}}
+            '''.readLines().collect{ it.trim() }.join()
+    }
+
    def "get: 指定したキーの値を取得する"() {
        setup:
        map.put('a', 'Value of a')
