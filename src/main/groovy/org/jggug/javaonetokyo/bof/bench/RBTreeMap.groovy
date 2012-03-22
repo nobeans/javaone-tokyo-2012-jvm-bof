@@ -43,9 +43,32 @@ abstract class Node {
     Node left
     Node right
 
-    abstract Node put(String key, String value)
     abstract String get(String key)
     abstract int height()
+
+    Node put(String key, String value) {
+        if (this == EMPTY) {
+            return new FillNode(RED, key, value)
+        }
+        switch (this.key <=> key) {
+            case  0:
+                this.value = value
+                return this
+            case  1:
+                if (left == EMPTY) {
+                    left = new FillNode(RED, key, value)
+                    return this
+                }
+                return balanceLeft(left.put(key, value))
+            case -1:
+                if (right == EMPTY) {
+                    right = new FillNode(RED, key, value)
+                    return this
+                }
+                return balanceRight(right.put(key, value))
+        }
+        assert false
+    }
 
     private static Node rotateRight(Node node) {
         def left = node.left
@@ -71,7 +94,7 @@ abstract class Node {
         node.right.color = BLACK
     }
 
-    static Node balanceLeft(Node node) {
+    private static Node balanceLeft(Node node) {
         if (node.color == BLACK) {
             if (node.left.right.color == RED) {
                 node.left = rotateLeft(node.left)
@@ -87,7 +110,7 @@ abstract class Node {
         return node
     }
 
-    static Node balanceRight(Node node) {
+    private static Node balanceRight(Node node) {
         if (node.color == BLACK) {
             if (node.right.left.color == RED) {
                 node.right = rotateRight(node.right)
@@ -110,28 +133,6 @@ class FillNode extends Node {
         this.value = value
         this.left = EMPTY
         this.right = EMPTY
-    }
-
-    @Override
-    Node put(String key, String value) {
-        switch (this.key <=> key) {
-            case  0:
-                this.value = value
-                return this
-            case  1:
-                if (left == EMPTY) {
-                    left = new FillNode(RED, key, value)
-                    return left
-                }
-                return balanceLeft(left.put(key, value))
-            case -1:
-                if (rigth == EMPTY) {
-                    right = new FillNode(RED, key, value)
-                    return right
-                }
-                return balanceRight(right.put(key, value))
-        }
-        assert false
     }
 
     @Override
@@ -158,11 +159,6 @@ class FillNode extends Node {
 class EmptyNode extends Node {
     EmptyNode() {
         this.color = BLACK
-    }
-
-    @Override
-    Node put(String key, String value) {
-        assert false
     }
 
     @Override
