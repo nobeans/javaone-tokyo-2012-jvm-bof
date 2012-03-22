@@ -3,7 +3,7 @@ package org.jggug.javaonetokyo.bof.bench
 import java.lang.IllegalArgumentException as IAE
 
 class RBTreeMap {
-    def root = new EmptyNode()
+    def root = Node.EMPTY
 
     private RBTreeMap() {}
 
@@ -109,8 +109,8 @@ class FillNode extends Node {
         this.color = color
         this.key = key
         this.value = value
-        this.left = new EmptyNode()
-        this.right = new EmptyNode()
+        this.left = EMPTY
+        this.right = EMPTY
     }
 
     @Override
@@ -120,11 +120,17 @@ class FillNode extends Node {
                 this.value = value
                 return this
             case  1:
-                left = balanceLeft(left.put(key, value))
-                return left
+                if (left == EMPTY) {
+                    left = new FillNode(RED, key, value)
+                    return left
+                }
+                balanceLeft(left.put(key, value))
             case -1:
-                right = balanceRight(right.put(key, value))
-                return right
+                if (rith == EMPTY) {
+                    right = new FillNode(RED, key, value)
+                    return right
+                }
+                return balanceRight(right.put(key, value))
         }
         assert false
     }
