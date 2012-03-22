@@ -55,17 +55,11 @@ abstract class Node {
                 this.value = value
                 return this
             case  1:
-                if (left == EMPTY) {
-                    left = new FillNode(RED, key, value)
-                    return this
-                }
-                return balanceLeft(left.put(key, value))
+                left = left.put(key, value)
+                return balanceLeft(this)
             case -1:
-                if (right == EMPTY) {
-                    right = new FillNode(RED, key, value)
-                    return this
-                }
-                return balanceRight(right.put(key, value))
+                right = right.put(key, value)
+                return balanceRight(this)
         }
         assert false
     }
