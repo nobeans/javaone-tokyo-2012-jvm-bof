@@ -123,7 +123,7 @@ class FillNode extends Node {
                     left = new FillNode(RED, key, value)
                     return left
                 }
-                balanceLeft(left.put(key, value))
+                return balanceLeft(left.put(key, value))
             case -1:
                 if (rigth == EMPTY) {
                     right = new FillNode(RED, key, value)
