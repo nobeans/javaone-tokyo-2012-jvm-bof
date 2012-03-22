@@ -9,7 +9,7 @@ class RBTreeMap {
 
     void put(String key, String value) {
         if (key == null) throw new IAE("key is null")
-        root = root.put(key, value).root
+        root = root.put(key, value)
     }
 
     String get(String key) {
@@ -31,58 +31,79 @@ class RBTreeMap {
     }
 }
 
-abstract class Node {
+class NodeUtil {
+    final static int BLACK = 1
+    final static int RED = 0
 
+    static Node rotateRight(Node node) {
+        def left = node.left
+        node.left = left.right
+        left.right = node
+        left.color = node.color
+        node.color = RED
+        return left
+    }
+
+    static Node rotateLeft(Node node) {
+        def right = node.right
+        node.right = right.left
+        right.left = node
+        right.color = node.color
+        node.color = RED
+        return right
+    }
+
+    static void split(Node node) {
+        node.color = RED
+        node.left.color = BLACK
+        node.right.color = BLACK
+    }
+
+    static Node balanceLeft(Node node) {
+        if (node.color == BLACK) {
+            if (node.left.right.color == RED) {
+                node.left = rotateLeft(node.left)
+            }
+            if (node.left.left.color == RED) {
+                if (node.right.color == RED) {
+                    split(node)
+                } else {
+                    return rotateRight(node)
+                }
+            }
+        }
+        return node
+    }
+
+    static Node balanceRight(node) {
+        if (node.color == BLACK) {
+            if (node.right.left.color == RED) {
+                node.right = rotate_right(node.right)
+            }
+            if (node.right.right.color == RED)
+                if (node.left.color == RED) {
+                    split(node)
+                } else {
+                    return rotate_left(node)
+                }
+        }
+        return node
+    }
+}
+
+abstract class Node {
     final static int BLACK = 1
     final static int RED = 0
 
     int color
     String key
     String value
-    Node parent
     Node left
     Node right
 
     abstract Node put(String key, String value)
     abstract String get(String key)
     abstract int height()
-
-    final Node getBrother() {
-        if (isLefty()) {
-            return parent.right
-        } else {
-            return parent.left
-        }
-    }
-
-    final void replace(Node node) {
-        if (parent == null) {
-            node.parent = null
-        } else if (isLefty()) {
-            parent.left = node
-        } else {
-            parent.right = node
-        }
-    }
-
-    final boolean isLefty() { parent.left == this }
-    final boolean isRighty() { parent.right == this }
-
-    final void setLeft(Node left) {
-        this.left = left
-        left.parent = this
-    }
-    final void setRight(Node right) {
-        this.right = right
-        right.parent = this
-    }
-
-    final Node getRoot() {
-        if (parent == null) {
-            return this
-        }
-        return parent.getRoot()
-    }
 }
 
 class FillNode extends Node {
@@ -97,9 +118,9 @@ class FillNode extends Node {
     @Override
     Node put(String key, String value) {
         switch (this.key <=> key) {
-            case  0: return this
-            case  1: return left.put(key, value)
-            case -1: return right.put(key, value)
+            case  0: this.value = value; return this
+            case  1: return NodeUtil.balanceLeft(left.put(key, value))
+            case -1: return NodeUtil.balanceRight(right.put(key, value))
         }
         assert false
     }
@@ -132,82 +153,7 @@ class EmptyNode extends Node {
 
     @Override
     Node put(String key, String value) {
-        // as root
-        if (parent == null) {
-            return new FillNode(BLACK, key, value)
-        }
-
-        // parent is black
-        if (parent.color == BLACK) {
-            Node node = new FillNode(RED, key, value)
-            this.replace(node)
-            return node
-        }
-
-        // parent is red
-        def brother = parent.brother
-        if (brother.color == RED) {
-            parent.color = BLACK
-            brother.color = BLACK
-            def grandParent = parent.parent
-            if (grandParent != null && grandParent.parent != null) { // if grandparent isn't root
-                grandParent.color = RED
-            }
-            Node node = new FillNode(RED, key, value)
-            this.replace(node)
-            return node
-        }
-
-        // parent is red and parent's brother is black
-        boolean isLefty = this.isLefty()
-        boolean parentIsLefty = parent.isLefty()
-        if (parentIsLefty) {
-            if (isLefty) {
-                def oldSubRoot = parent.parent
-                def newSubRoot = parent
-                newSubRoot.color = BLACK
-                oldSubRoot.replace(newSubRoot)
-                oldSubRoot.left = newSubRoot.right
-                oldSubRoot.color = RED
-                newSubRoot.right = oldSubRoot
-                newSubRoot.left = new FillNode(RED, key, value)
-                return newSubRoot
-            } else {
-                def oldSubRoot = parent.parent
-                def newSubRoot = new FillNode(BLACK, key, value)
-                oldSubRoot.replace(newSubRoot)
-                oldSubRoot.left = newSubRoot.right
-                oldSubRoot.color = RED
-                parent.right = newSubRoot.left
-                parent.color = RED
-                newSubRoot.right = oldSubRoot
-                newSubRoot.left = parent
-                return newSubRoot
-            }
-        } else {
-            if (isLefty) {
-                def oldSubRoot = parent.parent
-                def newSubRoot = new FillNode(BLACK, key, value)
-                oldSubRoot.replace(newSubRoot)
-                oldSubRoot.right = newSubRoot.left
-                oldSubRoot.color = RED
-                parent.left = newSubRoot.right
-                parent.color = RED
-                newSubRoot.left = oldSubRoot
-                newSubRoot.right = parent
-                return newSubRoot
-            } else {
-                def oldSubRoot = parent.parent
-                def newSubRoot = parent
-                newSubRoot.color = BLACK
-                oldSubRoot.replace(newSubRoot)
-                oldSubRoot.right = newSubRoot.left
-                oldSubRoot.color = RED
-                newSubRoot.left = oldSubRoot
-                newSubRoot.right = new FillNode(RED, key, value)
-                return newSubRoot
-            }
-        }
+        return new FillNode(RED, key, value)
     }
 
     @Override
