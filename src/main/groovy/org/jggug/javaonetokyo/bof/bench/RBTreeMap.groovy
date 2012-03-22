@@ -162,7 +162,7 @@ class EmptyNode extends Node {
 
     @Override
     Node put(String key, String value) {
-        return new FillNode(RED, key, value)
+        assert false
     }
 
     @Override
