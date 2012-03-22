@@ -36,6 +36,8 @@ abstract class Node {
     final static int BLACK = 1
     final static int RED = 0
 
+    final static Node EMPTY = new EmptyNode()
+
     int color
     String key
     String value
@@ -114,9 +116,15 @@ class FillNode extends Node {
     @Override
     Node put(String key, String value) {
         switch (this.key <=> key) {
-            case  0: this.value = value; return this
-            case  1: return balanceLeft(left.put(key, value))
-            case -1: return balanceRight(right.put(key, value))
+            case  0:
+                this.value = value
+                return this
+            case  1:
+                left = balanceLeft(left.put(key, value))
+                return left
+            case -1:
+                right = balanceRight(right.put(key, value))
+                return right
         }
         assert false
     }
@@ -133,7 +141,7 @@ class FillNode extends Node {
 
     @Override
     int height() {
-        left.height() + color // BLACK = 1, RED = 0
+        left.height() + color // because of BLACK = 1 and RED = 0
     }
 
     @Override
