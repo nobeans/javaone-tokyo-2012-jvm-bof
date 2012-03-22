@@ -35,7 +35,6 @@ class RBTreeMap {
 abstract class Node {
     final static int BLACK = 1
     final static int RED = 0
-
     final static Node EMPTY = new EmptyNode()
 
     int color
@@ -48,7 +47,7 @@ abstract class Node {
     abstract String get(String key)
     abstract int height()
 
-    static Node rotateRight(Node node) {
+    private static Node rotateRight(Node node) {
         def left = node.left
         node.left = left.right
         left.right = node
@@ -57,7 +56,7 @@ abstract class Node {
         return left
     }
 
-    static Node rotateLeft(Node node) {
+    private static Node rotateLeft(Node node) {
         def right = node.right
         node.right = right.left
         right.left = node
@@ -66,7 +65,7 @@ abstract class Node {
         return right
     }
 
-    static void split(Node node) {
+    private static void split(Node node) {
         node.color = RED
         node.left.color = BLACK
         node.right.color = BLACK
@@ -126,7 +125,7 @@ class FillNode extends Node {
                 }
                 balanceLeft(left.put(key, value))
             case -1:
-                if (rith == EMPTY) {
+                if (rigth == EMPTY) {
                     right = new FillNode(RED, key, value)
                     return right
                 }
