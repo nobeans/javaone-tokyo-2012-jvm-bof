@@ -13,7 +13,7 @@ class RdBTreeMapSpec extends Specification {
     def "エントリを追加しない場合は高さ1"() {
         expect:
         map.height() == 1
-        map.toString() == "[null]->BLACK(empty)"
+        map.toString() == "BLACK(empty)"
     }
 
     def "nullをputすると例外をスローする"() {
@@ -30,7 +30,7 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 2
-        map.toString() == "[ROOT]->BLACK(a=Value of a){L:[a]->BLACK(empty)}{R:[a]->BLACK(empty)}"
+        map.toString() == "BLACK(a=Value of a){L:BLACK(empty)}{R:BLACK(empty)}"
     }
 
     def "エントリを2つ追加する"() {
@@ -41,11 +41,11 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 2
         map.toString() == '''
-            [ROOT]->BLACK(a=Value of a)
-                {L:[a]->BLACK(empty)}
-                {R:[a]->RED(b=Value of b)
-                    {L:[b]->BLACK(empty)}
-                    {R:[b]->BLACK(empty)}}
+            BLACK(a=Value of a)
+                {L:BLACK(empty)}
+                {R:RED(b=Value of b)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -58,13 +58,13 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 2
         map.toString() == '''
-            [ROOT]->BLACK(a=Value of a)
-                {L:[a]->RED(X=Value of X)
-                    {L:[X]->BLACK(empty)}
-                    {R:[X]->BLACK(empty)}}
-                {R:[a]->RED(b=Value of b)
-                    {L:[b]->BLACK(empty)}
-                    {R:[b]->BLACK(empty)}}
+            BLACK(a=Value of a)
+                {L:RED(X=Value of X)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:RED(b=Value of b)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -78,15 +78,15 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 3
         map.toString() == '''
-            [ROOT]->BLACK(a=Value of a)
-                {L:[a]->BLACK(X=Value of X)
-                    {L:[X]->BLACK(empty)}
-                    {R:[X]->BLACK(empty)}}
-                {R:[a]->BLACK(b=Value of b)
-                    {L:[b]->BLACK(empty)}
-                    {R:[b]->RED(c=Value of c)
-                        {L:[c]->BLACK(empty)}
-                        {R:[c]->BLACK(empty)}}}
+            BLACK(a=Value of a)
+                {L:BLACK(X=Value of X)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:BLACK(b=Value of b)
+                    {L:BLACK(empty)}
+                    {R:RED(c=Value of c)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -101,17 +101,17 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 3
         map.toString() == '''
-            [ROOT]->BLACK(a=Value of a)
-                {L:[a]->BLACK(X=Value of X)
-                    {L:[X]->BLACK(empty)}
-                    {R:[X]->BLACK(empty)}}
-                {R:[a]->BLACK(c=Value of c)
-                    {L:[c]->RED(b=Value of b)
-                        {L:[b]->BLACK(empty)}
-                        {R:[b]->BLACK(empty)}}
-                    {R:[c]->RED(d=Value of d)
-                        {L:[d]->BLACK(empty)}
-                        {R:[d]->BLACK(empty)}}}
+            BLACK(a=Value of a)
+                {L:BLACK(X=Value of X)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:BLACK(c=Value of c)
+                    {L:RED(b=Value of b)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}
+                    {R:RED(d=Value of d)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -127,19 +127,19 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 3
         map.toString() == '''
-            [ROOT]->BLACK(a=Value of a)
-                {L:[a]->BLACK(X=Value of X)
-                    {L:[X]->BLACK(empty)}
-                    {R:[X]->BLACK(empty)}}
-                {R:[a]->RED(c=Value of c)
-                    {L:[c]->BLACK(b=Value of b)
-                        {L:[b]->BLACK(empty)}
-                        {R:[b]->BLACK(empty)}}
-                    {R:[c]->BLACK(d=Value of d)
-                        {L:[d]->BLACK(empty)}
-                        {R:[d]->RED(e=Value of e)
-                            {L:[e]->BLACK(empty)}
-                            {R:[e]->BLACK(empty)}}}}
+            BLACK(a=Value of a)
+                {L:BLACK(X=Value of X)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:RED(c=Value of c)
+                    {L:BLACK(b=Value of b)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}
+                    {R:BLACK(d=Value of d)
+                        {L:BLACK(empty)}
+                        {R:RED(e=Value of e)
+                            {L:BLACK(empty)}
+                            {R:BLACK(empty)}}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -152,13 +152,13 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 2
         map.toString() == '''
-            [ROOT]->BLACK(b=Value of b)
-                {L:[b]->RED(a=Value of a)
-                    {L:[a]->BLACK(empty)}
-                    {R:[a]->BLACK(empty)}}
-                {R:[b]->RED(c=Value of c)
-                    {L:[c]->BLACK(empty)}
-                    {R:[c]->BLACK(empty)}}
+            BLACK(b=Value of b)
+                {L:RED(a=Value of a)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:RED(c=Value of c)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -171,13 +171,13 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 2
         map.toString() == '''
-            [ROOT]->BLACK(b=Value of b)
-                {L:[b]->RED(a=Value of a)
-                    {L:[a]->BLACK(empty)}
-                    {R:[a]->BLACK(empty)}}
-                {R:[b]->RED(c=Value of c)
-                    {L:[c]->BLACK(empty)}
-                    {R:[c]->BLACK(empty)}}
+            BLACK(b=Value of b)
+                {L:RED(a=Value of a)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:RED(c=Value of c)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -190,13 +190,13 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 2
         map.toString() == '''
-            [ROOT]->BLACK(b=Value of b)
-                {L:[b]->RED(a=Value of a)
-                    {L:[a]->BLACK(empty)}
-                    {R:[a]->BLACK(empty)}}
-                {R:[b]->RED(c=Value of c)
-                    {L:[c]->BLACK(empty)}
-                    {R:[c]->BLACK(empty)}}
+            BLACK(b=Value of b)
+                {L:RED(a=Value of a)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:RED(c=Value of c)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -209,13 +209,13 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 2
         map.toString() == '''
-            [ROOT]->BLACK(b=Value of b)
-                {L:[b]->RED(a=Value of a)
-                    {L:[a]->BLACK(empty)}
-                    {R:[a]->BLACK(empty)}}
-                {R:[b]->RED(c=Value of c)
-                    {L:[c]->BLACK(empty)}
-                    {R:[c]->BLACK(empty)}}
+            BLACK(b=Value of b)
+                {L:RED(a=Value of a)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:RED(c=Value of c)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -229,15 +229,15 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 3
         map.toString() == '''
-            [ROOT]->BLACK(b=Value of b)
-                {L:[b]->BLACK(a=Value of a)
-                    {L:[a]->BLACK(empty)}
-                    {R:[a]->BLACK(empty)}}
-                {R:[b]->BLACK(c=Value of c)
-                    {L:[c]->BLACK(empty)}
-                    {R:[c]->RED(d=Value of d)
-                        {L:[d]->BLACK(empty)}
-                        {R:[d]->BLACK(empty)}}}
+            BLACK(b=Value of b)
+                {L:BLACK(a=Value of a)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:BLACK(c=Value of c)
+                    {L:BLACK(empty)}
+                    {R:RED(d=Value of d)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -252,17 +252,17 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 3
         map.toString() == '''
-            [ROOT]->BLACK(b=Value of b)
-                {L:[b]->BLACK(a=Value of a)
-                    {L:[a]->BLACK(empty)}
-                    {R:[a]->BLACK(empty)}}
-                {R:[b]->BLACK(d=Value of d)
-                    {L:[d]->RED(c=Value of c)
-                        {L:[c]->BLACK(empty)}
-                        {R:[c]->BLACK(empty)}}
-                    {R:[d]->RED(e=Value of e)
-                        {L:[e]->BLACK(empty)}
-                        {R:[e]->BLACK(empty)}}}
+            BLACK(b=Value of b)
+                {L:BLACK(a=Value of a)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:BLACK(d=Value of d)
+                    {L:RED(c=Value of c)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}
+                    {R:RED(e=Value of e)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -278,19 +278,19 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 3
         map.toString() == '''
-            [ROOT]->BLACK(b=Value of b)
-                {L:[b]->BLACK(a=Value of a)
-                    {L:[a]->BLACK(empty)}
-                    {R:[a]->BLACK(empty)}}
-                {R:[b]->RED(d=Value of d)
-                    {L:[d]->BLACK(c=Value of c)
-                        {L:[c]->BLACK(empty)}
-                        {R:[c]->BLACK(empty)}}
-                    {R:[d]->BLACK(e=Value of e)
-                        {L:[e]->BLACK(empty)}
-                        {R:[e]->RED(f=Value of f)
-                            {L:[f]->BLACK(empty)}
-                            {R:[f]->BLACK(empty)}}}}
+            BLACK(b=Value of b)
+                {L:BLACK(a=Value of a)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:RED(d=Value of d)
+                    {L:BLACK(c=Value of c)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}
+                    {R:BLACK(e=Value of e)
+                        {L:BLACK(empty)}
+                        {R:RED(f=Value of f)
+                            {L:BLACK(empty)}
+                            {R:BLACK(empty)}}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -307,21 +307,21 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 3
         map.toString() == '''
-            [ROOT]->BLACK(b=Value of b)
-                {L:[b]->BLACK(a=Value of a)
-                    {L:[a]->BLACK(empty)}
-                    {R:[a]->BLACK(empty)}}
-                {R:[b]->RED(d=Value of d)
-                    {L:[d]->BLACK(c=Value of c)
-                        {L:[c]->BLACK(empty)}
-                        {R:[c]->BLACK(empty)}}
-                    {R:[d]->BLACK(f=Value of f)
-                        {L:[f]->RED(e=Value of e)
-                            {L:[e]->BLACK(empty)}
-                            {R:[e]->BLACK(empty)}}
-                        {R:[f]->RED(g=Value of g)
-                            {L:[g]->BLACK(empty)}
-                            {R:[g]->BLACK(empty)}}}}
+            BLACK(b=Value of b)
+                {L:BLACK(a=Value of a)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:RED(d=Value of d)
+                    {L:BLACK(c=Value of c)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}
+                    {R:BLACK(f=Value of f)
+                        {L:RED(e=Value of e)
+                            {L:BLACK(empty)}
+                            {R:BLACK(empty)}}
+                        {R:RED(g=Value of g)
+                            {L:BLACK(empty)}
+                            {R:BLACK(empty)}}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -339,23 +339,23 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 3
         map.toString() == '''
-            [ROOT]->BLACK(b=Value of b)
-                {L:[b]->BLACK(a=Value of a)
-                    {L:[a]->BLACK(empty)}
-                    {R:[a]->BLACK(empty)}}
-                {R:[b]->RED(d=Value of d)
-                    {L:[d]->BLACK(c=Value of c)
-                        {L:[c]->BLACK(empty)}
-                        {R:[c]->BLACK(empty)}}
-                    {R:[d]->RED(f=Value of f)
-                        {L:[f]->BLACK(e=Value of e)
-                            {L:[e]->BLACK(empty)}
-                            {R:[e]->BLACK(empty)}}
-                        {R:[f]->BLACK(g=Value of g)
-                            {L:[g]->BLACK(empty)}
-                            {R:[g]->RED(h=Value of h)
-                                {L:[h]->BLACK(empty)}
-                                {R:[h]->BLACK(empty)}}}}}
+            BLACK(b=Value of b)
+                {L:BLACK(a=Value of a)
+                    {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:RED(d=Value of d)
+                    {L:BLACK(c=Value of c)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}
+                    {R:RED(f=Value of f)
+                        {L:BLACK(e=Value of e)
+                            {L:BLACK(empty)}
+                            {R:BLACK(empty)}}
+                        {R:BLACK(g=Value of g)
+                            {L:BLACK(empty)}
+                            {R:RED(h=Value of h)
+                                {L:BLACK(empty)}
+                                {R:BLACK(empty)}}}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
