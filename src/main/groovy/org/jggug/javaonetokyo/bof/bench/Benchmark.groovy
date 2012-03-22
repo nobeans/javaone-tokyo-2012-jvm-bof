@@ -16,6 +16,7 @@ new BenchmarkBuilder().run(warmUpTime:0, measureCpuTime:false, verbose:true) {
             map.put(key, value)
             //assert map.height() == height as int
             //DEBUG << "${key},${value},${map.height()}\n"
+            //DEBUG << "${map}\n"
         }
 
         // get(key)
