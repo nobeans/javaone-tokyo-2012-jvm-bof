@@ -252,14 +252,14 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 3
         map.toString() == '''
-            BLACK(c=Value of c)
-                {L:RED(b=Value of b)
-                    {L:BLACK(a=Value of a)
-                        {L:BLACK(empty)}
-                        {R:BLACK(empty)}}
-                    {R:BLACK(empty)}}
-                {R:RED(d=Value of d)
+            BLACK(b=Value of b)
+                {L:BLACK(a=Value of a)
                     {L:BLACK(empty)}
+                    {R:BLACK(empty)}}
+                {R:BLACK(d=Value of d)
+                    {L:RED(c=Value of c)
+                        {L:BLACK(empty)}
+                        {R:BLACK(empty)}}}
                     {R:RED(e=Value of e)
                         {L:BLACK(empty)}
                         {R:BLACK(empty)}}}
@@ -278,19 +278,6 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 4
         map.toString() == '''
-            BLACK(c=Value of c)
-                {L:BLACK(b=Value of b)
-                    {L:BLACK(a=Value of a)
-                        {L:BLACK(empty)}
-                        {R:BLACK(empty)}}
-                    {R:BLACK(empty)}}
-                {R:BLACK(d=Value of d)
-                    {L:BLACK(empty)}
-                    {R:RED(e=Value of e)
-                        {L:BLACK(empty)}
-                        {R:RED(f=Value of f)
-                            {L:BLACK(empty)}
-                            {R:BLACK(empty)}}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -307,21 +294,6 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 4
         map.toString() == '''
-            BLACK(d=Value of d)
-                {L:RED(c=Value of c)
-                    {L:BLACK(b=Value of b)
-                        {L:BLACK(a=Value of a)
-                            {L:BLACK(empty)}
-                            {R:BLACK(empty)}}
-                        {R:BLACK(empty)}}
-                    {R:BLACK(empty)}}
-                {R:RED(e=Value of e)
-                    {L:BLACK(empty)}
-                    {R:RED(f=Value of f)
-                        {L:BLACK(empty)}
-                        {R:RED(g=Value of g)
-                            {L:BLACK(empty)}
-                            {R:BLACK(empty)}}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
@@ -339,23 +311,6 @@ class RdBTreeMapSpec extends Specification {
         then:
         map.height() == 5
         map.toString() == '''
-            BLACK(d=Value of d)
-                {L:BLACK(c=Value of c)
-                    {L:BLACK(b=Value of b)
-                        {L:BLACK(a=Value of a)
-                            {L:BLACK(empty)}
-                            {R:BLACK(empty)}}
-                        {R:BLACK(empty)}}
-                    {R:BLACK(empty)}}
-                {R:BLACK(e=Value of e)
-                    {L:BLACK(empty)}
-                    {R:RED(f=Value of f)
-                        {L:BLACK(empty)}
-                        {R:RED(g=Value of g)
-                            {L:BLACK(empty)}
-                            {R:RED(h=Value of h)
-                                {L:BLACK(empty)}
-                                {R:BLACK(empty)}}}}}
             '''.readLines().collect{ it.trim() }.join()
     }
 
