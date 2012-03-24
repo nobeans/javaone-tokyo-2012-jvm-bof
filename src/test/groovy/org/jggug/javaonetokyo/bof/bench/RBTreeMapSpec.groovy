@@ -90,23 +90,24 @@ class RdBTreeMapSpec extends Specification {
                             | B(X)'''.stripMargin()
     }
 
-//    def "エントリを6つ追加する。親と親の兄弟が赤の場合は、親の親を赤に、親と親の兄弟を黒に変更する"() {
-//        when:
-//        map.put('a', 'Value of a')
-//        map.put('c', 'Value of c')
-//        map.put('X', 'Value of X')
-//        map.put('b', 'Value of b')
-//        map.put('d', 'Value of d')
-//        map.put('e', 'Value of e')
-//
-//        then:
-//        map.height() == 4
-//        map.toString() == '''  B(X)
-//                            | R(a)
-//                            |B(b)
-//                            | R(c)
-//                            |  R(d)'''.stripMargin()
-//    }
+    def "エントリを6つ追加する。親と親の兄弟が赤の場合は、親の親を赤に、親と親の兄弟を黒に変更する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('c', 'Value of c')
+        map.put('X', 'Value of X')
+        map.put('b', 'Value of b')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+
+        then:
+        map.height() == 3
+        map.toString() == '''   R(e)
+                            |  B(d)
+                            | R(c)
+                            |  B(b)
+                            |B(a)
+                            | B(X)'''.stripMargin()
+    }
 
     def "エントリを3つ追加する。直列に偏るように追加されると平衡化を行う。右、右"() {
         when:
