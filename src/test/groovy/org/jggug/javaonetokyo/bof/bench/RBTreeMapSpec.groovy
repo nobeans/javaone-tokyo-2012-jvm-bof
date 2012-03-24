@@ -176,70 +176,85 @@ class RdBTreeMapSpec extends Specification {
                             | B(a)'''.stripMargin()
     }
 
-//    def "右側にエントリを5つ追加する"() {
-//        when:
-//        map.put('a', 'Value of a')
-//        map.put('b', 'Value of b')
-//        map.put('c', 'Value of c')
-//        map.put('d', 'Value of d')
-//        map.put('e', 'Value of e')
-//
-//        then:
-//        map.height() == 3
-//        map.toString() == '''  B(e)
-//                            | B(d)
-//                            |  B(c)
-//                            |B(b)
-//                            | R(a)'''.stripMargin()
-//    }
-//
-//    def "右側にエントリを6つ追加する"() {
-//        when:
-//        map.put('a', 'Value of a')
-//        map.put('b', 'Value of b')
-//        map.put('c', 'Value of c')
-//        map.put('d', 'Value of d')
-//        map.put('e', 'Value of e')
-//        map.put('f', 'Value of f')
-//
-//        then:
-//        map.height() == 4
-//        map.toString() == '''
-//            '''.readLines().collect{ it.trim() }.join()
-//    }
-//
-//    def "右側にエントリを7つ追加する"() {
-//        when:
-//        map.put('a', 'Value of a')
-//        map.put('b', 'Value of b')
-//        map.put('c', 'Value of c')
-//        map.put('d', 'Value of d')
-//        map.put('e', 'Value of e')
-//        map.put('f', 'Value of f')
-//        map.put('g', 'Value of g')
-//
-//        then:
-//        map.height() == 4
-//        map.toString() == '''
-//            '''.readLines().collect{ it.trim() }.join()
-//    }
-//
-//    def "右側にエントリを8つ追加する"() {
-//        when:
-//        map.put('a', 'Value of a')
-//        map.put('b', 'Value of b')
-//        map.put('c', 'Value of c')
-//        map.put('d', 'Value of d')
-//        map.put('e', 'Value of e')
-//        map.put('f', 'Value of f')
-//        map.put('g', 'Value of g')
-//        map.put('h', 'Value of h')
-//
-//        then:
-//        map.height() == 5
-//        map.toString() == '''
-//            '''.readLines().collect{ it.trim() }.join()
-//    }
+    def "右側にエントリを5つ追加する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('c', 'Value of c')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+
+        then:
+        map.height() == 3
+        map.toString() == '''  R(e)
+                            | B(d)
+                            |  R(c)
+                            |B(b)
+                            | B(a)'''.stripMargin()
+    }
+
+    def "右側にエントリを6つ追加する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('c', 'Value of c')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+        map.put('f', 'Value of f')
+
+        then:
+        map.height() == 3
+        map.toString() == '''   R(f)
+                            |  B(e)
+                            | R(d)
+                            |  B(c)
+                            |B(b)
+                            | B(a)'''.stripMargin()
+    }
+
+    def "右側にエントリを7つ追加する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('c', 'Value of c')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+        map.put('f', 'Value of f')
+        map.put('g', 'Value of g')
+
+        then:
+        map.height() == 3
+        map.toString() == '''   R(g)
+                            |  B(f)
+                            |   R(e)
+                            | R(d)
+                            |  B(c)
+                            |B(b)
+                            | B(a)'''.stripMargin()
+    }
+
+    def "右側にエントリを8つ追加する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('c', 'Value of c')
+        map.put('d', 'Value of d')
+        map.put('e', 'Value of e')
+        map.put('f', 'Value of f')
+        map.put('g', 'Value of g')
+        map.put('h', 'Value of h')
+
+        then:
+        map.height() == 3
+        map.toString() == '''   R(h)
+                            |  B(g)
+                            | R(f)
+                            |  B(e)
+                            |B(d)
+                            |  B(c)
+                            | R(b)
+                            |  B(a)'''.stripMargin()
+    }
 
    def "get: 指定したキーの値を取得する"() {
        setup:
