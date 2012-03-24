@@ -56,10 +56,10 @@ abstract class Node {
                 return this
             case  1:
                 left = left.put(key, value)
-                return balanceLeft(this)
+                return rebalanceLeft(this)
             case -1:
                 right = right.put(key, value)
-                return balanceRight(this)
+                return rebalanceRight(this)
         }
         assert false
     }
@@ -106,7 +106,7 @@ abstract class Node {
         node.right.color = BLACK
     }
 
-    private static Node balanceLeft(Node node) {
+    private static Node rebalanceLeft(Node node) {
         if (node.color == BLACK) {
             if (node.left.right.color == RED) {
                 node.left = rotateLeft(node.left)
@@ -122,7 +122,7 @@ abstract class Node {
         return node
     }
 
-    private static Node balanceRight(Node node) {
+    private static Node rebalanceRight(Node node) {
         if (node.color == BLACK) {
             if (node.right.left.color == RED) {
                 node.right = rotateRight(node.right)
