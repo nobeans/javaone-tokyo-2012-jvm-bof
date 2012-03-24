@@ -160,112 +160,112 @@ class RdBTreeMapSpec extends Specification {
                             | R(a)'''.stripMargin()
     }
 
-//    def "右側にエントリを4つ追加する"() {
+    def "右側にエントリを4つ追加する"() {
+        when:
+        map.put('a', 'Value of a')
+        map.put('b', 'Value of b')
+        map.put('d', 'Value of d')
+        map.put('c', 'Value of c')
+
+        then:
+        map.height() == 3
+        map.toString() == ''' B(d)
+                            |  R(c)
+                            |B(b)
+                            | B(a)'''.stripMargin()
+    }
+
+//    def "右側にエントリを5つ追加する"() {
 //        when:
 //        map.put('a', 'Value of a')
 //        map.put('b', 'Value of b')
-//        map.put('d', 'Value of d')
 //        map.put('c', 'Value of c')
+//        map.put('d', 'Value of d')
+//        map.put('e', 'Value of e')
 //
 //        then:
 //        map.height() == 3
-//        map.toString() == ''' B(d)
-//                            |  R(c)
+//        map.toString() == '''  B(e)
+//                            | B(d)
+//                            |  B(c)
 //                            |B(b)
-//                            | B(a)'''.stripMargin()
+//                            | R(a)'''.stripMargin()
 //    }
 //
-////    def "右側にエントリを5つ追加する"() {
-////        when:
-////        map.put('a', 'Value of a')
-////        map.put('b', 'Value of b')
-////        map.put('c', 'Value of c')
-////        map.put('d', 'Value of d')
-////        map.put('e', 'Value of e')
-////
-////        then:
-////        map.height() == 3
-////        map.toString() == '''  B(e)
-////                            | B(d)
-////                            |  B(c)
-////                            |B(b)
-////                            | R(a)'''.stripMargin()
-////    }
-////
-////    def "右側にエントリを6つ追加する"() {
-////        when:
-////        map.put('a', 'Value of a')
-////        map.put('b', 'Value of b')
-////        map.put('c', 'Value of c')
-////        map.put('d', 'Value of d')
-////        map.put('e', 'Value of e')
-////        map.put('f', 'Value of f')
-////
-////        then:
-////        map.height() == 4
-////        map.toString() == '''
-////            '''.readLines().collect{ it.trim() }.join()
-////    }
-////
-////    def "右側にエントリを7つ追加する"() {
-////        when:
-////        map.put('a', 'Value of a')
-////        map.put('b', 'Value of b')
-////        map.put('c', 'Value of c')
-////        map.put('d', 'Value of d')
-////        map.put('e', 'Value of e')
-////        map.put('f', 'Value of f')
-////        map.put('g', 'Value of g')
-////
-////        then:
-////        map.height() == 4
-////        map.toString() == '''
-////            '''.readLines().collect{ it.trim() }.join()
-////    }
-////
-////    def "右側にエントリを8つ追加する"() {
-////        when:
-////        map.put('a', 'Value of a')
-////        map.put('b', 'Value of b')
-////        map.put('c', 'Value of c')
-////        map.put('d', 'Value of d')
-////        map.put('e', 'Value of e')
-////        map.put('f', 'Value of f')
-////        map.put('g', 'Value of g')
-////        map.put('h', 'Value of h')
-////
-////        then:
-////        map.height() == 5
-////        map.toString() == '''
-////            '''.readLines().collect{ it.trim() }.join()
-////    }
-//
-//   def "get: 指定したキーの値を取得する"() {
-//       setup:
-//       map.put('a', 'Value of a')
-//       map.put('b', 'Value of b')
-//       map.put('c', 'Value of c')
-//       map.put('d', 'Value of d')
-//       map.put('e', 'Value of e')
-//
-//       expect:
-//       map.get(key) == value
-//
-//       where:
-//       key | value
-//       'a' | 'Value of a'
-//       'b' | 'Value of b'
-//       'c' | 'Value of c'
-//       'd' | 'Value of d'
-//       'e' | 'Value of e'
-//       'f' | null
-//   }
-//
-//    def "nullをgetすると例外をスローする"() {
+//    def "右側にエントリを6つ追加する"() {
 //        when:
-//        map.get(null)
+//        map.put('a', 'Value of a')
+//        map.put('b', 'Value of b')
+//        map.put('c', 'Value of c')
+//        map.put('d', 'Value of d')
+//        map.put('e', 'Value of e')
+//        map.put('f', 'Value of f')
 //
 //        then:
-//        thrown(IllegalArgumentException)
+//        map.height() == 4
+//        map.toString() == '''
+//            '''.readLines().collect{ it.trim() }.join()
 //    }
+//
+//    def "右側にエントリを7つ追加する"() {
+//        when:
+//        map.put('a', 'Value of a')
+//        map.put('b', 'Value of b')
+//        map.put('c', 'Value of c')
+//        map.put('d', 'Value of d')
+//        map.put('e', 'Value of e')
+//        map.put('f', 'Value of f')
+//        map.put('g', 'Value of g')
+//
+//        then:
+//        map.height() == 4
+//        map.toString() == '''
+//            '''.readLines().collect{ it.trim() }.join()
+//    }
+//
+//    def "右側にエントリを8つ追加する"() {
+//        when:
+//        map.put('a', 'Value of a')
+//        map.put('b', 'Value of b')
+//        map.put('c', 'Value of c')
+//        map.put('d', 'Value of d')
+//        map.put('e', 'Value of e')
+//        map.put('f', 'Value of f')
+//        map.put('g', 'Value of g')
+//        map.put('h', 'Value of h')
+//
+//        then:
+//        map.height() == 5
+//        map.toString() == '''
+//            '''.readLines().collect{ it.trim() }.join()
+//    }
+
+   def "get: 指定したキーの値を取得する"() {
+       setup:
+       map.put('a', 'Value of a')
+       map.put('b', 'Value of b')
+       map.put('c', 'Value of c')
+       map.put('d', 'Value of d')
+       map.put('e', 'Value of e')
+
+       expect:
+       map.get(key) == value
+
+       where:
+       key | value
+       'a' | 'Value of a'
+       'b' | 'Value of b'
+       'c' | 'Value of c'
+       'd' | 'Value of d'
+       'e' | 'Value of e'
+       'f' | null
+   }
+
+    def "nullをgetすると例外をスローする"() {
+        when:
+        map.get(null)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
 }
