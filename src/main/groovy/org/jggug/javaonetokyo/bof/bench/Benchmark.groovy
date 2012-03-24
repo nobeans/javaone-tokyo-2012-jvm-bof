@@ -7,7 +7,7 @@ final DEBUG = new File("/tmp/rbtree_map_input.csv")
 
 new BenchmarkBuilder().run(warmUpTime:0, measureCpuTime:false, verbose:true) {
 
-    with "${FILE}を読み込んで赤黒木を構築する", {
+    with "${FILE}を読み込んで赤黒木を構築した後にチェックする", {
         def map = RBTreeMap.newInstance()
 
         // put(key, value)
