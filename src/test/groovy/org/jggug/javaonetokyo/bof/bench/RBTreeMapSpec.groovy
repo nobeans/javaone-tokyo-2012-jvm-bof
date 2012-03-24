@@ -13,7 +13,7 @@ class RdBTreeMapSpec extends Specification {
 
     def "エントリを追加しない場合は高さ1"() {
         expect:
-        map.height() == 1
+        map.height() == 0
         map.toString() == "B(null)"
     }
 
@@ -30,7 +30,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('a', 'Value of a')
 
         then:
-        map.height() == 2
+        map.height() == 1
         map.toString() == "B(a)"
     }
 
@@ -40,7 +40,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('b', 'Value of b')
 
         then:
-        map.height() == 2
+        map.height() == 1
         map.toString() == ''' R(b)
                             |B(a)'''.stripMargin()
     }
@@ -52,7 +52,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('X', 'Value of X')
 
         then:
-        map.height() == 2
+        map.height() == 1
         map.toString() == ''' R(b)
                             |B(a)
                             | R(X)'''.stripMargin()
@@ -66,7 +66,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('c', 'Value of c')
 
         then:
-        map.height() == 3
+        map.height() == 2
         map.toString() == '''  R(c)
                             | B(b)
                             |B(a)
@@ -82,7 +82,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('d', 'Value of d')
 
         then:
-        map.height() == 3
+        map.height() == 2
         map.toString() == '''  R(d)
                             | B(c)
                             |  R(b)
@@ -100,7 +100,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('e', 'Value of e')
 
         then:
-        map.height() == 3
+        map.height() == 2
         map.toString() == '''   R(e)
                             |  B(d)
                             | R(c)
@@ -116,7 +116,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('c', 'Value of c')
 
         then:
-        map.height() == 2
+        map.height() == 1
         map.toString() == ''' R(c)
                             |B(b)
                             | R(a)'''.stripMargin()
@@ -129,7 +129,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('a', 'Value of a')
 
         then:
-        map.height() == 2
+        map.height() == 1
         map.toString() == ''' R(c)
                             |B(b)
                             | R(a)'''.stripMargin()
@@ -142,7 +142,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('b', 'Value of b')
 
         then:
-        map.height() == 2
+        map.height() == 1
         map.toString() == ''' R(c)
                             |B(b)
                             | R(a)'''.stripMargin()
@@ -155,7 +155,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('b', 'Value of b')
 
         then:
-        map.height() == 2
+        map.height() == 1
         map.toString() == ''' R(c)
                             |B(b)
                             | R(a)'''.stripMargin()
@@ -169,7 +169,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('c', 'Value of c')
 
         then:
-        map.height() == 3
+        map.height() == 2
         map.toString() == ''' B(d)
                             |  R(c)
                             |B(b)
@@ -185,7 +185,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('e', 'Value of e')
 
         then:
-        map.height() == 3
+        map.height() == 2
         map.toString() == '''  R(e)
                             | B(d)
                             |  R(c)
@@ -203,7 +203,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('f', 'Value of f')
 
         then:
-        map.height() == 3
+        map.height() == 2
         map.toString() == '''   R(f)
                             |  B(e)
                             | R(d)
@@ -223,7 +223,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('g', 'Value of g')
 
         then:
-        map.height() == 3
+        map.height() == 2
         map.toString() == '''   R(g)
                             |  B(f)
                             |   R(e)
@@ -245,7 +245,7 @@ class RdBTreeMapSpec extends Specification {
         map.put('h', 'Value of h')
 
         then:
-        map.height() == 3
+        map.height() == 2
         map.toString() == '''   R(h)
                             |  B(g)
                             | R(f)

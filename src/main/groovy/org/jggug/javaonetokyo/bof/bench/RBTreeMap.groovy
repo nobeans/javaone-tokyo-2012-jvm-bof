@@ -208,8 +208,7 @@ class EmptyNode extends Node {
 
     @Override
     int height() {
-        1 // empty node is always black.
-        //0 // empty node shouldn't be count
+        0 // empty node shouldn't be count
     }
 
     @Override
