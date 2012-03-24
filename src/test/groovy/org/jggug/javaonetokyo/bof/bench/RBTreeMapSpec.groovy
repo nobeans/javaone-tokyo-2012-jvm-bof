@@ -163,8 +163,8 @@ class RdBTreeMapSpec extends Specification {
         when:
         map.put('a', 'Value of a')
         map.put('b', 'Value of b')
-        map.put('c', 'Value of c')
         map.put('d', 'Value of d')
+        map.put('c', 'Value of c')
 
         then:
         map.height() == 3
