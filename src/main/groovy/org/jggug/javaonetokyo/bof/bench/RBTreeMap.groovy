@@ -47,8 +47,8 @@ abstract class Node {
     abstract int height()
 
     Node put(String key, String value) {
-        println ">"*10 + "put($key, $value)"
-        println this
+        //println ">"*10 + "put($key, $value)"
+        //println this
         if (this == EMPTY) {
             return new FillNode(RED, key, value)
         }
@@ -94,8 +94,8 @@ abstract class Node {
         left.right = node
         left.color = node.color
         node.color = RED
-        println ">"*10 + "rotateRight"
-        println node
+        //println ">"*10 + "rotateRight"
+        //println node
         return left
     }
 
@@ -105,8 +105,8 @@ abstract class Node {
         right.left = node
         right.color = node.color
         node.color = RED
-        println ">"*10 + "rotateLeft"
-        println node
+        //println ">"*10 + "rotateLeft"
+        //println node
         return right
     }
 
@@ -114,13 +114,13 @@ abstract class Node {
         node.color = RED
         node.left.color = BLACK
         node.right.color = BLACK
-        println ">"*10 + "split"
-        println node
+        //println ">"*10 + "split"
+        //println node
     }
 
     private static Node rebalanceLeft(Node node) {
-        println ">"*10 + "rebalanceLeft:BEFORE"
-        println node
+        //println ">"*10 + "rebalanceLeft:BEFORE"
+        //println node
         if (node.color == BLACK && node.left.color == RED && !node.left.bothChildrenBlack()) {
             if (node.right.color == RED) {
                 split(node)
@@ -140,14 +140,14 @@ abstract class Node {
                 }
             }
         }
-        println ">"*10 + "rebalanceLeft:AFTER"
-        println node
+        //println ">"*10 + "rebalanceLeft:AFTER"
+        //println node
         return node
     }
 
     private static Node rebalanceRight(Node node) {
-        println ">"*10 + "rebalanceRight:BEFORE"
-        println node
+        //println ">"*10 + "rebalanceRight:BEFORE"
+        //println node
         if (node.color == BLACK && node.right.color == RED && !node.right.bothChildrenBlack()) {
             if (node.left.color == RED) {
                 split(node)
@@ -167,8 +167,8 @@ abstract class Node {
                 }
             }
         }
-        println ">"*10 + "rebalanceRight:AFTER"
-        println node
+        //println ">"*10 + "rebalanceRight:AFTER"
+        //println node
         return node
     }
 }
