@@ -40,8 +40,9 @@ abstract class Node {
     int color
     String key
     String value
-    Node left
-    Node right
+    Node left = EMPTY
+    Node right = EMPTY
+    boolean shouldBlance = false
 
     abstract String get(String key)
     abstract int height()
@@ -56,10 +57,20 @@ abstract class Node {
                 return this
             case  1:
                 left = left.put(key, value)
-                return balanceLeft(this)
+                println("L:" + left?.shouldBlance)
+                if (left.shouldBlance) {
+                    return balanceLeft(this)
+                } else {
+                    return this
+                }
             case -1:
                 right = right.put(key, value)
-                return balanceRight(this)
+                println("R:" + right?.shouldBlance)
+                if (right.shouldBlance) {
+                    return balanceRight(this)
+                } else {
+                    return this
+                }
         }
         assert false
     }
@@ -108,12 +119,14 @@ abstract class Node {
 
     private static Node balanceLeft(Node node) {
         if (node.color == BLACK) {
+            node.shouldBlance = false
             if (node.left.right.color == RED) {
                 node.left = rotateLeft(node.left)
             }
             if (node.left.left.color == RED) {
                 if (node.right.color == RED) {
                     split(node)
+                    node.shouldBlance = true
                 } else {
                     return rotateRight(node)
                 }
@@ -124,15 +137,18 @@ abstract class Node {
 
     private static Node balanceRight(Node node) {
         if (node.color == BLACK) {
+            node.shouldBlance = false
             if (node.right.left.color == RED) {
                 node.right = rotateRight(node.right)
             }
-            if (node.right.right.color == RED)
+            if (node.right.right.color == RED) {
                 if (node.left.color == RED) {
                     split(node)
+                    node.shouldBlance = true
                 } else {
                     return rotateLeft(node)
                 }
+            }
         }
         return node
     }
@@ -143,8 +159,7 @@ class FillNode extends Node {
         this.color = color
         this.key = key
         this.value = value
-        this.left = EMPTY
-        this.right = EMPTY
+        this.shouldBlance = true
     }
 
     @Override

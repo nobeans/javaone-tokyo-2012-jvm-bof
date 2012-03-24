@@ -7,6 +7,7 @@ class RdBTreeMapSpec extends Specification {
     def map
 
     def setup() {
+        println "-"*50
         map = RBTreeMap.newInstance()
     }
 
