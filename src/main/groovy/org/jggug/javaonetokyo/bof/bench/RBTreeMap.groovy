@@ -64,6 +64,24 @@ abstract class Node {
         assert false
     }
 
+    @Override
+    String toString() {
+        toTreeString(0)
+    }
+
+    String toTreeString(int level) {
+        def indent = " "
+        def buff = []
+        if (left) {
+            buff << left.toTreeString(level + 1)
+        }
+        buff << indent * level + (color == 1 ? 'B' : 'R') + "($key)"
+        if (right) {
+            buff << right.toTreeString(level + 1)
+        }
+        buff.join(System.getProperty("line.separator"))
+    }
+
     private static Node rotateRight(Node node) {
         def left = node.left
         node.left = left.right
@@ -143,11 +161,6 @@ class FillNode extends Node {
     int height() {
         left.height() + color // because of BLACK = 1 and RED = 0
     }
-
-    @Override
-    String toString() {
-        "${color == 1 ? 'BLACK' : 'RED'}(${key}=${value}){L:${left?.toString()}}{R:${right?.toString()}}"
-    }
 }
 
 class EmptyNode extends Node {
@@ -166,8 +179,7 @@ class EmptyNode extends Node {
     }
 
     @Override
-    String toString() {
-        "BLACK(empty)"
+    boolean asBoolean() {
+        false
     }
 }
-
