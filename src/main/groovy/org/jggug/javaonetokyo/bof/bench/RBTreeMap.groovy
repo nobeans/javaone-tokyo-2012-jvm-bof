@@ -72,12 +72,12 @@ abstract class Node {
     String toTreeString(int level) {
         def indent = " "
         def buff = []
-        if (left) {
-            buff << left.toTreeString(level + 1)
-        }
-        buff << indent * level + (color == 1 ? 'B' : 'R') + "($key)"
         if (right) {
             buff << right.toTreeString(level + 1)
+        }
+        buff << indent * level + (color == 1 ? 'B' : 'R') + "($key)"
+        if (left) {
+            buff << left.toTreeString(level + 1)
         }
         buff.join(System.getProperty("line.separator"))
     }
