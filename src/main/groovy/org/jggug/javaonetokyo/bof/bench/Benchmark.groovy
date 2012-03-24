@@ -14,7 +14,7 @@ new BenchmarkBuilder().run(warmUpTime:0, measureCpuTime:false, verbose:true) {
         FILE.eachLine { line ->
             def (key, value, height) = line.split(",", 3)
             map.put(key, value)
-            assert map.height() == height as int
+            //assert map.height() == height as int
             //DEBUG << "${key},${value},${map.height()}\n"
             //DEBUG << "${map}\n"
         }
