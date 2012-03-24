@@ -124,7 +124,7 @@ abstract class Node {
                 node.left = rotateLeft(node.left)
             }
             if (node.left.left.color == RED) {
-                if (node.right.color == RED) {
+                if (node.left.color == RED) {
                     split(node)
                     node.shouldBlance = true
                 } else {
@@ -142,7 +142,7 @@ abstract class Node {
                 node.right = rotateRight(node.right)
             }
             if (node.right.right.color == RED) {
-                if (node.left.color == RED) {
+                if (node.right.color == RED) {
                     split(node)
                     node.shouldBlance = true
                 } else {
