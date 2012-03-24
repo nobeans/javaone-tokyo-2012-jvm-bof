@@ -47,6 +47,8 @@ abstract class Node {
     abstract int height()
 
     Node put(String key, String value) {
+        println ">"*10 + "put($key, $value)"
+        println this
         if (this == EMPTY) {
             return new FillNode(RED, key, value)
         }
@@ -82,12 +84,18 @@ abstract class Node {
         buff.join(System.getProperty("line.separator"))
     }
 
+    boolean bothChildrenBlack() {
+        left.color == BLACK && right.color == BLACK
+    }
+
     private static Node rotateRight(Node node) {
         def left = node.left
         node.left = left.right
         left.right = node
         left.color = node.color
         node.color = RED
+        println ">"*10 + "rotateRight"
+        println node
         return left
     }
 
@@ -97,6 +105,8 @@ abstract class Node {
         right.left = node
         right.color = node.color
         node.color = RED
+        println ">"*10 + "rotateLeft"
+        println node
         return right
     }
 
@@ -104,37 +114,61 @@ abstract class Node {
         node.color = RED
         node.left.color = BLACK
         node.right.color = BLACK
+        println ">"*10 + "split"
+        println node
     }
 
     private static Node rebalanceLeft(Node node) {
-        if (node.color == BLACK) {
-            if (node.left.right.color == RED) {
-                node.left = rotateLeft(node.left)
-            }
-            if (node.left.left.color == RED) {
-                if (node.right.color == RED) {
-                    split(node)
+        println ">"*10 + "rebalanceLeft:BEFORE"
+        println node
+        if (node.color == BLACK && node.left.color == RED && !node.left.bothChildrenBlack()) {
+            if (node.right.color == RED) {
+                split(node)
+            } else {
+                if (node.left.right.color == RED) {
+                    node.left = rotateLeft(node.left)
                 } else {
-                    return rotateRight(node)
+                    node = rotateRight(node)
+                }
+                if (node.color == BLACK) {
+                    if (node.right.color == RED) {
+                        return rebalanceRight(node)
+                    }
+                    if (node.left.color == RED) {
+                        return rebalanceLeft(node)
+                    }
                 }
             }
         }
+        println ">"*10 + "rebalanceLeft:AFTER"
+        println node
         return node
     }
 
     private static Node rebalanceRight(Node node) {
-        if (node.color == BLACK) {
-            if (node.right.left.color == RED) {
-                node.right = rotateRight(node.right)
-            }
-            if (node.right.right.color == RED) {
-                if (node.left.color == RED) {
-                    split(node)
+        println ">"*10 + "rebalanceRight:BEFORE"
+        println node
+        if (node.color == BLACK && node.right.color == RED && !node.right.bothChildrenBlack()) {
+            if (node.left.color == RED) {
+                split(node)
+            } else {
+                if (node.right.left.color == RED) {
+                    node.right = rotateRight(node.right)
                 } else {
-                    return rotateLeft(node)
+                    node = rotateLeft(node)
+                }
+                if (node.color == BLACK) {
+                    if (node.right.color == RED) {
+                        return rebalanceRight(node)
+                    }
+                    if (node.left.color == RED) {
+                        return rebalanceLeft(node)
+                    }
                 }
             }
         }
+        println ">"*10 + "rebalanceRight:AFTER"
+        println node
         return node
     }
 }
@@ -175,6 +209,7 @@ class EmptyNode extends Node {
     @Override
     int height() {
         1 // empty node is always black.
+        //0 // empty node shouldn't be count
     }
 
     @Override
