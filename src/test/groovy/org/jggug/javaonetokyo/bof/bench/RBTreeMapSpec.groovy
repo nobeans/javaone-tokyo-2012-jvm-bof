@@ -83,11 +83,11 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 3
-        map.toString() == '''  B(X)
-                            | R(a)
-                            |B(b)
-                            | R(c)
-                            |  R(d)'''.stripMargin()
+        map.toString() == '''  R(d)
+                            | B(c)
+                            |  R(b)
+                            |B(a)
+                            | B(X)'''.stripMargin()
     }
 
 //    def "エントリを6つ追加する。親と親の兄弟が赤の場合は、親の親を赤に、親と親の兄弟を黒に変更する"() {
