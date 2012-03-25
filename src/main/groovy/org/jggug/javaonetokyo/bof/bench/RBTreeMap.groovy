@@ -113,21 +113,23 @@ abstract class Node {
     private static Node balanceLeft(Node node) {
         //println ">"*10 + "balanceLeft:BEFORE"
         //println node
-        if (node.color == BLACK && node.left.color == RED && node.right.color == BLACK) {
-            if (node.left.right.color == RED) {
-                node.left = rotateLeft(node.left)
+        if (node.color == BLACK && node.left.color == RED) {
+            if (node.right.color == BLACK) {
+                if (node.left.right.color == RED) {
+                    node.left = rotateLeft(node.left)
+                }
+                // both are black
+                else if (node.left.left.color == BLACK) {
+                    //assert (node.left.right.color == BLACK && node.left.left.color == BLACK)
+                    return node
+                }
+                node = rotateRight(node)
             }
-            // both are black
-            else if (node.left.left.color == BLACK) {
-                //assert (node.left.right.color == BLACK && node.left.left.color == BLACK)
-                return node
+            if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
+                node.color = RED
+                node.left.color = BLACK
+                node.right.color = BLACK
             }
-            node = rotateRight(node)
-        }
-        if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
-            node.color = RED
-            node.left.color = BLACK
-            node.right.color = BLACK
         }
         //println ">"*10 + "balanceLeft:AFTER"
         //println node
@@ -137,21 +139,23 @@ abstract class Node {
     private static Node balanceRight(Node node) {
         //println ">"*10 + "balanceRight:BEFORE"
         //println node
-        if (node.color == BLACK && node.right.color == RED && node.left.color == BLACK) {
-            if (node.right.left.color == RED) {
-                node.right = rotateRight(node.right)
+        if (node.color == BLACK && node.right.color == RED) {
+            if (node.left.color == BLACK) {
+                if (node.right.left.color == RED) {
+                    node.right = rotateRight(node.right)
+                }
+                // both are black
+                else if (node.right.right.color == BLACK) {
+                    //assert (node.right.right.color == BLACK && node.right.left.color == BLACK)
+                    return node
+                }
+                node = rotateLeft(node)
             }
-            // both are black
-            else if (node.right.right.color == BLACK) {
-                //assert (node.right.right.color == BLACK && node.right.left.color == BLACK)
-                return node
+            if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
+                node.color = RED
+                node.left.color = BLACK
+                node.right.color = BLACK
             }
-            node = rotateLeft(node)
-        }
-        if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
-            node.color = RED
-            node.left.color = BLACK
-            node.right.color = BLACK
         }
         //println ">"*10 + "balanceRight:AFTER"
         //println node
