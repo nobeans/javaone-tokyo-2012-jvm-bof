@@ -85,8 +85,7 @@ abstract class Node {
     }
 
     boolean hasRedChild() {
-        //left.color == RED || right.color == RED
-        (left.color + right.color) < 2
+        left.color == RED || right.color == RED
     }
 
     private static Node rotateRight(Node node) {
