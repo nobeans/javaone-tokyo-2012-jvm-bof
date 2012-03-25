@@ -42,16 +42,18 @@ class Benchmark {
         }
 
         // benchmarking
-        new BenchmarkBuilder().run(warmUpTime:10, measureCpuTime:false, quiet:true) {
+        // MEMO: change warmUpTime and trials
+        int trials = 10
+        new BenchmarkBuilder().run(warmUpTime:15 /*sec*/, measureCpuTime:false, quiet:true) {
+            trials.times {
+                with "${file}を読み込んで赤黒木を構築する(put only)", {
+                    Benchmark.putOnly(file)
+                }
 
-            with "${file}を読み込んで赤黒木を構築する(put only)", {
-                Benchmark.putOnly(file)
+                with "${file}を読み込んで赤黒木を構築した後にチェックする(put & get)", {
+                    Benchmark.putAndGet(file)
+                }
             }
-
-            with "${file}を読み込んで赤黒木を構築した後にチェックする(put & get)", {
-                Benchmark.putAndGet(file)
-            }
-
         }.prettyPrint()
     }
 }
