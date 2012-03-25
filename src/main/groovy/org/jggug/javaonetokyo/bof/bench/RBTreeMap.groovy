@@ -87,10 +87,10 @@ abstract class Node {
 
     private static Node rotateRight(Node node) {
         def left = node.left
-        node.left = left.right
-        left.right = node
-        left.color = node.color
-        node.color = RED
+        node.setLeft(left.right)
+        left.setRight(node)
+        left.setColor(node.color)
+        node.setColor(RED)
         //println ">"*10 + "rotateRight"
         //println node
         return left
@@ -98,10 +98,10 @@ abstract class Node {
 
     private static Node rotateLeft(Node node) {
         def right = node.right
-        node.right = right.left
-        right.left = node
-        right.color = node.color
-        node.color = RED
+        node.setRight(right.left)
+        right.setLeft(node)
+        right.setColor(node.color)
+        node.setColor(RED)
         //println ">"*10 + "rotateLeft"
         //println node
         return right
@@ -110,22 +110,24 @@ abstract class Node {
     private static Node balanceLeft(Node node) {
         //println ">"*10 + "balanceLeft:BEFORE"
         //println node
-        if (node.color == BLACK && node.left.color == RED) {
+        Node right = node.right
+        Node left = node.left
+        if (node.color == BLACK && left.color == RED) {
             if (node.right.color == BLACK) {
-                if (node.left.right.color == RED) {
-                    node.left = rotateLeft(node.left)
+                if (left.right.color == RED) {
+                    node.setLeft(rotateLeft(left))
                 }
                 // both are black
-                else if (node.left.left.color == BLACK) {
+                else if (left.left.color == BLACK) {
                     //assert (node.left.right.color == BLACK && node.left.left.color == BLACK)
                     return node
                 }
                 node = rotateRight(node)
             }
             if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
-                node.color = RED
-                node.left.color = BLACK
-                node.right.color = BLACK
+                node.setColor(RED)
+                node.left.setColor(BLACK)
+                node.right.setColor(BLACK)
             }
         }
         //println ">"*10 + "balanceLeft:AFTER"
@@ -136,22 +138,24 @@ abstract class Node {
     private static Node balanceRight(Node node) {
         //println ">"*10 + "balanceRight:BEFORE"
         //println node
-        if (node.color == BLACK && node.right.color == RED) {
-            if (node.left.color == BLACK) {
-                if (node.right.left.color == RED) {
-                    node.right = rotateRight(node.right)
+        Node right = node.right
+        Node left = node.left
+        if (node.color == BLACK && right.color == RED) {
+            if (left.color == BLACK) {
+                if (right.left.color == RED) {
+                    node.setRight(rotateRight(right))
                 }
                 // both are black
-                else if (node.right.right.color == BLACK) {
+                else if (right.right.color == BLACK) {
                     //assert (node.right.right.color == BLACK && node.right.left.color == BLACK)
                     return node
                 }
                 node = rotateLeft(node)
             }
             if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
-                node.color = RED
-                node.left.color = BLACK
-                node.right.color = BLACK
+                node.setColor(RED)
+                node.left.setColor(BLACK)
+                node.right.setColor(BLACK)
             }
         }
         //println ">"*10 + "balanceRight:AFTER"
@@ -161,9 +165,11 @@ abstract class Node {
 
     static Node balanceAsRoot(Node node) {
         node.color = BLACK
-        if (node.right.color == RED && node.left.color == RED) {
-            node.left.color = BLACK
-            node.right.color = BLACK
+        Node right = node.right
+        Node left = node.left
+        if (right.color == RED && left.color == RED) {
+            left.color = BLACK
+            right.color = BLACK
         }
         return node
     }
