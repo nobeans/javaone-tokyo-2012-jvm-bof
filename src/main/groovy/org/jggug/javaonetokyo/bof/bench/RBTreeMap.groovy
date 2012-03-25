@@ -85,7 +85,8 @@ abstract class Node {
     }
 
     boolean hasRedChild() {
-        left.color == RED || right.color == RED
+        //left.color == RED || right.color == RED
+        (left.color + right.color) < 2
     }
 
     private static Node rotateRight(Node node) {
@@ -110,12 +111,13 @@ abstract class Node {
         return right
     }
 
-    private static void split(Node node) {
+    private static Node split(Node node) {
         node.color = RED
         node.left.color = BLACK
         node.right.color = BLACK
         //println ">"*10 + "split"
         //println node
+        return node
     }
 
     private static Node balanceLeft(Node node) {
@@ -123,7 +125,7 @@ abstract class Node {
         //println node
         if (node.color == BLACK && node.left.color == RED && node.left.hasRedChild()) {
             if (node.right.color == RED) {
-                split(node)
+                return split(node)
             } else {
                 if (node.left.right.color == RED) {
                     node.left = rotateLeft(node.left)
@@ -143,7 +145,7 @@ abstract class Node {
         //println node
         if (node.color == BLACK && node.right.color == RED && node.right.hasRedChild()) {
             if (node.left.color == RED) {
-                split(node)
+                return split(node)
             } else {
                 if (node.right.left.color == RED) {
                     node.right = rotateRight(node.right)
@@ -160,14 +162,14 @@ abstract class Node {
 
     private static Node rebalance(Node node) {
         if (node.color == BLACK) {
-            if (node.right.color == RED && node.left.color == RED) {
-                split(node)
-                return node
+            boolean isRightRed = node.right.color == RED
+            boolean isLeftRed = node.left.color == RED
+            if (isRightRed && isLeftRed) {
+                return split(node)
             }
-            if (node.right.color == RED) {
+            if (isRightRed) {
                 return balanceRight(node)
-            }
-            if (node.left.color == RED) {
+            } else {
                 return balanceLeft(node)
             }
         }
