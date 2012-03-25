@@ -84,10 +84,6 @@ abstract class Node {
         buff.join(System.getProperty("line.separator"))
     }
 
-    boolean hasRedChild() {
-        left.color == RED || right.color == RED
-    }
-
     private static Node rotateRight(Node node) {
         def left = node.left
         node.left = left.right
