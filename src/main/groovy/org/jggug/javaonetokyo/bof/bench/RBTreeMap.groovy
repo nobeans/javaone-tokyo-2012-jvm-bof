@@ -111,15 +111,6 @@ abstract class Node {
         return right
     }
 
-    private static Node split(Node node) {
-        node.color = RED
-        node.left.color = BLACK
-        node.right.color = BLACK
-        //println ">"*10 + "split"
-        //println node
-        return node
-    }
-
     private static Node balanceLeft(Node node) {
         //println ">"*10 + "balanceLeft:BEFORE"
         //println node
@@ -135,7 +126,9 @@ abstract class Node {
             node = rotateRight(node)
         }
         if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
-            node = split(node)
+            node.color = RED
+            node.left.color = BLACK
+            node.right.color = BLACK
         }
         //println ">"*10 + "balanceLeft:AFTER"
         //println node
@@ -157,7 +150,9 @@ abstract class Node {
             node = rotateLeft(node)
         }
         if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
-            node = split(node)
+            node.color = RED
+            node.left.color = BLACK
+            node.right.color = BLACK
         }
         //println ">"*10 + "balanceRight:AFTER"
         //println node
@@ -167,8 +162,7 @@ abstract class Node {
     static Node balanceAsRoot(node) {
         node.color = BLACK
         if (node.right.color == RED && node.left.color == RED) {
-            node.left.color = BLACK
-            node.right.color = BLACK
+            node.left.color = node.right.color = BLACK
         }
         return node
     }
