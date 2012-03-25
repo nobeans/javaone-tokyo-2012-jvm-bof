@@ -165,6 +165,12 @@ abstract class Node {
 }
 
 class FillNode extends Node {
+    FillNode(int color, String key, String value) {
+        setColor(color)
+        setKey(key)
+        setValue(value)
+    }
+
     @Override
     String get(String key) {
         int compare = (this.key <=> key)
@@ -182,7 +188,7 @@ class FillNode extends Node {
 class EmptyNode extends Node {
     @Override
     Node put(String key, String value) {
-        return new FillNode(color:RED, key:key, value:value)
+        return new FillNode(RED, key, value)
     }
 
     @Override
