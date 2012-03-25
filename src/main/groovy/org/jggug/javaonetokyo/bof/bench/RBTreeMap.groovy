@@ -127,13 +127,12 @@ abstract class Node {
             if (node.left.right.color == RED) {
                 node.left = rotateLeft(node.left)
             } else {
-                if (node.left.left.color == RED) {
-                    node = rotateRight(node)
-                } else {
+                if (node.left.left.color == BLACK) {
                     //assert !(node.right.right.color == RED && node.right.left.color == RED)
                     return node
                 }
             }
+            node = rotateRight(node)
             node = balanceLeft(node)
         }
         if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
@@ -151,13 +150,12 @@ abstract class Node {
             if (node.right.left.color == RED) {
                 node.right = rotateRight(node.right)
             } else {
-                if (node.right.right.color == RED) {
-                    node = rotateLeft(node)
-                } else {
+                if (node.right.right.color == BLACK) {
                     //assert !(node.right.right.color == RED && node.right.left.color == RED)
                     return node
                 }
             }
+            node = rotateLeft(node)
             node = balanceRight(node)
         }
         if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
