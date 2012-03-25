@@ -34,9 +34,9 @@ class RBTreeMap {
 }
 
 abstract class Node {
-    private final static int BLACK = 1
-    private final static int RED = 0
-    final static Node EMPTY = new EmptyNode(color:BLACK)
+    protected final static int BLACK = 1
+    protected final static int RED = 0
+    protected final static Node EMPTY = new EmptyNode(color:BLACK)
 
     int color
     String key
@@ -50,9 +50,6 @@ abstract class Node {
     Node put(String key, String value) {
         //println ">"*10 + "put($key, $value)"
         //println this
-        if (this == EMPTY) {
-            return new FillNode(color:RED, key:key, value:value)
-        }
         switch (this.key <=> key) {
             case  0:
                 this.value = value
@@ -186,6 +183,11 @@ class FillNode extends Node {
 }
 
 class EmptyNode extends Node {
+    @Override
+    Node put(String key, String value) {
+        return new FillNode(color:RED, key:key, value:value)
+    }
+
     @Override
     String get(String key) {
         null
