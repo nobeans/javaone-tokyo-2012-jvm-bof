@@ -3,7 +3,7 @@ package org.jggug.javaonetokyo.bof.bench
 import gbench.*
 
 final FILE = new File("src/main/resources/rbtree_map_input.csv")
-//final DEBUG = new File("/tmp/rbtree_map_input.csv")
+final DEBUG = new File("/tmp/rbtree_map_input.csv")
 
 new BenchmarkBuilder().run(warmUpTime:10, measureCpuTime:false, verbose:true) {
 
