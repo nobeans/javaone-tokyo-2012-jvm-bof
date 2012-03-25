@@ -10,10 +10,7 @@ class RBTreeMap {
     void put(String key, String value) {
         if (key == null) throw new IAE("key is null")
         root = root.put(key, value)
-
-        root.color = Node.BLACK
-        Node.rebalance(root)
-        root.color = Node.BLACK
+        root = Node.balanceAsRoot(root)
     }
 
     String get(String key) {
@@ -161,7 +158,7 @@ abstract class Node {
         return node
     }
 
-    static rebalance(Node node) {
+    private static Node rebalance(Node node) {
         if (node.color == BLACK) {
             if (node.right.color == RED && node.left.color == RED) {
                 split(node)
@@ -174,6 +171,13 @@ abstract class Node {
                 return rebalanceLeft(node)
             }
         }
+        return node
+    }
+
+    private static Node balanceAsRoot(node) {
+        node.color = BLACK
+        node = Node.rebalance(node)
+        node.color = BLACK
         return node
     }
 }
