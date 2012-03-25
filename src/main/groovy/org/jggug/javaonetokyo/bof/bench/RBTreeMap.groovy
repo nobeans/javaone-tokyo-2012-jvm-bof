@@ -1,3 +1,4 @@
+@Typed
 package org.jggug.javaonetokyo.bof.bench
 
 import java.lang.IllegalArgumentException as IAE
@@ -74,11 +75,11 @@ abstract class Node {
     String toTreeString(int level) {
         def indent = " "
         def buff = []
-        if (right) {
+        if (right instanceof FillNode) {
             buff << right.toTreeString(level + 1)
         }
         buff << indent * level + (color == 1 ? 'B' : 'R') + "($key)"
-        if (left) {
+        if (left instanceof FillNode) {
             buff << left.toTreeString(level + 1)
         }
         buff.join(System.getProperty("line.separator"))
@@ -158,7 +159,7 @@ abstract class Node {
         return node
     }
 
-    static Node balanceAsRoot(node) {
+    static Node balanceAsRoot(Node node) {
         node.color = BLACK
         if (node.right.color == RED && node.left.color == RED) {
             node.left.color = BLACK
@@ -194,9 +195,5 @@ class EmptyNode extends Node {
     @Override
     int height() {
         0 // empty node shouldn't be count
-    }
-
-    boolean asBoolean() {
-        false
     }
 }
