@@ -33,10 +33,10 @@ class RBTreeMap {
     }
 }
 
-abstract class Node {
+class Node {
     protected final static int BLACK = 1
     protected final static int RED = 0
-    protected final static Node EMPTY = new EmptyNode(color:BLACK)
+    protected final static Node EMPTY = new Node(color:BLACK)
 
     int color
     String key
@@ -44,12 +44,31 @@ abstract class Node {
     Node left = EMPTY
     Node right = EMPTY
 
-    abstract String get(String key)
-    abstract int height()
+    String get(String key) {
+        if (this == EMPTY) {
+            return null
+        }
+        switch (this.key <=> key) {
+            case  0: return value
+            case  1: return left.get(key)
+            case -1: return right.get(key)
+        }
+        assert false
+    }
+
+    int height() {
+        if (this == EMPTY) {
+            return 0
+        }
+        left.height() + color // because of BLACK = 1 and RED = 0
+    }
 
     Node put(String key, String value) {
         //println ">"*10 + "put($key, $value)"
         //println this
+        if (this == EMPTY) {
+            return new Node(color:RED, key:key, value:value)
+        }
         switch (this.key <=> key) {
             case  0:
                 this.value = value
@@ -74,11 +93,11 @@ abstract class Node {
     String toTreeString(int level) {
         def indent = " "
         def buff = []
-        if (right instanceof FillNode) {
+        if (right != null && right != EMPTY) {
             buff << right.toTreeString(level + 1)
         }
         buff << indent * level + (color == BLACK ? 'B' : 'R') + "($key)"
-        if (left instanceof FillNode) {
+        if (left != null && left != EMPTY) {
             buff << left.toTreeString(level + 1)
         }
         buff.join(System.getProperty("line.separator"))
@@ -162,39 +181,5 @@ abstract class Node {
         //println ">"*10 + "balanceRight:AFTER"
         //println node
         return node
-    }
-}
-
-class FillNode extends Node {
-    @Override
-    String get(String key) {
-        switch (this.key <=> key) {
-            case  0: return value
-            case  1: return left.get(key)
-            case -1: return right.get(key)
-        }
-        assert false
-    }
-
-    @Override
-    int height() {
-        left.height() + color // because of BLACK = 1 and RED = 0
-    }
-}
-
-class EmptyNode extends Node {
-    @Override
-    Node put(String key, String value) {
-        return new FillNode(color:RED, key:key, value:value)
-    }
-
-    @Override
-    String get(String key) {
-        null
-    }
-
-    @Override
-    int height() {
-        0 // empty node shouldn't be count
     }
 }
