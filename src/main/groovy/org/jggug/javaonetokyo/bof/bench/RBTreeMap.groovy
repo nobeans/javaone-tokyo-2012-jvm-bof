@@ -11,7 +11,7 @@ class RBTreeMap {
     void put(String key, String value) {
         if (key == null) throw new IAE("key is null")
         root = root.put(key, value)
-        Node.balanceAsRoot(root)
+        root.toRootColor()
     }
 
     String get(String key) {
@@ -67,12 +67,7 @@ abstract class Node {
         assert false
     }
 
-    boolean isBlack() {
-        color == BLACK
-    }
-    boolean isRed() {
-        color == RED
-    }
+    void toRootColor() { setColor(BLACK) }
 
     @Override
     String toString() {
@@ -85,7 +80,7 @@ abstract class Node {
         if (right instanceof FillNode) {
             buff << right.toTreeString(level + 1)
         }
-        buff << indent * level + (isBlack() ? 'B' : 'R') + "($key)"
+        buff << indent * level + (color == BLACK ? 'B' : 'R') + "($key)"
         if (left instanceof FillNode) {
             buff << left.toTreeString(level + 1)
         }
@@ -119,22 +114,23 @@ abstract class Node {
         //println node
         Node right = node.right
         Node left = node.left
-        if (node.isBlack() && left.isRed()) {
-            if (node.right.isBlack()) {
-                if (left.right.isRed()) {
+        if (node.color == BLACK && left.color == RED) {
+            if (right.color == BLACK) {
+                if (left.right.color == RED) {
                     node.setLeft(rotateLeft(left))
                 }
                 // both are black
-                else if (left.left.isBlack()) {
-                    //assert (node.left.right.isBlack() && node.left.left.isBlack())
+                else if (left.left.color == BLACK) {
                     return node
                 }
                 node = rotateRight(node)
             }
-            if (node.isBlack() && node.right.isRed() && node.left.isRed()) {
+            right = node.right
+            left = node.left
+            if (node.color == BLACK && right.color == RED && left.color == RED) {
                 node.setColor(RED)
-                node.left.setColor(BLACK)
-                node.right.setColor(BLACK)
+                left.setColor(BLACK)
+                right.setColor(BLACK)
             }
         }
         //println ">"*10 + "balanceLeft:AFTER"
@@ -147,37 +143,28 @@ abstract class Node {
         //println node
         Node right = node.right
         Node left = node.left
-        if (node.isBlack() && right.isRed()) {
-            if (left.isBlack()) {
-                if (right.left.isRed()) {
+        if (node.color == BLACK && right.color == RED) {
+            if (left.color == BLACK) {
+                if (right.left.color == RED) {
                     node.setRight(rotateRight(right))
                 }
                 // both are black
-                else if (right.right.isBlack()) {
-                    //assert (node.right.right.isBlack() && node.right.left.isBlack())
+                else if (right.right.color == BLACK) {
                     return node
                 }
                 node = rotateLeft(node)
             }
-            if (node.isBlack() && node.right.isRed() && node.left.isRed()) {
+            right = node.right
+            left = node.left
+            if (node.color == BLACK && right.color == RED && left.color == RED) {
                 node.setColor(RED)
-                node.left.setColor(BLACK)
-                node.right.setColor(BLACK)
+                left.setColor(BLACK)
+                right.setColor(BLACK)
             }
         }
         //println ">"*10 + "balanceRight:AFTER"
         //println node
         return node
-    }
-
-    static void balanceAsRoot(Node node) {
-        node.setColor(BLACK)
-        Node right = node.right
-        Node left = node.left
-        if (right.isRed() && left.isRed()) {
-            left.setColor(BLACK)
-            right.setColor(BLACK)
-        }
     }
 }
 
