@@ -123,22 +123,21 @@ abstract class Node {
     private static Node balanceLeft(Node node) {
         //println ">"*10 + "balanceLeft:BEFORE"
         //println node
-        if (node.color == BLACK && node.left.color == RED) {
-            if (node.right.color == RED && node.left.hasRedChild()) {
-                node = split(node)
+        if (node.color == BLACK && node.left.color == RED && node.right.color == BLACK) {
+            if (node.left.right.color == RED) {
+                node.left = rotateLeft(node.left)
             } else {
-                if (node.left.hasRedChild()) {
-                    if (node.left.right.color == RED) {
-                        node.left = rotateLeft(node.left)
-                    } else {
-                        node = rotateRight(node)
-                    }
-                    if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
-                        node = split(node)
-                    }
-                    return balanceLeft(node)
+                if (node.left.left.color == RED) {
+                    node = rotateRight(node)
+                } else {
+                    //assert !(node.right.right.color == RED && node.right.left.color == RED)
+                    return node
                 }
             }
+            node = balanceLeft(node)
+        }
+        if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
+            node = split(node)
         }
         //println ">"*10 + "balanceLeft:AFTER"
         //println node
