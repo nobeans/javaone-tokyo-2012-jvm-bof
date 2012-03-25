@@ -67,6 +67,13 @@ abstract class Node {
         assert false
     }
 
+    boolean isBlack() {
+        color == BLACK
+    }
+    boolean isRed() {
+        color == RED
+    }
+
     @Override
     String toString() {
         toTreeString(0)
@@ -78,7 +85,7 @@ abstract class Node {
         if (right instanceof FillNode) {
             buff << right.toTreeString(level + 1)
         }
-        buff << indent * level + (color == 1 ? 'B' : 'R') + "($key)"
+        buff << indent * level + (isBlack() ? 'B' : 'R') + "($key)"
         if (left instanceof FillNode) {
             buff << left.toTreeString(level + 1)
         }
@@ -112,19 +119,19 @@ abstract class Node {
         //println node
         Node right = node.right
         Node left = node.left
-        if (node.color == BLACK && left.color == RED) {
-            if (node.right.color == BLACK) {
-                if (left.right.color == RED) {
+        if (node.isBlack() && left.isRed()) {
+            if (node.right.isBlack()) {
+                if (left.right.isRed()) {
                     node.setLeft(rotateLeft(left))
                 }
                 // both are black
-                else if (left.left.color == BLACK) {
-                    //assert (node.left.right.color == BLACK && node.left.left.color == BLACK)
+                else if (left.left.isBlack()) {
+                    //assert (node.left.right.isBlack() && node.left.left.isBlack())
                     return node
                 }
                 node = rotateRight(node)
             }
-            if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
+            if (node.isBlack() && node.right.isRed() && node.left.isRed()) {
                 node.setColor(RED)
                 node.left.setColor(BLACK)
                 node.right.setColor(BLACK)
@@ -140,19 +147,19 @@ abstract class Node {
         //println node
         Node right = node.right
         Node left = node.left
-        if (node.color == BLACK && right.color == RED) {
-            if (left.color == BLACK) {
-                if (right.left.color == RED) {
+        if (node.isBlack() && right.isRed()) {
+            if (left.isBlack()) {
+                if (right.left.isRed()) {
                     node.setRight(rotateRight(right))
                 }
                 // both are black
-                else if (right.right.color == BLACK) {
-                    //assert (node.right.right.color == BLACK && node.right.left.color == BLACK)
+                else if (right.right.isBlack()) {
+                    //assert (node.right.right.isBlack() && node.right.left.isBlack())
                     return node
                 }
                 node = rotateLeft(node)
             }
-            if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
+            if (node.isBlack() && node.right.isRed() && node.left.isRed()) {
                 node.setColor(RED)
                 node.left.setColor(BLACK)
                 node.right.setColor(BLACK)
@@ -167,7 +174,7 @@ abstract class Node {
         node.setColor(BLACK)
         Node right = node.right
         Node left = node.left
-        if (right.color == RED && left.color == RED) {
+        if (right.isRed() && left.isRed()) {
             left.setColor(BLACK)
             right.setColor(BLACK)
         }
