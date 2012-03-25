@@ -50,18 +50,17 @@ abstract class Node {
     Node put(String key, String value) {
         //println ">"*10 + "put($key, $value)"
         //println this
-        switch (this.key <=> key) {
-            case  0:
-                this.value = value
-                return this
-            case  1:
-                left = left.put(key, value)
-                return balanceLeft(this)
-            case -1:
-                right = right.put(key, value)
-                return balanceRight(this)
+        int compare = (this.key <=> key)
+        if (compare > 0) {
+            left = left.put(key, value)
+            return balanceLeft(this)
         }
-        assert false
+        if (compare < 0) {
+            right = right.put(key, value)
+            return balanceRight(this)
+        }
+        this.value = value
+        return this
     }
 
     void toRootColor() { setColor(BLACK) }
@@ -168,12 +167,10 @@ abstract class Node {
 class FillNode extends Node {
     @Override
     String get(String key) {
-        switch (this.key <=> key) {
-            case  0: return value
-            case  1: return left.get(key)
-            case -1: return right.get(key)
-        }
-        assert false
+        int compare = (this.key <=> key)
+        if (compare > 0) return left.get(key)
+        if (compare < 0) return right.get(key)
+        return value
     }
 
     @Override
