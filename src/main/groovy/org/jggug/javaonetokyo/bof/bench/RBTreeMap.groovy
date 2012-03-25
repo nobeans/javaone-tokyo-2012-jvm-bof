@@ -166,24 +166,11 @@ abstract class Node {
         return node
     }
 
-    private static Node rebalance(Node node) {
-        if (node.color == BLACK) {
-            if (node.right.color == RED) {
-                if (node.left.color == RED) {
-                    return split(node)
-                } else {
-                    return balanceRight(node)
-                }
-            } else {
-                return balanceLeft(node)
-            }
-        }
-        return node
-    }
-
     static Node balanceAsRoot(node) {
-        node.color = BLACK
-        node = Node.rebalance(node)
+        if (node.right.color == RED && node.left.color == RED) {
+            node.left.color = BLACK
+            node.right.color = BLACK
+        }
         node.color = BLACK
         return node
     }
