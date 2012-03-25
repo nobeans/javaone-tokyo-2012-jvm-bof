@@ -161,7 +161,8 @@ abstract class Node {
     static Node balanceAsRoot(node) {
         node.color = BLACK
         if (node.right.color == RED && node.left.color == RED) {
-            node.left.color = node.right.color = BLACK
+            node.left.color = BLACK
+            node.right.color = BLACK
         }
         return node
     }
