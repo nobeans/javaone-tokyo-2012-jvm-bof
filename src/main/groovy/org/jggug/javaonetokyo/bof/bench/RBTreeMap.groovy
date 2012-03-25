@@ -10,6 +10,9 @@ class RBTreeMap {
     void put(String key, String value) {
         if (key == null) throw new IAE("key is null")
         root = root.put(key, value)
+
+        root.color = Node.BLACK
+        Node.rebalance(root)
         root.color = Node.BLACK
     }
 
@@ -84,8 +87,8 @@ abstract class Node {
         buff.join(System.getProperty("line.separator"))
     }
 
-    boolean bothChildrenBlack() {
-        left.color == BLACK && right.color == BLACK
+    boolean hasRedChild() {
+        left.color == RED || right.color == RED
     }
 
     private static Node rotateRight(Node node) {
@@ -121,7 +124,7 @@ abstract class Node {
     private static Node rebalanceLeft(Node node) {
         //println ">"*10 + "rebalanceLeft:BEFORE"
         //println node
-        if (node.color == BLACK && node.left.color == RED && !node.left.bothChildrenBlack()) {
+        if (node.color == BLACK && node.left.color == RED && node.left.hasRedChild()) {
             if (node.right.color == RED) {
                 split(node)
             } else {
@@ -130,14 +133,7 @@ abstract class Node {
                 } else {
                     node = rotateRight(node)
                 }
-                if (node.color == BLACK) {
-                    if (node.right.color == RED) {
-                        return rebalanceRight(node)
-                    }
-                    if (node.left.color == RED) {
-                        return rebalanceLeft(node)
-                    }
-                }
+                return rebalance(node)
             }
         }
         //println ">"*10 + "rebalanceLeft:AFTER"
@@ -148,7 +144,7 @@ abstract class Node {
     private static Node rebalanceRight(Node node) {
         //println ">"*10 + "rebalanceRight:BEFORE"
         //println node
-        if (node.color == BLACK && node.right.color == RED && !node.right.bothChildrenBlack()) {
+        if (node.color == BLACK && node.right.color == RED && node.right.hasRedChild()) {
             if (node.left.color == RED) {
                 split(node)
             } else {
@@ -157,18 +153,27 @@ abstract class Node {
                 } else {
                     node = rotateLeft(node)
                 }
-                if (node.color == BLACK) {
-                    if (node.right.color == RED) {
-                        return rebalanceRight(node)
-                    }
-                    if (node.left.color == RED) {
-                        return rebalanceLeft(node)
-                    }
-                }
+                return rebalance(node)
             }
         }
         //println ">"*10 + "rebalanceRight:AFTER"
         //println node
+        return node
+    }
+
+    static rebalance(Node node) {
+        if (node.color == BLACK) {
+            if (node.right.color == RED && node.left.color == RED) {
+                split(node)
+                return node
+            }
+            if (node.right.color == RED) {
+                return rebalanceRight(node)
+            }
+            if (node.left.color == RED) {
+                return rebalanceLeft(node)
+            }
+        }
         return node
     }
 }
@@ -211,7 +216,6 @@ class EmptyNode extends Node {
         0 // empty node shouldn't be count
     }
 
-    @Override
     boolean asBoolean() {
         false
     }

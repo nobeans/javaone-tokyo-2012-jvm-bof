@@ -52,10 +52,10 @@ class RdBTreeMapSpec extends Specification {
         map.put('X', 'Value of X')
 
         then:
-        map.height() == 1
-        map.toString() == ''' R(b)
+        map.height() == 2
+        map.toString() == ''' B(b)
                             |B(a)
-                            | R(X)'''.stripMargin()
+                            | B(X)'''.stripMargin()
     }
 
     def "エントリを4つ追加する。親と親の兄弟が両方とも赤の場合は、親の親を赤に、親と親の兄弟を黒に変更する。ただし親の親が根の場合は黒のままとする。"() {
@@ -116,10 +116,10 @@ class RdBTreeMapSpec extends Specification {
         map.put('c', 'Value of c')
 
         then:
-        map.height() == 1
-        map.toString() == ''' R(c)
+        map.height() == 2
+        map.toString() == ''' B(c)
                             |B(b)
-                            | R(a)'''.stripMargin()
+                            | B(a)'''.stripMargin()
     }
 
     def "エントリを3つ追加する。直列に偏るように追加されると平衡化を行う。左、左"() {
@@ -129,10 +129,10 @@ class RdBTreeMapSpec extends Specification {
         map.put('a', 'Value of a')
 
         then:
-        map.height() == 1
-        map.toString() == ''' R(c)
+        map.height() == 2
+        map.toString() == ''' B(c)
                             |B(b)
-                            | R(a)'''.stripMargin()
+                            | B(a)'''.stripMargin()
     }
 
     def "エントリを3つ追加する。直列に偏るように追加されると平衡化を行う。右、左"() {
@@ -142,10 +142,10 @@ class RdBTreeMapSpec extends Specification {
         map.put('b', 'Value of b')
 
         then:
-        map.height() == 1
-        map.toString() == ''' R(c)
+        map.height() == 2
+        map.toString() == ''' B(c)
                             |B(b)
-                            | R(a)'''.stripMargin()
+                            | B(a)'''.stripMargin()
     }
 
     def "エントリを3つ追加する。直列に偏るように追加されると平衡化を行う。左、右"() {
@@ -155,10 +155,10 @@ class RdBTreeMapSpec extends Specification {
         map.put('b', 'Value of b')
 
         then:
-        map.height() == 1
-        map.toString() == ''' R(c)
+        map.height() == 2
+        map.toString() == ''' B(c)
                             |B(b)
-                            | R(a)'''.stripMargin()
+                            | B(a)'''.stripMargin()
     }
 
     def "右側にエントリを4つ追加する"() {
@@ -186,9 +186,9 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 2
-        map.toString() == '''  R(e)
-                            | B(d)
-                            |  R(c)
+        map.toString() == '''  B(e)
+                            | R(d)
+                            |  B(c)
                             |B(b)
                             | B(a)'''.stripMargin()
     }
@@ -223,14 +223,14 @@ class RdBTreeMapSpec extends Specification {
         map.put('g', 'Value of g')
 
         then:
-        map.height() == 2
-        map.toString() == '''   R(g)
-                            |  B(f)
-                            |   R(e)
-                            | R(d)
+        map.height() == 3
+        map.toString() == '''  B(g)
+                            | B(f)
+                            |  B(e)
+                            |B(d)
                             |  B(c)
-                            |B(b)
-                            | B(a)'''.stripMargin()
+                            | B(b)
+                            |  B(a)'''.stripMargin()
     }
 
     def "右側にエントリを8つ追加する"() {
@@ -245,14 +245,14 @@ class RdBTreeMapSpec extends Specification {
         map.put('h', 'Value of h')
 
         then:
-        map.height() == 2
+        map.height() == 3
         map.toString() == '''   R(h)
                             |  B(g)
-                            | R(f)
+                            | B(f)
                             |  B(e)
                             |B(d)
                             |  B(c)
-                            | R(b)
+                            | B(b)
                             |  B(a)'''.stripMargin()
     }
 
