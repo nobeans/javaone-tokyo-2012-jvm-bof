@@ -58,10 +58,10 @@ abstract class Node {
                 return this
             case  1:
                 left = left.put(key, value)
-                return rebalanceLeft(this)
+                return balanceLeft(this)
             case -1:
                 right = right.put(key, value)
-                return rebalanceRight(this)
+                return balanceRight(this)
         }
         assert false
     }
@@ -118,8 +118,8 @@ abstract class Node {
         //println node
     }
 
-    private static Node rebalanceLeft(Node node) {
-        //println ">"*10 + "rebalanceLeft:BEFORE"
+    private static Node balanceLeft(Node node) {
+        //println ">"*10 + "balanceLeft:BEFORE"
         //println node
         if (node.color == BLACK && node.left.color == RED && node.left.hasRedChild()) {
             if (node.right.color == RED) {
@@ -133,13 +133,13 @@ abstract class Node {
                 return rebalance(node)
             }
         }
-        //println ">"*10 + "rebalanceLeft:AFTER"
+        //println ">"*10 + "balanceLeft:AFTER"
         //println node
         return node
     }
 
-    private static Node rebalanceRight(Node node) {
-        //println ">"*10 + "rebalanceRight:BEFORE"
+    private static Node balanceRight(Node node) {
+        //println ">"*10 + "balanceRight:BEFORE"
         //println node
         if (node.color == BLACK && node.right.color == RED && node.right.hasRedChild()) {
             if (node.left.color == RED) {
@@ -153,7 +153,7 @@ abstract class Node {
                 return rebalance(node)
             }
         }
-        //println ">"*10 + "rebalanceRight:AFTER"
+        //println ">"*10 + "balanceRight:AFTER"
         //println node
         return node
     }
@@ -165,10 +165,10 @@ abstract class Node {
                 return node
             }
             if (node.right.color == RED) {
-                return rebalanceRight(node)
+                return balanceRight(node)
             }
             if (node.left.color == RED) {
-                return rebalanceLeft(node)
+                return balanceLeft(node)
             }
         }
         return node
