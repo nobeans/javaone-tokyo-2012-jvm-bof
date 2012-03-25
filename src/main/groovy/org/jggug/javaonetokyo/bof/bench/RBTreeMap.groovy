@@ -126,14 +126,13 @@ abstract class Node {
         if (node.color == BLACK && node.left.color == RED && node.right.color == BLACK) {
             if (node.left.right.color == RED) {
                 node.left = rotateLeft(node.left)
-            } else {
-                if (node.left.left.color == BLACK) {
-                    //assert !(node.right.right.color == RED && node.right.left.color == RED)
-                    return node
-                }
+            }
+            // both are black
+            else if (node.left.left.color == BLACK) {
+                //assert (node.left.right.color == BLACK && node.left.left.color == BLACK)
+                return node
             }
             node = rotateRight(node)
-            node = balanceLeft(node)
         }
         if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
             node = split(node)
@@ -149,14 +148,13 @@ abstract class Node {
         if (node.color == BLACK && node.right.color == RED && node.left.color == BLACK) {
             if (node.right.left.color == RED) {
                 node.right = rotateRight(node.right)
-            } else {
-                if (node.right.right.color == BLACK) {
-                    //assert !(node.right.right.color == RED && node.right.left.color == RED)
-                    return node
-                }
+            }
+            // both are black
+            else if (node.right.right.color == BLACK) {
+                //assert (node.right.right.color == BLACK && node.right.left.color == BLACK)
+                return node
             }
             node = rotateLeft(node)
-            node = balanceRight(node)
         }
         if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
             node = split(node)
