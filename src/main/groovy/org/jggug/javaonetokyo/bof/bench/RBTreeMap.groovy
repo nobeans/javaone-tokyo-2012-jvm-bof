@@ -50,7 +50,7 @@ abstract class Node {
         //println ">"*10 + "put($key, $value)"
         //println this
         if (this == EMPTY) {
-            return new FillNode(RED, key, value)
+            return new FillNode(color:RED, key:key, value:value)
         }
         switch (this.key <=> key) {
             case  0:
@@ -169,12 +169,6 @@ abstract class Node {
 }
 
 class FillNode extends Node {
-    FillNode(int color, String key, String value) {
-        this.color = color
-        this.key = key
-        this.value = value
-    }
-
     @Override
     String get(String key) {
         switch (this.key <=> key) {
