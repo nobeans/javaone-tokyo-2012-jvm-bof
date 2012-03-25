@@ -1,8 +1,6 @@
 apply plugin:'groovy'
-apply plugin:'application'
 
 defaultTasks 'clean', 'test'
-mainClassName = "org.jggug.javaonetokyo.bof.bench.Benchmark"
 
 repositories {
     mavenCentral()
@@ -10,7 +8,7 @@ repositories {
     mavenRepo name:"groovypp", url:"http://groovypp.artifactoryonline.com/groovypp/libs-releases-local"
 }
 dependencies {
-//    groovy 'org.codehaus.groovy:groovy:1.8.6'
+    //groovy 'org.codehaus.groovy:groovy:1.8.6'
     testCompile 'org.spockframework:spock-core:0.5-groovy-1.8', {
         exclude group:'org.codehaus.groovy', module:'groovy-all'
     }
@@ -36,4 +34,9 @@ compileTestGroovy {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.0-milestone-9'
+}
+
+task benchmark(dependsOn: 'classes', type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = "org.jggug.javaonetokyo.bof.bench.Benchmark"
 }
