@@ -123,20 +123,22 @@ abstract class Node {
     private static Node balanceLeft(Node node) {
         //println ">"*10 + "balanceLeft:BEFORE"
         //println node
-        if (node.color == BLACK && node.left.color == RED && node.left.hasRedChild()) {
-            if (node.right.color == RED) {
+        if (node.color == BLACK && node.left.color == RED) {
+            if (node.right.color == RED && node.left.hasRedChild()) {
                 node = split(node)
             } else {
-                if (node.left.right.color == RED) {
-                    node.left = rotateLeft(node.left)
-                } else {
-                    node = rotateRight(node)
-                }
-                if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
-                    node = split(node)
+                if (node.left.hasRedChild()) {
+                    if (node.left.right.color == RED) {
+                        node.left = rotateLeft(node.left)
+                    } else {
+                        node = rotateRight(node)
+                    }
+                    if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
+                        node = split(node)
+                    }
+                    return balanceLeft(node)
                 }
             }
-            return balanceLeft(node)
         }
         //println ">"*10 + "balanceLeft:AFTER"
         //println node
@@ -146,20 +148,21 @@ abstract class Node {
     private static Node balanceRight(Node node) {
         //println ">"*10 + "balanceRight:BEFORE"
         //println node
-        if (node.color == BLACK && node.right.color == RED && node.right.hasRedChild()) {
-            if (node.left.color == RED) {
-                node = split(node)
+        if (node.color == BLACK && node.right.color == RED && node.left.color == BLACK) {
+            if (node.right.left.color == RED) {
+                node.right = rotateRight(node.right)
             } else {
-                if (node.right.left.color == RED) {
-                    node.right = rotateRight(node.right)
-                } else {
+                if (node.right.right.color == RED) {
                     node = rotateLeft(node)
-                }
-                if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
-                    node = split(node)
+                } else {
+                    //assert !(node.right.right.color == RED && node.right.left.color == RED)
+                    return node
                 }
             }
-            return balanceRight(node)
+            node = balanceRight(node)
+        }
+        if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
+            node = split(node)
         }
         //println ">"*10 + "balanceRight:AFTER"
         //println node

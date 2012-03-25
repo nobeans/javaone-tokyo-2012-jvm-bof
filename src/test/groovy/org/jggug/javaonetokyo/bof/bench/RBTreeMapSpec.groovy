@@ -83,9 +83,9 @@ class RdBTreeMapSpec extends Specification {
 
         then:
         map.height() == 2
-        map.toString() == '''  R(d)
-                            | B(c)
-                            |  R(b)
+        map.toString() == '''  B(d)
+                            | R(c)
+                            |  B(b)
                             |B(a)
                             | B(X)'''.stripMargin()
     }
