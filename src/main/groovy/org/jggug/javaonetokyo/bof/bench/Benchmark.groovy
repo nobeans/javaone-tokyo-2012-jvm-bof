@@ -43,9 +43,9 @@ class Benchmark {
 
         // benchmarking
         // MEMO: change warmUpTime and trials
-        int trials = 10
-        new BenchmarkBuilder().run(warmUpTime:15 /*sec*/, measureCpuTime:false, quiet:true) {
-            trials.times {
+        int trials = 5
+        trials.times {
+            new BenchmarkBuilder().run(warmUpTime:10 /*sec*/, measureCpuTime:false, quiet:true) {
                 with "${file}を読み込んで赤黒木を構築する(put only)", {
                     Benchmark.putOnly(file)
                 }
@@ -53,8 +53,8 @@ class Benchmark {
                 with "${file}を読み込んで赤黒木を構築した後にチェックする(put & get)", {
                     Benchmark.putAndGet(file)
                 }
-            }
-        }.prettyPrint()
+            }.prettyPrint()
+        }
     }
 }
 
