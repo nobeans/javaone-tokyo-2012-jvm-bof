@@ -5,7 +5,7 @@ import gbench.*
 final FILE = new File("src/main/resources/rbtree_map_input.csv")
 //final DEBUG = new File("/tmp/rbtree_map_input.csv")
 
-new BenchmarkBuilder().run(warmUpTime:5, measureCpuTime:false, verbose:true) {
+new BenchmarkBuilder().run(warmUpTime:10, measureCpuTime:false, verbose:true) {
 
     with "${FILE}を読み込んで赤黒木を構築する", {
         def map = RBTreeMap.newInstance()

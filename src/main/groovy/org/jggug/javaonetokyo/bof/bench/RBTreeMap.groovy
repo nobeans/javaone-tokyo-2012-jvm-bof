@@ -175,7 +175,7 @@ abstract class Node {
         return node
     }
 
-    private static Node balanceAsRoot(node) {
+    static Node balanceAsRoot(node) {
         node.color = BLACK
         node = Node.rebalance(node)
         node.color = BLACK
