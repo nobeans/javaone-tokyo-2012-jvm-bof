@@ -11,7 +11,7 @@ class RdBTreeMapSpec extends Specification {
         map = RBTreeMap.newInstance()
     }
 
-    def "エントリを追加しない場合は高さ1"() {
+    def "エントリを追加しない場合は高さ0"() {
         expect:
         map.height() == 0
         map.toString() == "B(null)"
