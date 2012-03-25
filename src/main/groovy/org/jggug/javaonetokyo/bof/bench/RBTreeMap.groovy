@@ -125,15 +125,18 @@ abstract class Node {
         //println node
         if (node.color == BLACK && node.left.color == RED && node.left.hasRedChild()) {
             if (node.right.color == RED) {
-                return split(node)
+                node = split(node)
             } else {
                 if (node.left.right.color == RED) {
                     node.left = rotateLeft(node.left)
                 } else {
                     node = rotateRight(node)
                 }
-                return rebalance(node)
+                if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
+                    node = split(node)
+                }
             }
+            return balanceLeft(node)
         }
         //println ">"*10 + "balanceLeft:AFTER"
         //println node
@@ -145,15 +148,18 @@ abstract class Node {
         //println node
         if (node.color == BLACK && node.right.color == RED && node.right.hasRedChild()) {
             if (node.left.color == RED) {
-                return split(node)
+                node = split(node)
             } else {
                 if (node.right.left.color == RED) {
                     node.right = rotateRight(node.right)
                 } else {
                     node = rotateLeft(node)
                 }
-                return rebalance(node)
+                if (node.color == BLACK && node.right.color == RED && node.left.color == RED) {
+                    node = split(node)
+                }
             }
+            return balanceRight(node)
         }
         //println ">"*10 + "balanceRight:AFTER"
         //println node
