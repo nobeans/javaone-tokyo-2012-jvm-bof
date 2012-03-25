@@ -4,7 +4,6 @@ import gbench.*
 
 class Benchmark {
     private static final File FILE = new File("src/main/resources/rbtree_map_input.csv")
-    private static final File DEBUG = new File("/tmp/rbtree_map_input.csv")
 
     @Typed
     static void putOnly() {
@@ -14,9 +13,7 @@ class Benchmark {
         FILE.eachLine { line ->
             String[] cols = line.split(",") // key,value,height
             map.put(cols[0], cols[1])
-            //assert map.height() == height as int
-            //DEBUG << "${key},${value},${map.height()}\n"
-            //DEBUG << "${map}\n"
+            //assert map.height() == cols[2] as int
         }
     }
 
@@ -28,9 +25,7 @@ class Benchmark {
         FILE.eachLine { line ->
             String[] cols = line.split(",") // key,value,height
             map.put(cols[0], cols[1])
-            //assert map.height() == height as int
-            //DEBUG << "${key},${value},${map.height()}\n"
-            //DEBUG << "${map}\n"
+            //assert map.height() == cols[2] as int
         }
 
         // get(key)
