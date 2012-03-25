@@ -3,7 +3,7 @@ package org.jggug.javaonetokyo.bof.bench
 import java.lang.IllegalArgumentException as IAE
 
 class RBTreeMap {
-    def root = Node.EMPTY
+    private Node root = Node.EMPTY
 
     private RBTreeMap() {}
 
@@ -33,9 +33,9 @@ class RBTreeMap {
 }
 
 abstract class Node {
-    final static int BLACK = 1
-    final static int RED = 0
-    final static Node EMPTY = new EmptyNode()
+    private final static int BLACK = 1
+    private final static int RED = 0
+    final static Node EMPTY = new EmptyNode(color:BLACK)
 
     int color
     String key
@@ -192,10 +192,6 @@ class FillNode extends Node {
 }
 
 class EmptyNode extends Node {
-    EmptyNode() {
-        this.color = BLACK
-    }
-
     @Override
     String get(String key) {
         null
