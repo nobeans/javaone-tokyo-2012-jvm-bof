@@ -7,3 +7,6 @@ How to benchmark:
   To use specified file:
     $ ./gradlew benchmark -Dinput=<INPUT_FILE_PATH>
 
+  To use full arguments:
+    $ ./gradlew benchmark [-Dinput=<INPUT_FILE_PATH>] [-DwarmUpTime=<SECOND>] [-Dverbose=true] [-Dtrials=<COUNT>] [-DwithPutOnly=true]
+

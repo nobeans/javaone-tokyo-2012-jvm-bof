@@ -39,5 +39,11 @@ task wrapper(type: Wrapper) {
 task benchmark(dependsOn: 'classes', type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = "org.jggug.javaonetokyo.bof.bench.Benchmark"
-    args System.properties.input ?: "src/main/resources/rbtree_map_input.csv"
+    args(
+        System.properties["input"] ?: "src/main/resources/rbtree_map_input.csv",
+        System.properties["warmUpTime"] ?: 10, // sec
+        System.properties["verbose"] != null ? System.properties["verbose"] : false,
+        System.properties["trials"] ?: 1,
+        System.properties["withPutOnly"] ?: false,
+    )
 }
