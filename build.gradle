@@ -8,12 +8,12 @@ repositories {
     mavenRepo name:"groovypp", url:"http://groovypp.artifactoryonline.com/groovypp/libs-releases-local"
 }
 dependencies {
-    //groovy 'org.codehaus.groovy:groovy:1.8.6'
+    groovy 'org.codehaus.groovy:groovy:1.8.6'
     testCompile 'org.spockframework:spock-core:0.5-groovy-1.8', {
         exclude group:'org.codehaus.groovy', module:'groovy-all'
     }
     groovy 'com.googlecode.gbench:gbench:0.3.0-groovy-1.8'
-    groovy 'org.mbte.groovypp:groovypp-all:0.9.0_1.8.2'
+    //groovy 'org.mbte.groovypp:groovypp-all:0.9.0_1.8.2'
 }
 
 def defaultEncoding = 'UTF-8'

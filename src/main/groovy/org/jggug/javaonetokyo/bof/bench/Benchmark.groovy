@@ -3,7 +3,6 @@ package org.jggug.javaonetokyo.bof.bench
 import gbench.*
 
 class Benchmark {
-    @Typed
     static void putOnly(File file) {
         RBTreeMap map = RBTreeMap.newInstance()
 
@@ -15,7 +14,6 @@ class Benchmark {
         }
     }
 
-    @Typed
     static void putAndGet(File file) {
         RBTreeMap map = RBTreeMap.newInstance()
 
