@@ -24,3 +24,8 @@ How to translate and tweet
     $ cd script
     $ echo こんにちは、Groovy! | groovy translateAndTweet.groovy
 
+This script needs the following files:
+
+- script/twitter4j.properties (See http://twitter4j.org/en/configuration.html)
+- $HOME/.bing-app-id (it includes only appId as a line)
+
