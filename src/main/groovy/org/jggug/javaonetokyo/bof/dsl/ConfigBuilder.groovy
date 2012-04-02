@@ -1,5 +1,8 @@
 package src.main.groovy.org.jggug.javaonetokyo.bof.dsl
 
+/**
+ * NodeBuilderを使用した実装
+ */
 class ConfigBuilder {
 
     Properties build(Closure dsl) {

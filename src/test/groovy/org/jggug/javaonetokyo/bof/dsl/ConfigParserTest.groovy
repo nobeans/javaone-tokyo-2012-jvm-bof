@@ -10,12 +10,12 @@ class ConfigParserSpec extends Specification {
         parser = new ConfigParser()
     }
 
-    def "入れご構造でドット区切りが表現できる"() {
+    def "入れ子構造でドット区切りが表現できる"() {
         setup:
         def config = {
             x {
                 y {
-                    z "value of z"
+                    z = "value of z"
                 }
             }
         }
@@ -28,16 +28,16 @@ class ConfigParserSpec extends Specification {
         props.size() == 1
     }
 
-    def "入れご構造でドット区切りが表現できる。複数キーの場合"() {
+    def "入れ子構造でドット区切りが表現できる。複数キーの場合"() {
         setup:
         def config = {
             x {
-                a "value of a"
+                a = "value of a"
                 y {
-                    b "value of b"
-                    z "value of z"
+                    b = "value of b"
+                    z = "value of z"
                 }
-                c "value of c"
+                c = "value of c"
             }
         }
 

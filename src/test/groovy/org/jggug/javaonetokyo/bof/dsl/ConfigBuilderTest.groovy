@@ -10,7 +10,7 @@ class ConfigBuilderSpec extends Specification {
         builder = new ConfigBuilder()
     }
 
-    def "入れご構造でドット区切りが表現できる"() {
+    def "入れ子構造でドット区切りが表現できる"() {
         setup:
         def config = {
             x {
@@ -28,7 +28,7 @@ class ConfigBuilderSpec extends Specification {
         props.size() == 1
     }
 
-    def "入れご構造でドット区切りが表現できる。複数キーの場合"() {
+    def "入れ子構造でドット区切りが表現できる。複数キーの場合"() {
         setup:
         def config = {
             x {

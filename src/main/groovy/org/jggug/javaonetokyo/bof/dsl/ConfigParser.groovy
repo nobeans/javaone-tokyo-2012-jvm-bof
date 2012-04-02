@@ -1,25 +1,40 @@
 package src.main.groovy.org.jggug.javaonetokyo.bof.dsl
 
+/**
+ * methodMissingとpropertyMissingを使った自前実装
+ */
 class ConfigParser {
 
+    private props
+    private stack
+
     Properties parse(Closure dsl) {
-        def root = new NodeBuilder().config(dsl)
-        def props = new Properties()
-        traverse(root.value(), props, [])
+        this.props = new Properties()
+        this.stack = []
+
+        // delegateを差し替えてmethodMissing/propertyMissingが
+        // ConfigParser自身のメソッドを呼び出すように細工する。
+        dsl.delegate = this
+
+        // クロージャを実行する。
+        dsl.call()
+
         return props
     }
 
-    void traverse(nodes, props, stack) {
-        nodes.each { node ->
-            def newStack = stack + node.name()
-            def value = node.value()
-            if (value in List) {
-                traverse(value, props, newStack)
-            } else {
-                def key = newStack.join(".")
-                props[key] = value
+    def methodMissing(String name, args) {
+        def oldStack = stack
+        this.stack = stack + name
+        args.each { arg ->
+            if (arg in Closure) {
+                arg.call()
             }
         }
+        this.stack = oldStack
     }
 
+    void propertyMissing(String name, value) {
+        def key = (stack + name).join(".")
+        props[key] = value
+    }
 }
