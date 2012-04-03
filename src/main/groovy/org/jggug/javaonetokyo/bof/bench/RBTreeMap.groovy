@@ -1,8 +1,8 @@
-@Typed
 package org.jggug.javaonetokyo.bof.bench
 
 import java.lang.IllegalArgumentException as IAE
 
+@Typed
 class RBTreeMap {
     private Node root = Node.EMPTY
 
@@ -33,6 +33,7 @@ class RBTreeMap {
     }
 }
 
+@Typed
 abstract class Node {
     protected final static int BLACK = 1
     protected final static int RED = 0
@@ -164,6 +165,7 @@ abstract class Node {
     }
 }
 
+@Typed
 class FillNode extends Node {
     FillNode(int color, String key, String value) {
         setColor(color)
@@ -185,6 +187,7 @@ class FillNode extends Node {
     }
 }
 
+@Typed
 class EmptyNode extends Node {
     @Override
     Node put(String key, String value) {
