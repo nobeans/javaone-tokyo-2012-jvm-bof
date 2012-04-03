@@ -45,6 +45,5 @@ task benchmark(dependsOn: 'classes', type: JavaExec) {
         System.properties["warmUpTime"] ?: 10, // sec
         System.properties["verbose"] != null ? System.properties["verbose"] : false,
         System.properties["trials"] ?: 1,
-        System.properties["withPutOnly"] ?: false,
     )
 }
