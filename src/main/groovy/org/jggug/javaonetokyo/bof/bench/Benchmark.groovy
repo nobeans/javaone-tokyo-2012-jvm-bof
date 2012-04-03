@@ -35,7 +35,7 @@ class Benchmark {
 
     static void main(String[] args) {
         // arguments
-        def (inputFilePath, warmUpTime, verbose, trials, withPutOnly) = args
+        def (inputFilePath, warmUpTime, verbose, trials) = args
         File file = new File(inputFilePath)
         if (!file.exists()) {
             System.err.println "ERROR: file not found: ${file}"
@@ -44,17 +44,10 @@ class Benchmark {
         warmUpTime = warmUpTime?.toInteger()
         verbose = verbose?.toBoolean()
         trials = trials?.toInteger()
-        withPutOnly = withPutOnly?.toBoolean()
 
         // benchmarking
         new BenchmarkBuilder().run(warmUpTime:warmUpTime, verbose:verbose, quiet:!verbose, measureCpuTime:false) {
             trials.toInteger().times {
-                if (withPutOnly) {
-                    with "${file}を読み込んで赤黒木を構築する(put only)", {
-                        Benchmark.putOnly(file)
-                    }
-                }
-
                 with "${file}を読み込んで赤黒木を構築した後にチェックする(put & get)", {
                     Benchmark.putAndGet(file)
                 }

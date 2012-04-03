@@ -15,7 +15,7 @@ To use specified file:
 
 To use full arguments:
 
-    $ ./gradlew benchmark [-Dinput=<INPUT_FILE_PATH>] [-DwarmUpTime=<SECOND>] [-Dverbose=true] [-Dtrials=<COUNT>] [-DwithPutOnly=true]
+    $ ./gradlew benchmark [-Dinput=<INPUT_FILE_PATH>] [-DwarmUpTime=<SECOND>] [-Dverbose=true] [-Dtrials=<COUNT>]
 
 
 How to translate and tweet
