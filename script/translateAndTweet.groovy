@@ -14,7 +14,6 @@ String.metaClass.encodeAsURL = {
 
 String.metaClass.translate = { ->
     def text =  delegate.encodeAsURL()
-    //println "Text: ${text}"
 
     def apiId = getApiId()
     def sourceLang = "ja"
@@ -28,7 +27,6 @@ String.metaClass.translate = { ->
 }
 
 String.metaClass.tweet = { ->
-    //println delegate
     new TwitterFactory().instance.updateStatus(delegate)
 }
 
