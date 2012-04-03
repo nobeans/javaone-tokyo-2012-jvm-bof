@@ -12,13 +12,11 @@ String.metaClass.encodeAsURL = {
     URLEncoder.encode(delegate)
 }
 
-String.metaClass.translate = { ->
+String.metaClass.translate = { from, to ->
     def text =  delegate.encodeAsURL()
 
     def apiId = getApiId()
-    def sourceLang = "ja"
-    def targetLang = "en"
-    def translateUrl = "https://api.microsofttranslator.com/V2/Http.svc/Translate?appId=${apiId}&text=${text}&from=${sourceLang}&to=${targetLang}"
+    def translateUrl = "https://api.microsofttranslator.com/V2/Http.svc/Translate?appId=${apiId}&text=${text}&from=${from}&to=${to}"
 
     def response = translateUrl.toURL().text
     return new XmlParser().parseText(response).text()
@@ -30,5 +28,5 @@ String.metaClass.tweet = { ->
     new TwitterFactory().instance.updateStatus(delegate)
 }
 
-System.in.text.translate().tweet()
+System.in.text.translate("ja", "en").tweet()
 
