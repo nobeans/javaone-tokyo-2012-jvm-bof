@@ -1,4 +1,4 @@
-package src.main.groovy.org.jggug.javaonetokyo.bof.dsl
+package org.jggug.javaonetokyo.bof.dsl
 
 /**
  * methodMissingとpropertyMissingを使った自前実装

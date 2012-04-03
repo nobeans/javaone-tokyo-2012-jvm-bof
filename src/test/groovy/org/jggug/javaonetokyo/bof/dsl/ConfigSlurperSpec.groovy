@@ -1,4 +1,4 @@
-package src.main.groovy.org.jggug.javaonetokyo.bof.dsl
+package org.jggug.javaonetokyo.bof.dsl
 
 import spock.lang.*
 
