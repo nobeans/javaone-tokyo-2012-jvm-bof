@@ -17,19 +17,11 @@ dependencies {
 }
 
 def defaultEncoding = 'UTF-8'
-compileJava {
-    options.encoding = defaultEncoding
+[compileJava, compileTestJava, compileGroovy, compileTestGroovy].each {
+    it.options.encoding = defaultEncoding
 }
-compileTestJava {
-    options.encoding = defaultEncoding
-}
-compileGroovy {
-    groovyOptions.encoding = defaultEncoding
-    options.encoding = defaultEncoding
-}
-compileTestGroovy {
-    groovyOptions.encoding = defaultEncoding
-    options.encoding = defaultEncoding
+[compileGroovy, compileTestGroovy].each {
+    it.groovyOptions.encoding = defaultEncoding
 }
 
 task wrapper(type: Wrapper) {
