@@ -19,18 +19,12 @@ class RBTreeMap {
         root.get(key)
     }
 
-    int height() {
-        root.height()
-    }
+    int height() { root.height() }
 
     @Override
-    String toString() {
-        root.toString()
-    }
+    String toString() { root.toString() }
 
-    static newInstance() {
-        new RBTreeMap()
-    }
+    static newInstance() { new RBTreeMap() }
 }
 
 @Typed
@@ -67,9 +61,7 @@ abstract class Node {
     void toRootColor() { setColor(BLACK) }
 
     @Override
-    String toString() {
-        toTreeString(0)
-    }
+    String toString() { toTreeString(0) }
 
     String toTreeString(int level) {
         def indent = " "
@@ -195,12 +187,8 @@ class EmptyNode extends Node {
     }
 
     @Override
-    String get(String key) {
-        null
-    }
+    String get(String key) { null }
 
     @Override
-    int height() {
-        0 // empty node shouldn't be count
-    }
+    int height() { 0 } // empty node shouldn't be count
 }
