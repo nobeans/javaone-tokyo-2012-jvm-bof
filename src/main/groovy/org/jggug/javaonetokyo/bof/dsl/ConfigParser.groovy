@@ -23,14 +23,14 @@ class ConfigParser {
     }
 
     def methodMissing(String name, args) {
-        def oldStack = stack
+        def currentStack = stack
         this.stack = stack + name
         args.each { arg ->
             if (arg in Closure) {
                 arg.call()
             }
         }
-        this.stack = oldStack
+        this.stack = currentStack
     }
 
     void propertyMissing(String name, value) {
