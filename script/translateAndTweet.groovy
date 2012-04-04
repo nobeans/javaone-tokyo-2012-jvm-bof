@@ -35,8 +35,10 @@ String.metaClass.tweet = {
     new TwitterFactory().instance.updateStatus(delegate)
 }
 
+// ↑色々と仕込んで、
 // ------------------------------------------------
-// エレガントに実行する。
+// ↓エレガントに実行する。
 
 System.in.text.translate("ja", "en").tweet()
+
 
