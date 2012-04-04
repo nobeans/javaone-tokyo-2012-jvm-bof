@@ -23,6 +23,7 @@ String.metaClass.translate = { from, to ->
     def translateUrl = "https://api.microsofttranslator.com/V2/Http.svc/Translate?appId=${apiId}&text=${text}&from=${from}&to=${to}"
 
     def response = translateUrl.toURL().text
+    // response: <string xmlns="http://schemas.microsoft.com/2003/10/Serialization/">翻訳結果</string>
     return new XmlParser().parseText(response).text()
 
     // もっとシンプルにも書ける。
