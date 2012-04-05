@@ -41,7 +41,6 @@ task wrapper(type: Wrapper) {
 task benchmark(dependsOn: 'classes', type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = "org.jggug.javaonetokyo.bof.bench.Benchmark"
-    jvmArgs("-server", "-Xmx1536m", "-Xms1536m", "-Xss1m", "-XX:MaxPermSize=256m")
     args(
         System.properties["input"] ?: "src/main/resources/rbtree_map_input.csv",
         System.properties["warmUpTime"] ?: 10, // sec
