@@ -9,13 +9,13 @@ repositories {
     mavenRepo name:'spock-snapshots', url:'http://oss.sonatype.org/content/repositories/snapshots/'
 }
 dependencies {
-    //groovy 'org.codehaus.groovy:groovy:1.8.6'
-    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0-SNAPSHOT', {
+    testCompile 'org.spockframework:spock-core:0.5-groovy-1.8', {
         exclude group:'org.codehaus.groovy', module:'groovy-all'
     }
     groovy 'com.googlecode.gbench:gbench:0.3.0-groovy-1.8'
-    groovy files('/home/cchampeau/DEV/PROJECTS/OPENSOURCE/GROOVY/groovy-git/groovy-git/target/dist/groovy-all.jar')
+    //groovy 'org.codehaus.groovy:groovy:1.8.6'
     //groovy 'org.mbte.groovypp:groovypp-all:0.9.0_1.8.2'
+    groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT.jar')
 }
 
 def defaultEncoding = 'UTF-8'
