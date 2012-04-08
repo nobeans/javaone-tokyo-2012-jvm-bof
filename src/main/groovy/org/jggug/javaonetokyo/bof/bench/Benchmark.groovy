@@ -6,7 +6,7 @@ import groovy.transform.CompileStatic
 class Benchmark {
     @CompileStatic
     static void putOnly(File file) {
-        RBTreeMap map = RBTreeMap.newInstance()
+        RBTreeMap map = RBTreeMap.newMap()
 
         // put(key, value)
         file.eachLine { String line ->
@@ -18,7 +18,7 @@ class Benchmark {
 
     @CompileStatic
     static void putAndGet(File file) {
-        RBTreeMap map = RBTreeMap.newInstance()
+        RBTreeMap map = RBTreeMap.newMap()
 
         // put(key, value)
         file.eachLine { String line ->

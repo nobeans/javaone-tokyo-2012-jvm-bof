@@ -25,7 +25,7 @@ class RBTreeMap {
     @Override
     String toString() { root.toString() }
 
-    static newInstance() { new RBTreeMap() }
+    static RBTreeMap newMap() { new RBTreeMap() }
 }
 
 @CompileStatic
