@@ -1,10 +1,8 @@
 package org.jggug.javaonetokyo.bof.bench
 
 import gbench.*
-import groovy.transform.CompileStatic
 
 class Benchmark {
-    @CompileStatic
     static void putOnly(File file) {
         RBTreeMap map = RBTreeMap.newMap()
 
@@ -16,7 +14,6 @@ class Benchmark {
         }
     }
 
-    @CompileStatic
     static void putAndGet(File file) {
         RBTreeMap map = RBTreeMap.newMap()
 

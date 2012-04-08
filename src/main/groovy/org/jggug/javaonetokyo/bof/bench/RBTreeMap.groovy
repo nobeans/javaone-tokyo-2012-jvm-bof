@@ -1,9 +1,7 @@
 package org.jggug.javaonetokyo.bof.bench
 
 import java.lang.IllegalArgumentException as IAE
-import groovy.transform.CompileStatic
 
-@CompileStatic
 class RBTreeMap {
     private Node root = Node.EMPTY
 
@@ -28,7 +26,6 @@ class RBTreeMap {
     static RBTreeMap newMap() { new RBTreeMap() }
 }
 
-@CompileStatic
 abstract class Node {
     protected final static int BLACK = 1
     protected final static int RED = 0
@@ -158,7 +155,6 @@ abstract class Node {
     }
 }
 
-@CompileStatic
 class FillNode extends Node {
     FillNode(int color, String key, String value) {
         setColor(color)
@@ -180,7 +176,6 @@ class FillNode extends Node {
     }
 }
 
-@CompileStatic
 class EmptyNode extends Node {
     @Override
     Node put(String key, String value) {
