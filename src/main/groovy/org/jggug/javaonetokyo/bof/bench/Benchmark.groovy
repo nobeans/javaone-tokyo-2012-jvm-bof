@@ -1,33 +1,34 @@
 package org.jggug.javaonetokyo.bof.bench
 
 import gbench.*
+import groovy.transform.CompileStatic
 
 class Benchmark {
-    @Typed
+    @CompileStatic
     static void putOnly(File file) {
         RBTreeMap map = RBTreeMap.newInstance()
 
         // put(key, value)
-        file.eachLine { line ->
+        file.eachLine { String line ->
             String[] cols = line.split(",") // key,value,height
             map.put(cols[0], cols[1])
             //assert map.height() == cols[2] as int
         }
     }
 
-    @Typed
+    @CompileStatic
     static void putAndGet(File file) {
         RBTreeMap map = RBTreeMap.newInstance()
 
         // put(key, value)
-        file.eachLine { line ->
+        file.eachLine { String line ->
             String[] cols = line.split(",") // key,value,height
             map.put(cols[0], cols[1])
             //assert map.height() == cols[2] as int
         }
 
         // get(key)
-        file.eachLine { line ->
+        file.eachLine { String line ->
             String[] cols = line.split(",") // key,value,height
             assert map.get(cols[0]) == cols[1]
         }
