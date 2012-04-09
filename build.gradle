@@ -16,7 +16,8 @@ dependencies {
     //groovy 'org.codehaus.groovy:groovy:1.8.6'
     //groovy 'org.mbte.groovypp:groovypp-all:0.9.0_1.8.2'
     //groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT.jar')
-    groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-ENV.jar') // to use GROOVY_INDY for activating indy
+    //groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-ENV.jar') // to use GROOVY_INDY for activating indy
+    groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar') // default set indy option
 }
 
 def defaultEncoding = 'UTF-8'
