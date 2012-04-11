@@ -43,6 +43,7 @@ task wrapper(type: Wrapper) {
 task benchmark(dependsOn: 'classes', type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = "org.jggug.javaonetokyo.bof.bench.Benchmark"
+    jvmArgs "-Xbootclasspath/a:build/classes/main:libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar"
     args(
         System.properties["input"] ?: "src/main/resources/rbtree_map_input.csv",
         System.properties["warmUpTime"] ?: 10, // sec
