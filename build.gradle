@@ -16,8 +16,8 @@ dependencies {
     //groovy 'org.codehaus.groovy:groovy:1.8.6'
     //groovy 'org.mbte.groovypp:groovypp-all:0.9.0_1.8.2'
     //groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT.jar')
-    //groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-ENV.jar') // to use GROOVY_INDY for activating indy
-    groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar') // default set indy option
+    groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-ENV.jar') // to use GROOVY_INDY for activating indy
+    //groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar') // default set indy option
 }
 
 def defaultEncoding = 'UTF-8'
@@ -49,5 +49,14 @@ task benchmark(dependsOn: 'classes', type: JavaExec) {
         System.properties["warmUpTime"] ?: 10, // sec
         System.properties["verbose"] != null ? System.properties["verbose"] : false,
         System.properties["trials"] ?: 1,
+    )
+}
+
+task fibonacci(dependsOn: 'classes', type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = "org.jggug.javaonetokyo.bof.bench.Fibonacci"
+//    jvmArgs "-Xbootclasspath/a:build/classes/main:libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar"
+    args(
+        System.properties["number"] ?: 0,
     )
 }
