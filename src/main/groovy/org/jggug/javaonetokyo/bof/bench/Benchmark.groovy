@@ -46,7 +46,7 @@ class Benchmark {
         // benchmarking
         new BenchmarkBuilder().run(warmUpTime:warmUpTime, verbose:verbose, quiet:!verbose, measureCpuTime:false) {
             trials.toInteger().times {
-                with "${file}を読み込んで赤黒木を構築した後にチェックする(put & get)", {
+                with ">> Put to / Get from RBTreeMap: ${file}", {
                     Benchmark.putAndGet(file)
                 }
             }
