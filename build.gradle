@@ -44,7 +44,8 @@ task wrapper(type: Wrapper) {
 task benchmark(dependsOn: 'classes', type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = "org.jggug.javaonetokyo.bof.bench.Benchmark"
-//    jvmArgs "-Xbootclasspath/a:build/classes/main:libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar" // FIXME this seems wrong.
+    //jvmArgs "-Xbootclasspath/a:build/classes/main:libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar" // FIXME this seems wrong.
+    //jvmArgs "-classpath", "libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar:build/classes/main"
     args(
         System.properties["input"] ?: "src/main/resources/rbtree_map_input.csv",
         System.properties["warmUpTime"] ?: 10, // sec
@@ -56,7 +57,8 @@ task benchmark(dependsOn: 'classes', type: JavaExec) {
 task fibonacci(dependsOn: 'classes', type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = "org.jggug.javaonetokyo.bof.bench.Fibonacci"
-//    jvmArgs "-Xbootclasspath/a:build/classes/main:libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar" // FIXME this seems wrong.
+    //jvmArgs "-Xbootclasspath/a:build/classes/main:libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar" // FIXME this seems wrong.
+    //jvmArgs "-classpath", "libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar:build/classes/main"
     args(
         System.properties["number"] ?: 0,
     )
