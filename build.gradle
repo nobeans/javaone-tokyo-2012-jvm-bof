@@ -16,8 +16,8 @@ dependencies {
     groovy 'com.googlecode.gbench:gbench:0.3.0-groovy-1.8'
     //groovy 'org.codehaus.groovy:groovy:1.8.6'
     //groovy 'org.mbte.groovypp:groovypp-all:0.9.0_1.8.2'
-    //groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT.jar')
-    groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-ENV.jar') // to use GROOVY_INDY for activating indy
+    groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT.jar')
+    //groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-ENV.jar') // to use GROOVY_INDY for activating indy
     //groovy files('libs/groovy-all-2.0.0-beta-3-SNAPSHOT-DEFAULT.jar') // default set indy option
 }
 
@@ -31,6 +31,13 @@ compileTestJava {
 compileGroovy {
     groovyOptions.encoding = defaultEncoding
     options.encoding = defaultEncoding
+
+    // to use Groovc with indy option via AntGroovyCompiler
+    groovyOptions.useAnt = true
+    options.useAnt = true
+
+    // requrired to apply my patch to gradle
+    groovyOptions.indy = true
 }
 compileTestGroovy {
     groovyOptions.encoding = defaultEncoding
